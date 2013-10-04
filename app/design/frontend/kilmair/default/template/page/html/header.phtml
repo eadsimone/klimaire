@@ -1,0 +1,112 @@
+
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2010 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+/**
+ * @var Mage_Page_Block_Html_Header $this
+ */
+ // Login Display Cart Page
+  Mage::getSingleton('core/session', array('name' => 'frontend'));
+$status = Mage::getSingleton('customer/session')->isLoggedIn();
+ // Login Display Cart Page
+
+?>
+		<div id="header">
+          <div class="header-holder">
+            <?php if ($this->getIsHomePage()):?>
+				<h1 class="logo"><?php /* ?><strong><?php echo $this->getLogoAlt() ?></strong><?php */ ?><a href="<?php echo $this->getUrl('') ?>" title="<?php echo $this->getLogoAlt() ?>" class="logo"><img src="<?php echo $this->getLogoSrc() ?>" alt="<?php echo $this->getLogoAlt() ?>" /></a></h1>
+			<?php else:?>
+				<a href="<?php echo $this->getUrl('') ?>" title="<?php echo $this->getLogoAlt() ?>" class="logo"><?php /* ?><strong><?php echo $this->getLogoAlt() ?></strong><?php */ ?><img src="<?php echo $this->getLogoSrc() ?>" alt="<?php echo $this->getLogoAlt() ?>" /></a>
+			<?php endif?>
+			
+            <?php echo $this->getChildHtml('cms_mainmenu') ?>
+            
+			<fieldset>
+            <div class="row">
+              <div class="text">
+                <div style="clear: both;"></div>
+                <div id="localDealers" style="padding-left: 7px !important;">
+                  <div class="searchArea">
+                     <?php echo $this->getChildHtml('topSearch') ?>
+                  </div>
+
+                </div>
+                
+                <div class="modalBackground" style="display: none; position: fixed; left: 0px; top: 0px; z-index: 10000;"></div>
+                <div class="modalBackground" style="display: none; position: fixed; left: 0px; top: 0px; z-index: 10000;"></div>
+              </div>
+            </div>
+            </fieldset>
+<!-- Find Dealer serch box Comment -->
+<!--
+<div style="width:301px; margin:10px 0 0 285px; float:left;">
+Find Dealer / Contrator <input type="text" name="finddealer" style="margin:0 8px 0 0;" /> <img src="<?php echo $this->getSkinUrl('images/header-search-btn.png') ?>" style="float:right;" />
+          </div>
+-->
+<!-- Find Dealer serch box Comment -->
+
+<!-- Find Dealer serch box Comment -->
+<div style="width:301px; margin:10px 0 0 105px; float:left; color:black; text-align: right;">
+<a href="<?php echo Mage::getBaseUrl(); ?>search-dealer" style="color:#8F8E8E; font-weight:bold; text-transform: uppercase;">PEche Find a Dealer</a>
+
+<!--
+<input type="text" name="finddealer" style="margin:0 8px 0 0;" /> <img src="<?php echo $this->getSkinUrl('images/header-search-btn.png') ?>" style="float:right;" />
+-->
+          </div>
+<!-- Find Dealer serch box Comment -->
+<!-- view cart link -->
+
+<!-- Display Cart Page Login Delear -->
+<?php
+   		if($status==true)
+		{ ?>
+			<div style="width:579px; margin:0 0 -4px; float:left; color:black; text-align: right;">
+			<a href="<?php echo Mage::getBaseUrl(); ?>checkout/cart/" style="color:#8F8E8E; font-weight:bold; text-transform: capitalize;">View Cart</a> | <a href="<?php echo Mage::getBaseUrl(); ?>customer/account/" style="color:#8F8E8E; font-weight:bold; text-transform: capitalize;">My Account</a> | <a href="<?php echo Mage::helper('customer')->getLogoutUrl(); ?>" style="color:#8F8E8E; font-weight:bold; text-transform: capitalize;" ><?php echo $this->__('Logout') ?></a>
+			</div>
+        <?php  }
+		else
+		{ ?>
+			<br /><br />
+		<?PHP } ?>
+
+
+<!-- End Display Cart Page Login Delear -->
+
+<!-- end view cart link -->
+        </div>
+<?php /* header-search-locator.png
+?>
+<div class="header-container">
+    <div class="header">
+        <div class="quick-access">
+           <p class="welcome-msg"><?php echo $this->getWelcome()?></p>
+            <?php echo $this->getChildHtml('topLinks') ?>
+            <?php echo $this->getChildHtml('store_language') ?>
+        </div>
+        <?php echo $this->getChildHtml('topContainer'); ?>
+    </div>
+</div>
+<?php echo $this->getChildHtml('topMenu') ?>
+<?php */ ?>

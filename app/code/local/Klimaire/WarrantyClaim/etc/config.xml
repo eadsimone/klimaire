@@ -1,0 +1,130 @@
+<?xml version="1.0"?>
+<!-- 
+/**
+ * @category   Klimaire
+ * @package    Klimaire_WarrantyClaim
+ * @author     ModuleCreator
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+ -->
+<config>
+    <modules>
+        <Klimaire_WarrantyClaim>
+            <version>0.1.0</version>
+        </Klimaire_WarrantyClaim>
+    </modules>
+    <frontend>
+        <routers>
+            <warrantyclaim>
+                <use>standard</use>
+                <args>
+                    <module>Klimaire_WarrantyClaim</module>
+                    <frontName>warrantyclaim</frontName>
+                </args>
+            </warrantyclaim>
+        </routers>
+        <layout>
+            <updates>
+                <warrantyclaim>
+                    <file>warrantyclaim.xml</file>
+                </warrantyclaim>
+            </updates>
+        </layout>
+    </frontend>
+    <admin>
+        <routers>
+			<warrantyclaim>
+				<use>admin</use>
+				<args>
+					<module>Klimaire_WarrantyClaim</module>
+					<frontName>warrantyclaim</frontName>
+				</args>
+			</warrantyclaim>
+        </routers>
+    </admin>
+    <adminhtml>
+		<menu>
+			<klimaire>
+				<children>
+                    <warrantyclaim module="warrantyclaim">
+                        <title>Warranty: Claim</title>
+                        <sort_order>3</sort_order>
+                        <action>warrantyclaim/adminhtml_warrantyclaim</action>
+                    </warrantyclaim>
+				</children>
+			</klimaire>
+		</menu>
+		<acl>
+			<resources>
+				<all>
+					<title>Allow Everything</title>
+				</all>
+				<admin>
+					<children>
+                        <klimaire>
+                            <children>
+                                <warrantyclaim module="warrantyclaim">
+                                    <title>Warranty: Claim</title>
+                                    <sort_order>3</sort_order>
+                                </warrantyclaim>
+                            </children>
+                        </klimaire>
+					</children>
+				</admin>
+			</resources>
+		</acl>
+		<layout>
+			<updates>
+				<warrantyclaim>
+					<file>warrantyclaim.xml</file>
+				</warrantyclaim>
+			</updates>
+		</layout>
+    </adminhtml>   
+    <global>
+        <models>
+            <warrantyclaim>
+                <class>Klimaire_WarrantyClaim_Model</class>
+                <resourceModel>warrantyclaim_mysql4</resourceModel>
+            </warrantyclaim>
+            <warrantyclaim_mysql4>
+                <class>Klimaire_WarrantyClaim_Model_Mysql4</class>
+                <entities>
+                    <warrantyclaim>
+                        <table>warrantyclaim</table>
+                    </warrantyclaim>
+                </entities>
+            </warrantyclaim_mysql4>
+        </models>
+        <resources>
+            <warrantyclaim_setup>
+                <setup>
+                    <module>Klimaire_WarrantyClaim</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </warrantyclaim_setup>
+            <warrantyclaim_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </warrantyclaim_write>
+            <warrantyclaim_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </warrantyclaim_read>
+        </resources>
+        <blocks>
+            <warrantyclaim>
+                <class>Klimaire_WarrantyClaim_Block</class>
+            </warrantyclaim>
+        </blocks>
+        <helpers>
+            <warrantyclaim>
+                <class>Klimaire_WarrantyClaim_Helper</class>
+            </warrantyclaim>
+        </helpers>
+    </global>
+</config>

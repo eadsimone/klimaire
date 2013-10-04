@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <warrantyclaim_adminhtml_warrantyclaim_index>
+        <reference name="content">
+            <block type="warrantyclaim/adminhtml_warrantyclaim" name="warrantyclaim" />
+        </reference>
+    </warrantyclaim_adminhtml_warrantyclaim_index>
+</layout>

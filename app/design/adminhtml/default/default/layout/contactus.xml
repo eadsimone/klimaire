@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+<contactus_adminhtml_contactusbackend_index>
+			<reference name="content">
+				<block type="contactus/adminhtml_contactusbackend" name="contactusbackend" template="contactus/contactusbackend.phtml"/>
+			</reference>
+		</contactus_adminhtml_contactusbackend_index>
+</layout>

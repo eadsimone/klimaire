@@ -1,0 +1,134 @@
+<?xml version="1.0"?>
+<!-- 
+/**
+ * @category   Klimaire
+ * @package    Klimaire_PdfUpload
+ * @author     ModuleCreator
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+ -->
+<config>
+    <modules>
+        <Klimaire_PdfUpload>
+            <version>0.1.0</version>
+        </Klimaire_PdfUpload>
+    </modules>
+    <frontend>
+        <routers>
+            <pdfupload>
+                <use>standard</use>
+                <args>
+                    <module>Klimaire_PdfUpload</module>
+                    <frontName>pdfupload</frontName>
+                </args>
+            </pdfupload>
+        </routers>
+        <layout>
+            <updates>
+                <pdfupload>
+                    <file>pdfupload.xml</file>
+                </pdfupload>
+            </updates>
+        </layout>
+    </frontend>
+    <admin>
+        <routers>
+			<pdfupload>
+				<use>admin</use>
+				<args>
+					<module>Klimaire_PdfUpload</module>
+					<frontName>pdfupload</frontName>
+				</args>
+			</pdfupload>
+        </routers>
+    </admin>
+    <adminhtml>
+		<menu>
+			<klimaire module="pdfupload">
+				<title>Klimaire</title>
+				<sort_order>71</sort_order>               
+				<children>
+					<pdfupload module="pdfupload">
+						<title>Manage PDFs</title>
+						<sort_order>0</sort_order>
+						<action>pdfupload/adminhtml_pdfupload</action>
+					</pdfupload>
+				</children>
+			</klimaire>
+		</menu>
+		<acl>
+			<resources>
+				<all>
+					<title>Allow Everything</title>
+				</all>
+				<admin>
+					<children>
+                        <klimaire module="pdfupload">
+                            <title>Klimaire</title>
+                            <sort_order>10</sort_order>               
+                            <children>
+                                <pdfupload module="pdfupload">
+                                    <title>Manage PDFs</title>
+                                    <sort_order>0</sort_order>
+                                </pdfupload>
+                            </children>
+                        </klimaire>
+					</children>
+				</admin>
+			</resources>
+		</acl>
+		<layout>
+			<updates>
+				<pdfupload>
+					<file>pdfupload.xml</file>
+				</pdfupload>
+			</updates>
+		</layout>
+    </adminhtml>   
+    <global>
+        <models>
+            <pdfupload>
+                <class>Klimaire_PdfUpload_Model</class>
+                <resourceModel>pdfupload_mysql4</resourceModel>
+            </pdfupload>
+            <pdfupload_mysql4>
+                <class>Klimaire_PdfUpload_Model_Mysql4</class>
+                <entities>
+                    <pdfupload>
+                        <table>pdfupload</table>
+                    </pdfupload>
+                </entities>
+            </pdfupload_mysql4>
+        </models>
+        <resources>
+            <pdfupload_setup>
+                <setup>
+                    <module>Klimaire_PdfUpload</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </pdfupload_setup>
+            <pdfupload_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </pdfupload_write>
+            <pdfupload_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </pdfupload_read>
+        </resources>
+        <blocks>
+            <pdfupload>
+                <class>Klimaire_PdfUpload_Block</class>
+            </pdfupload>
+        </blocks>
+        <helpers>
+            <pdfupload>
+                <class>Klimaire_PdfUpload_Helper</class>
+            </pdfupload>
+        </helpers>
+    </global>
+</config>

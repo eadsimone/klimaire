@@ -1,0 +1,323 @@
+<?php
+    if(!isset($_SESSION['warranty_claim_data_preserve']))
+    {
+        header("Location: ".$this->getUrl('warrantyclaim/'));
+        exit;
+    }
+?>
+<br />
+<div class="page-title"><h1><?php echo $this->__('Warranty Claim Preview') ?></h1></div>
+<br />
+<style type="text/css">
+.warranty_block_class
+{ 
+    background-color: #CCC; 
+    padding: 2px; 
+    border: 1px solid #000;
+}
+.mandatory_star_fields
+{
+    color: red;
+}
+table th.warranty_block_class
+{
+    text-align: right !important;
+} 
+.button-wattantyclim {background: none repeat scroll 0 0 #0D7F02;border: 1px solid #076300;color: #FFFFFF;cursor: pointer;height: 25px;padding: 0 2px;width: auto; margin:0 0 0 10px;}
+</style>
+<?php
+if(!isset($_SESSION['warranty_claim_succ_data_submit_flag']))
+{
+    $_SESSION['warranty_claim_succ_data_submit_flag'] = false;    
+}    
+?>
+<form action="<?php echo $this->getUrl('warrantyclaim/index/confirmedpost/'); ?>" id="warranty_claim_Form" name="warranty_claim_Form" method="post">
+<br />
+<table width="100%" border="0" cellspacing="1" cellpadding="1">
+  <tr>
+  <th align="left" valign="top" width="15">Warranty Types: <strong> <?php if($_SESSION['warranty_claim_data_preserve']['productwarranty'] == 1){?>Product Warranty &nbsp; <?php }?><?php if($_SESSION['warranty_claim_data_preserve']['partswarranty'] == 1){?>Parts Warranty  &nbsp;<?php }?><?php if($_SESSION['warranty_claim_data_preserve']['extendedwarranty'] == 1){?>Extended Warranty  &nbsp;<?php }?><?php if($_SESSION['warranty_claim_data_preserve']['slawarranty'] == 1){?>SLA warranty  &nbsp;<?php }?></th>
+    <td align="left" valign="top" width="15" style="font-weight:bold"></td>
+    
+    <td align="left" valign="top" width="15"></td>
+    
+    <td align="left" valign="top" width="15"></td>
+    
+    <td align="left" valign="top" width="15"></td>
+    
+  </tr>
+  <tr><td colspan="8" align="center" valign="top"><div class="validation-advice" id="warrantytype_error_msg_id" style="display: none;">Please, select the Type of Warrranty: [Product | Parts | Extended | SLA]</div></td></tr>
+  </table>
+
+<br />
+<div class="warranty_block_class"><strong>1. - Registered Information (?)</strong></div>
+<br />
+<table width="100%" border="0" cellspacing="3" cellpadding="1">
+  <tr>
+    <th width="23%" align="right" valign="top"><label for="reg_code" class="required">Registration Code:</label></th>
+    <td width="77%"><?php echo $_SESSION['warranty_claim_data_preserve']['reg_code']; ?>
+    </td>
+  </tr>
+  <tr>
+    <?php if($_SESSION['warranty_claim_data_preserve']['contact_pt_radio'] == 'zip'){?><th width="23%" align="right" valign="top">Zip Code:</th><td width="77%"><?php echo $_SESSION['warranty_claim_data_preserve']['zip']; }?></td>
+    <?php if($_SESSION['warranty_claim_data_preserve']['contact_pt_radio'] == 'phno'){?><th width="23%" align="right" valign="top">Phone No.</th><td width="77%"><?php echo $_SESSION['warranty_claim_data_preserve']['phno'];}?></td>
+    <?php if($_SESSION['warranty_claim_data_preserve']['contact_pt_radio'] == 'srno'){?><th width="23%" align="right" valign="top">Serial No. :</th><td width="77%"><?php echo $_SESSION['warranty_claim_data_preserve']['srno']; }?></td>
+  </tr>
+  
+  <tr>
+    <th width="23%" align="right" valign="top"><label for="reg_fname" class="required">Firstname:</label></th>
+    <td width="16%"><?php echo $_SESSION['warranty_claim_data_preserve']['reg_fname']; ?></td>
+  </tr>
+  <tr>
+    <th align="right" valign="top"><label for="reg_lname" class="required">Lastname:</label></th>
+    <td><?php echo $_SESSION['warranty_claim_data_preserve']['reg_lname']; ?></td>
+  </tr>
+  <tr>
+    <th align="right" valign="top"><label for="reg_addr1" class="required">Address1:</label></th>
+    <td><?php echo $_SESSION['warranty_claim_data_preserve']['reg_addr1']; ?></td>
+  </tr>
+  <tr>
+    <th align="right" valign="top"><label for="reg_addr2" class="required">Apt/Unit#:</label></th>
+    <td><?php echo $_SESSION['warranty_claim_data_preserve']['reg_addr2']; ?></td>
+  </tr>
+  <tr>
+    <th align="right" valign="top"><label for="reg_zip" class="required">Zip Code:</label></th>
+    <td><?php echo $_SESSION['warranty_claim_data_preserve']['reg_zip']; ?></td>
+  </tr>
+  <tr>
+    <th align="right" valign="top"><label for="reg_ph" class="required">Phone:</label></th>
+    <td><?php echo $_SESSION['warranty_claim_data_preserve']['reg_ph']; ?></td>
+  </tr>  
+  <tr>
+    <th align="right" valign="top"><label for="reg_email" class="required">Email:</label></th>
+    <td><?php echo $_SESSION['warranty_claim_data_preserve']['reg_email']; ?></td>
+  </tr>  
+</table>
+<br />
+<div class="warranty_block_class"><strong>2. - Current Contact Information</strong></div>
+<br />
+<table width="100%" border="0" cellspacing="3" cellpadding="1">    
+  <tr>
+    <th width="23%" align="right" valign="top"><label for="Phone" class="required">Phone:</label></th>
+    <td>
+      	<?php echo $_SESSION['warranty_claim_data_preserve']['contact_ph']; ?>
+    </td>
+    </tr>
+  <tr>
+    <th align="right" valign="top"><label for="Email" class="required">Email:</label></th>
+    <td><?php echo $_SESSION['warranty_claim_data_preserve']['contact_email']; ?></td>
+    </tr>  
+  <tr>
+    <th align="right" valign="top"><label for="Address" class="required">Address:</label></th>
+    <td><?php echo $_SESSION['warranty_claim_data_preserve']['contact_addr1']; ?></td>
+    </tr>  
+  <tr>
+    <th align="right" valign="top"><label for="Zip Code" class="required">Zip Code:</label></th>
+    <td><?php echo $_SESSION['warranty_claim_data_preserve']['contact_zip']; ?></td>
+    </tr>    
+</table>
+<br />
+<div class="warranty_block_class"><strong>3. - Product Information (?)</strong></div>
+<br />
+<table width="100%" border="0" cellspacing="3" cellpadding="1">    
+  <tr>
+    <th width="23%" align="right" valign="top"><label for="prod_code" class="required">Product Code:</label></th>
+    <td width="77%">
+      <?php     
+    $read_handler = Mage::getSingleton('core/resource')->getConnection('core_read');
+    $_qur = "select prodcode from warrantyclientdb group by prodcode";
+    $_res = $read_handler->query($_qur);
+    $_rows = $_res->fetchAll();    
+    
+    /*$SKU_coll = Mage::getModel('catalog/product')->getCollection()->addAttributeToSelect('sku');
+    $SKU_data_coll = $SKU_coll->getData();*/    
+    if(count($_rows) > 0)
+    {
+        foreach($_rows as $v)
+        {
+            if($_SESSION['warranty_claim_data_preserve']['prod_code'] == trim($v['prodcode']))
+            {
+                 echo trim($v['prodcode']);
+            }    
+        }
+    }
+    ?>
+    </td>
+    </tr>
+  <tr>
+    <th align="right" valign="top"><label for="prod_srno" class="required">Serial Number:</label></th>
+    <td><?php echo $_SESSION['warranty_claim_data_preserve']['prod_srno']; ?></td>
+    </tr>  
+  <tr>
+    <th align="right" valign="top"><label for="prod_installedon" class="required">Date Installed:</label></th>
+    <td><?php echo $_SESSION['warranty_claim_data_preserve']['prod_installedon']; ?></td>
+    </tr>  
+  <tr>
+    <th align="right" valign="top"><label for="prod_serviceon" class="required">Service Date:</label></th>
+    <td><?php echo $_SESSION['warranty_claim_data_preserve']['prod_serviceon']; ?></td>
+    </tr>
+  <tr>
+    <th align="right" valign="top"><label for="prod_purchasedon" class="required">Purchase Date:</label></th>
+    <td><?php echo $_SESSION['warranty_claim_data_preserve']['prod_purchasedon']; ?></td>
+    </tr>    
+</table>  
+<br />
+
+<div class="warranty_block_class"><strong>4. - Servicing Contractor Information (?)</strong></div>
+<br />
+<table width="100%" border="0" cellspacing="1" cellpadding="1">
+  <tr>
+    <th width="22%" align="left" valign="top"><label for="serv_contra_name" class="required">Servicing Contractor Name:</label></th>
+    <td width="10%"><?php echo $_SESSION['warranty_claim_data_preserve']['serv_contra_name']; ?></td>
+    <td colspan="4" align="left" valign="top">&nbsp;</td>
+  </tr>
+  <tr>
+    <th align="left" valign="top"><label for="serv_contra_addr" class="required">Contractor's Street Address:</label></th>
+    <td><?php echo $_SESSION['warranty_claim_data_preserve']['serv_contra_addr']; ?></td>
+    <td colspan="4" align="left" valign="top">&nbsp;</td>
+  </tr>
+  <tr>
+    <th align="left" valign="top"><label for="serv_contra_city" class="required">City:</label></th>
+    <td width="15%"><?php echo $_SESSION['warranty_claim_data_preserve']['serv_contra_city']; ?></td>
+    <th width="7%" align="left" valign="top"><label for="serv_contra_state" class="required">State:</label></th>
+    <td><?php echo $_SESSION['warranty_claim_data_preserve']['serv_contra_state']; ?></td>
+    <th width="5%"><label for="serv_contra_zip" class="required">Zip:</label></th>
+    <td><?php echo $_SESSION['warranty_claim_data_preserve']['serv_contra_zip']; ?></td>
+  </tr>
+  <tr>
+    <th align="left" valign="top"><label for="serv_contra_ph" class="required">Phone No.:</label></th>
+    <td><?php echo $_SESSION['warranty_claim_data_preserve']['serv_contra_ph']; ?></td>
+    <td colspan="4" align="left" valign="top">&nbsp;</td>
+  </tr>
+  <tr>
+    <th align="left" valign="top"><label for="serv_contra_licenseno" class="required">Contractor's License Number:</label></th>
+    <td><?php echo $_SESSION['warranty_claim_data_preserve']['serv_contra_licenseno']; ?></td>
+    <td colspan="4" align="left" valign="top">&nbsp;</td>
+  </tr>  
+</table>
+<br />
+
+<div class="warranty_block_class"><strong>5. - Purchase from:</strong></div>
+<br />
+<table><tr><th><label for="purchasefrom_loc" class="required">Purchase from:</label></th><td><?php echo $_SESSION['warranty_claim_data_preserve']['purchasefrom_loc']; ?></td><th><label for="purchasefrom_ph" class="required">Phone No. :</label></th><td><?php echo $_SESSION['warranty_claim_data_preserve']['purchasefrom_ph']; ?></td></tr></table>
+<br />
+
+<div class="warranty_block_class"><strong>6. - Reason of Failure (Select from the window / table):</strong></div>
+<br />
+<table width="100%" cellpadding="0" cellspacing="0" border="0">
+<tr>
+<th><label for="res_failure_failedcompocode" class="required">Failed component code:</label></th>
+<td>
+<?php
+$res_failure_failedcompocode_arr = array('Refrigerant System'=>'Refrigerant System','Compressor / Motors'=>'Compressor / Motors','Electrical Components'=>'Electrical Components','Non-Electrical Components'=>'Non-Electrical Components','Gas Furnace / Boiler'=>'Gas Furnace / Boiler');
+foreach($res_failure_failedcompocode_arr as $v):
+?>
+<?php if($_SESSION['warranty_claim_data_preserve']['res_failure_failedcompocode'] == $v){ echo $v; }?>
+<?php
+    endforeach;
+$res_failure_failedcompocode_Keyarr = array_keys($res_failure_failedcompocode_arr,$_SESSION['warranty_claim_data_preserve']['res_failure_failedcompocode']);
+switch($res_failure_failedcompocode_Keyarr[0])
+{
+    case 'Refrigerant System':
+        $postFix_key = 1;
+    break;
+    
+    case 'Compressor / Motors':
+        $postFix_key = 2;    
+    break;
+    
+    case 'Electrical Components':
+        $postFix_key = 3;    
+    break;
+    
+    case 'Non-Electrical Components':
+        $postFix_key = 4;
+    break;
+    
+    case 'Gas Furnace / Boiler':
+        $postFix_key = 5;    
+    break;              
+}
+?>
+</td>
+<th><label for="res_failure_compocode" class="required">Component code:</label></th>
+<td>
+<?php
+echo $_SESSION['warranty_claim_data_preserve']['res_failure_compocode'.$postFix_key];
+$_SESSION['warranty_claim_data_preserve']['postFix_key']= $postFix_key;
+?>
+</td>
+<th><label for="res_failure_causecode" class="required">Cause code:</label></th>
+<td>
+<?php
+echo $_SESSION['warranty_claim_data_preserve']['res_failure_causecode'.$postFix_key];
+?>
+</td>
+</tr></table>
+<br />
+<table cellspacing="0" cellpadding="2" style="border: 1px solid #000 !important;" width="100%" border="1">
+  <tr>
+    <td colspan="6">&nbsp;</td>
+    </tr>
+  <tr align="center" valign="top">
+    <td colspan="2"><strong>Failed Part No. [?]
+</strong></td>
+    <td colspan="4"><strong>Description [?]
+</strong></td>
+    </tr>
+  <tr>
+    <td colspan="2"><?php echo $_SESSION['warranty_claim_data_preserve']['res_failure_failedpartno1']; ?></td>
+    <td colspan="4"><?php echo $_SESSION['warranty_claim_data_preserve']['res_failure_failedpartdescr1']; ?></td>
+    </tr>
+  <tr>
+    <td colspan="2"><?php echo $_SESSION['warranty_claim_data_preserve']['res_failure_failedpartno2']; ?></td>
+    <td colspan="4"><?php echo $_SESSION['warranty_claim_data_preserve']['res_failure_failedpartdescr2']; ?></td>
+    </tr>
+  <tr>
+    <td colspan="2"><?php echo $_SESSION['warranty_claim_data_preserve']['res_failure_failedpartno3']; ?></td>
+    <td colspan="4"><?php echo $_SESSION['warranty_claim_data_preserve']['res_failure_failedpartdescr3']; ?></td>
+    </tr>
+  <tr>
+    <td width="13%" align="center" valign="top"><strong>Fan Motor Serial Number 
+</strong></td>
+    <td width="25%"><?php echo $_SESSION['warranty_claim_data_preserve']['res_failure_srno1']; ?></td>
+    <td width="7%" align="center" valign="top"><strong>Compressor Serial Number </strong></td>
+    <td width="21%"><?php echo $_SESSION['warranty_claim_data_preserve']['res_failure_compressor']; ?></td>
+    </tr>
+</table> 
+
+
+<br />
+<div class="warranty_block_class"><strong>7. - Reason for Failure:</strong></div>
+<br />
+<table cellspacing="0" cellpadding="4" style="border: 1px solid #000 !important;" width="100%" border="1">        
+  <tr>
+    <td align="left" valign="top">
+    <?php echo $_SESSION['warranty_claim_data_preserve']['reason_for_failure']; ?>
+    </td>
+  </tr>  
+  </table>
+  
+<br />
+
+<div class="warranty_block_class"><strong>8. - Service Performed:</strong><span class="formInfo"><img height="18" width="18" alt="images3" src="<?php echo $this->getSkinUrl('js/js_tootip/images/question_img.jpg');?>" title="AC technician must provide specific test procedure used to determine the failed component." /><span style="display: none;" class="mycontent"><p>AC technician must provide specific test procedure used to determine the failed component.</p><br /><p>AC technician must provide specific test procedure used to determine the failed component.</p></span><br/>
+</span></div>
+<br />
+<table cellspacing="0" cellpadding="4" style="border: 1px solid #000 !important;" width="100%" border="1">
+  <tr>
+    <td align="left" valign="top">
+    <?php echo $_SESSION['warranty_claim_data_preserve']['service_performed']; ?>
+    </td>
+  </tr>
+  
+  </table>
+<br />
+<div class="warranty_block_class"><strong>9 - Extended Replacement Warranty (If applicable):</strong></div>
+<br />
+<table><tr><th><label for="extended_warranty" class="required">Did you purchase extended warranty ?:</label></th><td><?php if($_SESSION['warranty_claim_data_preserve']['extended_warranty']=='1') {echo 'Yes &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Bill number : '.$_SESSION['warranty_claim_data_preserve']['extendedwarrantybillnumber'];
+
+
+} else {echo 'No';} ?></td></tr></table>
+<br />
+<div align="center"><input type="submit" class="button-wattantyclim" name="submit" value=" Confirm & Submit " /><input type="button" name="back" class="button-wattantyclim" value=" Back " onclick="javascript:document.location.href='<?php echo $this->getUrl("warrantyclaim/index/"); ?>';" /></div>
+</form>
+<?php unset($_SESSION['warranty_claim_succ_data_submit_flag']); ?>

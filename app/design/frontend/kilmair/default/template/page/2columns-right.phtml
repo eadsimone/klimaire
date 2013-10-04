@@ -1,0 +1,98 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2010 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php
+/**
+ * Template for Mage_Page_Block_Html
+ */
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $this->getLang() ?>" lang="<?php echo $this->getLang() ?>">
+<head>
+<?php echo $this->getChildHtml('head') ?>
+<script type="text/javascript"> focname=0;focname2=0;</script>
+<script type="text/javascript">
+	jQuery(document).ready(function() {
+		jQuery('.col_1 a').removeClass('drop');
+	});
+</script>
+
+</head>
+<body<?php //echo $this->getBodyClass()?' class="'.$this->getBodyClass().'"':'' ?>>
+<?php echo $this->getChildHtml('after_body_start') ?>
+<div id="wrapper">
+    <div class="w1">
+		<div class="w2">
+			<?php echo $this->getChildHtml('global_notices') ?>
+			<?php echo $this->getChildHtml('header') ?>
+
+			<div class="main">
+				<div class="main-holder">
+					<div style="padding-left: 3%;"> </div>
+					<div id="leftColumn">
+
+						<div id="getWidget1"></div>
+						<?php $pageTitle= $this->getLayout()->getBlock('head')->getTitle(); ?> 
+						
+	                    <div class="images">&nbsp;</div>	
+                        <div class="sub-containor-bg" style="width:777px; margin: 0px; float: left;" >
+                          <div class="header-banner"><img src="<?php echo $this->getSkinUrl('images'); ?>/header-banner.jpg" alt="" /></div>
+                          <!--<div id="body-part">
+                          <h1>Package Terminal Air Conditioning & Heating</h1>			
+                          <div class="box-top">
+                          <div class="box-1">
+                            <h2>Mini-Split Air Conditioners</h2>
+                            <div class="box-img"><img src="<?php echo $this->getSkinUrl('images'); ?>/img-1.jpg" alt="category-img-1"/></div>
+                            <div class="box-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor in+cididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamodo consequat.</div>
+                          </div>			
+                          </div>
+                          </div>-->
+						
+						<div id="getWidget2"></div>
+                        
+						<?php echo $this->getChildHtml('global_messages') ?>
+						<?php echo $this->getChildHtml('content') ?>
+					</div>	                                                     
+            <!--<div class="col-right sidebar"><?php //echo $this->getChildHtml('right') ?></div>-->
+				</div>	
+            </div>
+
+			<div class="menu-container">
+				<div class="holder">
+					<?php echo $this->getChildHtml('footer') ?>
+					<?php echo $this->getChildHtml('before_body_end') ?>
+			</div>	
+		</div>
+	</div>
+</div>
+<?php echo $this->getAbsoluteFooter() ?>
+<script type="text/javascript">
+<!--
+var TabbedPanels1 = new Spry.Widget.TabbedPanels("TabbedPanels1");
+//-->
+</script>
+</body>
+</html>

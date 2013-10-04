@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <pdfupload_adminhtml_pdfupload_index>
+        <reference name="content">
+            <block type="pdfupload/adminhtml_pdfupload" name="pdfupload" />
+        </reference>
+    </pdfupload_adminhtml_pdfupload_index>
+</layout>

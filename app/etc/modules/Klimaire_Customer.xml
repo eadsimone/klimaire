@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @category   Klimaire
+ * @package    Klimaire_Customer
+ * @version    1.0.1
+ */
+-->
+<config>
+    <modules>
+        <Klimaire_Customer>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Klimaire_Customer>
+    </modules>
+</config>

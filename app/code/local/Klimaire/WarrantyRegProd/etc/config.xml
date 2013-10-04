@@ -1,0 +1,133 @@
+<?xml version="1.0"?>
+<!-- 
+/**
+ * @category   Klimaire
+ * @package    Klimaire_WarrantyRegProd
+ * @author     ModuleCreator
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+ -->
+<config>
+    <modules>
+        <Klimaire_WarrantyRegProd>
+            <version>0.1.0</version>
+        </Klimaire_WarrantyRegProd>
+    </modules>
+    <frontend>
+        <routers>
+            <warrantyregprod>
+                <use>standard</use>
+                <args>
+                    <module>Klimaire_WarrantyRegProd</module>
+                    <frontName>warrantyregprod</frontName>
+                </args>
+            </warrantyregprod>
+        </routers>
+        <layout>
+            <updates>
+                <warrantyregprod>
+                    <file>warrantyregprod.xml</file>
+                </warrantyregprod>
+            </updates>
+        </layout>
+    </frontend>
+    <admin>
+        <routers>
+			<warrantyregprod>
+				<use>admin</use>
+				<args>
+					<module>Klimaire_WarrantyRegProd</module>
+					<frontName>warrantyregprod</frontName>
+				</args>
+			</warrantyregprod>
+        </routers>
+    </admin>
+    <adminhtml>
+		<menu>
+			<klimaire>
+				<children>
+					<warrantyregprod module="warrantyregprod">
+                        <title>Warranty: Registered Products</title>
+                        <sort_order>1</sort_order>
+                        <action>warrantyregprod/adminhtml_warrantyregprod</action>
+                    </warrantyregprod>
+				</children>
+			</klimaire>
+		</menu>
+		<acl>
+			<resources>
+				<all>
+					<title>Allow Everything</title>
+				</all>
+				<admin>
+					<children>
+						<klimaire>
+                            <children>
+                                <warrantyregprod module="warrantyregprod">
+                                    <title>Warranty: Registered Products</title>
+                                    <sort_order>1</sort_order>
+                                </warrantyregprod>
+                            </children>
+                        </klimaire>
+					</children>
+				</admin>
+			</resources>
+		</acl>
+		<layout>
+			<updates>
+				<warrantyregprod>
+					<file>warrantyregprod.xml</file>
+				</warrantyregprod>
+			</updates>
+		</layout>
+    </adminhtml>   
+    <global>
+        <models>
+            <warrantyregprod>
+                <class>Klimaire_WarrantyRegProd_Model</class>
+                <resourceModel>warrantyregprod_mysql4</resourceModel>
+            </warrantyregprod>
+            <warrantyregprod_mysql4>
+                <class>Klimaire_WarrantyRegProd_Model_Mysql4</class>
+                <entities>
+                    <warrantyregprod>
+                        <table>warrantyregprod</table>                        
+                    </warrantyregprod>
+                    <warrantyregprodchild>
+                        <table>warrantyregprodchild</table>                        
+                    </warrantyregprodchild>
+                </entities>
+            </warrantyregprod_mysql4>
+        </models>
+        <resources>
+            <warrantyregprod_setup>
+                <setup>
+                    <module>Klimaire_WarrantyRegProd</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </warrantyregprod_setup>
+            <warrantyregprod_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </warrantyregprod_write>
+            <warrantyregprod_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </warrantyregprod_read>
+        </resources>
+        <blocks>
+            <warrantyregprod>
+                <class>Klimaire_WarrantyRegProd_Block</class>                
+            </warrantyregprod>
+        </blocks>
+        <helpers>
+            <warrantyregprod>
+                <class>Klimaire_WarrantyRegProd_Helper</class>                
+            </warrantyregprod>
+        </helpers>
+    </global>
+</config>

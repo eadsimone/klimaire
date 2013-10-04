@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <warrantyregprod_adminhtml_warrantyregprod_index>
+        <reference name="content">
+            <block type="warrantyregprod/adminhtml_warrantyregprod" name="warrantyregprod" />
+        </reference>
+    </warrantyregprod_adminhtml_warrantyregprod_index>
+</layout>

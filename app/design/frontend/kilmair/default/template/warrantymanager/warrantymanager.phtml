@@ -1,0 +1,107 @@
+<?php
+$warranty_claim_manager = Mage::getSingleton('customer/session')->getCustomer()->getData();
+if($warranty_claim_manager['group_id'] == 4 && $warranty_claim_manager['created_in'] == 'Admin')
+{
+	if(isset($_GET['status']) && $_GET['status'] != '')
+    {
+		$_SESSION['claim_collection_status'] = $_GET['status'];        
+    }
+	else if(isset($_GET['status']) && $_GET['status'] == '')
+	{
+		$_SESSION['claim_collection_status'] = '';
+	}
+	
+?>
+<script type="text/javascript">
+function Sortbystatus(val)
+{
+    document.location.href = '<?php echo $this->getUrl('warrantymanager'); ?>?status='+val;
+}
+</script>    
+    
+    <div align="right" style="border: 1px solid; padding: 5px;">
+    <strong>List By:</strong>&nbsp;
+    <select name="sortbystatus" onchange="Sortbystatus(this.value);">
+    <option value="">- Status -</option>
+    <option<?php if($_SESSION['claim_collection_status'] == 1) {?> selected="selected"<?php }?> value="1">Enable</option>
+    <option<?php if($_SESSION['claim_collection_status'] == 2) {?> selected="selected"<?php }?> value="2">Disable</option>
+    <option<?php if(isset($_SESSION['claim_collection_status']) && $_SESSION['claim_collection_status'] == '') {?> selected="selected"<?php }?> value="">Any</option>
+    </select>
+    </div>
+    <?php
+    $claim_collection = Mage::getModel('warrantyclaim/warrantyclaim')->getCollection();
+	
+	if(isset($_SESSION['claim_collection_status']) && $_SESSION['claim_collection_status'] != '')
+	{
+		$claim_collection->addFilter('status',$_SESSION['claim_collection_status']);    
+	}
+	
+	if(isset($_GET['page']))
+	{
+		$pageno = $_GET['page'];
+	}
+	else
+	{
+		$pageno = 1;
+	}
+	include Mage::getBaseDir('base')."/Paging.php";
+	
+	$limitperPage = 10;
+	$page_obj = new Paging($claim_collection,$pageno,$limitperPage);
+	$page_obj->setParameter("&status=".$_GET['status']);
+    
+    //$claim_collection->setPageSize(1)->setCurPage(2);
+    if(count($claim_collection) > 0)
+    {
+?>
+<br />
+<table cellspacing="1" cellpadding="2" border="1" width="100%">    
+  <thead>
+    <tr class="headings">
+      <!--<th>ID</th>-->
+      <th>Name/Email</th>      
+      <th>Reg/ConfirmCode</th>
+      <th>Product Code</th>
+      <th>Serial No</th>
+      <th width="220">Dates</th>     
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tr><td colspan="7"><hr /></td></tr>
+<?php
+foreach($claim_collection as $data)
+{
+  ?>
+  <tr>
+      <!--<td class="a-right"><?php //echo $data['warrantyclaim_id']; ?></td>-->
+      <td class="a-left" style="padding:4px 0px 4px 0px;"><?php echo ucfirst($data['reg_fname']),' ',ucfirst($data['reg_lname']),'<br />',$data['reg_email']; ?></td>      
+      <td class="a-left"><?php echo $data['confirmcode']; ?></td>
+      <td class="a-left"><?php echo $data['prod_code']; ?></td>
+      <td class="a-left"><?php echo $data['prod_srno']; ?></td>
+      <td class="a-left">
+      <?php if($data['prod_installedon'] != '') ?><strong>Installed On:</strong> <?php echo $data['prod_installedon'],'<br />';?>
+      <?php if($data['prod_serviceon'] != '') ?><strong>Service On:</strong> <?php echo $data['prod_serviceon'],'<br />';?>
+      <?php if($data['prod_purchasedon'] != '') ?><strong>Purchased On:</strong> <?php echo $data['prod_purchasedon'],'<br />';?>
+      <?php if($data['created_time'] != '') ?><strong>Created On:</strong> <?php echo $data['created_time'],'<br />';?>
+      <?php if($data['update_time'] != '') ?><strong>Updated On:</strong> <?php echo $data['update_time'],'<br />';?>
+      </td>      
+      <td class="a-left"><?php if($data['status'] == 1) {echo 'Enable'; } else { echo 'Disable';} ?></td>
+      <td class=" last"><a href="<?php echo $this->getUrl('warrantymanagerclaimview') ?>?claimID=<?php echo $data['warrantyclaim_id']; ?>">View</a></td>
+    </tr>
+  <?php      
+}
+?>
+<tr><td colspan="7"><hr /></td></tr>
+</table>
+<?php echo $page_obj->getPageNo();?>
+<?php
+}
+
+}
+else
+{
+    header("Location: ".$this->getUrl('customer/account'));
+    exit;
+}
+?>

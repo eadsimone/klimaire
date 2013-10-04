@@ -1,0 +1,287 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2010 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php
+/**
+ * Category view template
+ *
+ * @see Mage_Catalog_Block_Category_View
+ */
+?>
+<?php
+    $_helper    = $this->helper('catalog/output');
+    $_category  = $this->getCurrentCategory();
+    
+?>
+<td class="menuArea">
+    <div id="ctl00_left_leftColumn">
+        
+        
+        
+        <div id="ctl00_left_getWidget2">
+<div id="ctl00_left_ctl00_pgPanel">
+	
+<div id="sidebar">
+<h2>Product GUIDE</h2>
+<div class="menu">
+  
+    <ul>  
+    <li><a href="../../hrc.html"><span>HomeOwners</span></a></li>
+ 
+    <li><a href='tankless_vs_tank/index.html'><span>Tankless Vs Tank</span></a></li> 
+ 
+    <li><a href='how_it_works/index.html'><span>How Tankless Works</span></a></li> 
+ 
+    <li><a href='energy_calculator/index.html'><span>Energy Calculator</span></a></li> 
+ 
+    </ul>
+
+</div>
+</div>
+
+</div>
+</div>
+	    <div id="ctl00_left_getContent2_divContent" style="padding-left: 0px;" ContentAreaID="212">
+    
+    
+            
+            
+            <div id="sidebar">
+<div class="tags">
+<h3>Tankless links</h3>
+<ul class="dropdown">
+    <li>
+    <h4>Products</h4>
+    <ul>
+        <li>
+        <h4>Residential</h4>
+        <ul>
+            <li><a href="condensing_tankless.html">Condensing</a></li>
+            <li><a href="95_tankless_series.html">95 Series</a></li>
+            <li><a href="84_tankless_series.html">84 Series </a></li>
+            <li><a href="64_tankless_series.html">64 Series</a></li>
+            <li><a href="tankless_electric.html">Electric Series</a></li>
+        </ul>
+        </li>
+        <li>
+        <h4>Commercial</h4>
+        <ul>
+            <li><a href="../commercial/water_heating/tankless/index.html">Condensing</a></li>
+            <li><a href="../commercial/water_heating/tankless/index.html">95 Series</a></li>
+            <li><a href="../commercial/water_heating/tankless/index.html">84 Series</a></li>
+        </ul>
+        </li>
+        <li><a href="venting/index.html">Venting</a></li>
+        <li><a href="accessories/index.html">Accessories</a></li>
+    </ul>
+    </li>
+    <li>
+    <h4>Sizing</h4>
+    <ul>
+        <li><a href="ez_spec_sizing/index.html">EZ-Spec Online Sizing</a></li>
+        <li><a href="best_fit_residential/index.html">Best Fit Guide</a></li>
+    </ul>
+    </li>
+    <li>
+    <h4>Learn</h4>
+    <ul>
+        <li><a href="why_rheem/index.html">Why Rheem</a></li>
+        <li><a href="about_tankless/index.html">About Tankless</a><a href="how_it_works/index.html"><br>
+        </a></li>
+        <li><a href="whole_home_solutions/index.html">Where to use</a></li>
+        <li><a href="how_to_install/index.html">How To Select and Install</a><a href="energy_calculator/index.html"><br>
+        </a></li>
+        <li><a href="energystar/index.html">EnergyStar Products</a></li>
+        <li><a href="tv_commercials/index.html">TV Commercials</a></li>
+    </ul>
+    </li>
+    <li>
+    <h4>Customer Support</h4>
+    <ul>
+        <li><a href="customer_support/index.html">Contact Rheem</a></li>
+        <li><a href="faqs/index.html">FAQs</a></li>
+        <li><a href="technical_bulletins/index.html">Technical Bulletins</a></li>
+        <li><a href="technical_bulletins/index.html">Older Product Support</a></li>
+    </ul>
+    </li>
+</ul>
+</div>
+</div>
+<p>&nbsp;</p>
+            
+            
+        
+    
+</div>
+	    
+	    <div id="ctl00_left_getWidget7">
+<style type="text/css">
+    .sidetab {
+        position: fixed;
+        width: 240px;
+        height: 92px;
+        left: 0;
+        z-index: 50000;
+        margin-left: -50px;
+    }
+
+    .sidetab:hover {
+        cursor: pointer;
+    }
+
+    .sidetab p {
+        text-align: center;
+        text-indent: -99999px;
+    } 
+</style>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $(".sidetab").click(
+        function(){
+            window.location = $(this).attr("url");
+            return false;
+        });
+    });
+
+
+    $(document).ready(function() {
+        $('.sidetab').hover(function () {
+            $(this).stop().animate({
+                marginLeft : 0
+            }, 200);
+        },
+        
+        function () {
+            $(this).stop().animate({
+                marginLeft : 0
+            }, 0);
+        }).find(this).css('marginLeft', 200);
+    });
+</script>
+</div>
+	    <div id="ctl00_left_getContent3_divContent" style="padding-left: 0px;" ContentAreaID="217">
+    
+    
+            
+            
+            
+            
+            
+        
+    
+</div>
+	    
+	    <div id="ctl00_left_getWidget8"></div>
+	    <div id="ctl00_left_getContent4_divContent" style="padding-left: 0px;" ContentAreaID="218">
+    
+    
+            
+            
+            
+            
+            
+        
+    
+</div>
+	</div>
+</td>
+                        <td class="mainArea">
+   
+    <div id="ctl00_middle_middleColumn">
+    
+
+        <div id="ctl00_middle_getWidget3"></div>
+        
+        
+        <div id="ctl00_middle_getWidget4"></div>
+	    <div id="ctl00_middle_getContent6_divContent" style="padding-left: 0px;" ContentAreaID="214">
+    
+    
+            
+            
+            
+            
+            
+        
+    
+</div>
+	    
+	    <div id="ctl00_middle_getWidget9"></div>
+	    <div id="ctl00_middle_getContent7_divContent" style="padding-left: 0px;" ContentAreaID="219">
+    
+    
+            
+            
+            <div id="home-content">
+<h1>Rheem Tankless Water Heaters</h1>
+<p>Tankless Water Heaters from Rheem are innovative, energy efficient water heating solutions for today&rsquo;s homes. From point of use applications to whole home systems, Rheem has the water heating solution to fit your needs while providing a continuous supply of hot water from an energy-efficient and space-saving product. Imagine never running out of hot water again.</p>
+<table class="product-category-frame">
+    <tbody>
+        <tr>
+            <td><a href="condensing_tankless.html"><img alt="" complete="" src="../../_themes/rheem/v2/images/products_prestige-tankless-waterheaters.png"> <span class="category-name">Prestige&trade; Condensing Tankless <span class="line-break">Gas Water Heaters</span></span> </a></td>
+            <td><a href="residential-2.html"><img alt="" complete="" src="../../_themes/rheem/v2/images/products_tankless-gas-waterheaters.png"> <span class="category-name">Mid-Efficiency Tankless <span class="line-break">Gas Water Heaters</span></span></a></td>
+        </tr>
+        <tr>
+            <td><a href="tankless_electric.html"><img alt="" complete="" src="../../_themes/rheem/v2/images/products_tankless-electric-waterheaters.png"> <span class="category-name">Tankless Electric Series</span></a></td>
+            <td class="last"><a href="../commercial/water_heating/tankless/index.html"><img alt="Tankless Water Heater Commercial Series" complete="" src="../../_themes/rheem/v2/images/products_commercial-tankless-waterheaters.png"> <span class="category-name">Commercial Tankless <span class="line-break">Water Heaters</span></span></a></td>
+        </tr>
+    </tbody>
+</table>
+<p><i><b>Prestige</b></i><b>&trade; Series Condensing Tankless Gas and Tankless Gas units are great for:</b></p>
+<ul>
+    <li><b>Homes with busy families&nbsp;</b>Enough hot water to load the laundry, start the dishes, bathe the kids and still have enough to enjoy a relaxing shower of your own.</li>
+    <li><b>Homes with luxury bathrooms </b> Master bathrooms are meant to be luxurious and Rheem Tankless water heaters can support the hot water needed to bring them to life.</li>
+    <li><b>Vacation homes </b>Rheem tankless water heaters heat water only when a demand for hot water is made, this helps save energy over a traditional water heating system that continuously heats and stores water in anticipation of a hot water need.</li>
+</ul>
+<p><b>Tankless Electric units are perfect for point of use applications including:</b></p>
+<ul>
+    <li>Under the counter for bathroom or kitchen sinks</li>
+    <li>Home remodels or additons</li>
+    <li>Detached buildings such as cabins, workshops and barns</li>
+</ul>
+<p><img style="margin-right: 4px; margin-bottom: 4px; float: left;" alt="Top 100" complete="" src="http://globalimageserver.com/documents/default.aspx?ID=418d4712-cd0b-477e-b08b-5c87efc51f45&amp;w=100">Rheem Tankless Water Heaters have been featured in the Building Products Top 100 as one of the Top Green Products in the building industry today. The Top 100 list features new products and materials that are used by building professionals around the country.</p>
+<div style="clear: both;">&nbsp;</div>
+</div>
+            
+            
+        
+    
+</div>
+	    
+	    <div id="ctl00_middle_getWidget10"></div>
+	    <div id="ctl00_middle_getContent8_divContent" style="padding-left: 0px;" ContentAreaID="220">
+    
+    
+            
+            
+            <div style="clear: both;">&nbsp;</div>
+            
+            
+        
+    
+</div>
+	</div>
+</td>

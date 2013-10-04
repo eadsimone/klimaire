@@ -1,0 +1,381 @@
+<?php
+$warranty_claim_manager = Mage::getSingleton('customer/session')->getCustomer()->getData();
+if(isset($_GET['claimID']) && $warranty_claim_manager['group_id'] == 4 && $warranty_claim_manager['created_in'] == 'Admin')
+{
+?>
+<br />
+<style type="text/css">
+.warranty_block_class
+{ 
+    background-color: #CCC; 
+    padding: 2px; 
+    border: 1px solid #000;
+}
+.mandatory_star_fields
+{
+    color: red;
+}
+table th.warranty_block_class
+{
+    text-align: right !important;
+} 
+</style>
+<script type="text/javascript">
+function textCounter(field, countfield, maxlimit) 
+{
+    if (field.value.length > maxlimit) // if too long...trim it!
+    field.value = field.value.substring(0, maxlimit);
+    // otherwise, update 'characters left' counter
+    else 
+    countfield.value = maxlimit - field.value.length;
+}
+</script>
+<?php $claim_collection = Mage::getModel('warrantyclaim/warrantyclaim')->load($_GET['claimID']); ?>
+<form action="<?php echo $this->getUrl('warrantyclaim/index/warrantymanagerpost/'); ?>" id="warranty_claim_Form" name="warranty_claim_Form" method="post">
+<br />
+<table width="100%" border="0" cellspacing="1" cellpadding="1">
+  <tr>
+  <th align="left" valign="top" width="15">Warranty Types:</th>
+    <td align="left" valign="top" width="15"><?php if($claim_collection['productwarranty'] == 1){?>Product Warranty<?php }?></td>
+    
+    <td align="left" valign="top" width="15"><?php if($claim_collection['partswarranty'] == 1){?>Parts Warranty<?php }?></td>
+    
+    <td align="left" valign="top" width="15"><?php if($claim_collection['extendedwarranty'] == 1){?>Extended Warranty<?php }?></td>
+    
+    <td align="left" valign="top" width="15"><?php if($claim_collection['slawarranty'] == 1){?>SLA warranty<?php }?></td>
+    
+  </tr>
+  <tr><td colspan="8" align="center" valign="top"><div class="validation-advice" id="warrantytype_error_msg_id" style="display: none;">Please, select the Type of Warrranty: [Product | Parts | Extended | SLA]</div></td></tr>
+  </table>
+
+<br />
+<div class="warranty_block_class"><strong>1. - Registered Information (?)</strong></div>
+<br />
+<table width="100%" border="0" cellspacing="3" cellpadding="1">
+  <tr>
+    <th width="23%" align="right" valign="top"><label for="reg_code" class="required">Registration Code:</label></th>
+    <td width="77%"><?php echo $claim_collection['confirmcode']; ?><input type="hidden" name="hidden_confirmcode" value="<?php echo $claim_collection['confirmcode']; ?>" />
+    </td>
+  </tr>
+  <tr>
+    <?php if($claim_collection['zip'] != ''){?><th width="23%" align="right" valign="top">Point of contact >> Zip:</th><td width="77%"><?php echo $claim_collection['zip']; }?></td>
+    <?php if($claim_collection['phno'] != ''){?><th width="23%" align="right" valign="top">Point of contact >> Ph No.</th><td width="77%"><?php echo $claim_collection['phno'];}?></td>
+    <?php if($claim_collection['srno'] != ''){?><th width="23%" align="right" valign="top">Point of contact >> Sr No. :</th><td width="77%"><?php echo $claim_collection['srno']; }?></td>
+  </tr>
+  
+  <tr>
+    <th width="23%" align="right" valign="top"><label for="reg_fname" class="required">Firstname:</label></th>
+    <td width="16%"><?php echo $claim_collection['reg_fname']; ?><input type="hidden" name="hidden_reg_fname" value="<?php echo $claim_collection['reg_fname']; ?>" /></td>
+  </tr>
+  <tr>
+    <th align="right" valign="top"><label for="reg_lname" class="required">Lastname:</label></th>
+    <td><?php echo $claim_collection['reg_lname']; ?><input type="hidden" name="hidden_reg_lname" value="<?php echo $claim_collection['reg_lname']; ?>" /></td>
+  </tr>
+  <tr>
+    <th align="right" valign="top"><label for="reg_addr1" class="required">Address1:</label></th>
+    <td><?php echo $claim_collection['reg_addr1']; ?></td>
+  </tr>
+  <tr>
+    <th align="right" valign="top"><label for="reg_addr2" class="required">Apt/Unit#:</label></th>
+    <td><?php echo $claim_collection['reg_addr2']; ?></td>
+  </tr>
+  <tr>
+    <th align="right" valign="top"><label for="reg_zip" class="required">Zip Code:</label></th>
+    <td><?php echo $claim_collection['reg_zip']; ?></td>
+  </tr>
+  <tr>
+    <th align="right" valign="top"><label for="reg_ph" class="required">Phone:</label></th>
+    <td><?php echo $claim_collection['reg_ph']; ?></td>
+  </tr>  
+  <tr>
+    <th align="right" valign="top"><label for="reg_email" class="required">Email:</label></th>
+    <td><?php echo $claim_collection['reg_email']; ?><input type="hidden" name="hidden_reg_email" value="<?php echo trim($claim_collection['reg_email']); ?>" /></td>
+  </tr>  
+</table>
+<br />
+<div class="warranty_block_class"><strong>2. - Product Information (?)</strong></div>
+<br />
+<table width="100%" border="0" cellspacing="3" cellpadding="1">    
+  <tr>
+    <th width="23%" align="right" valign="top"><label for="prod_code" class="required">Product Code:</label></th>
+    <td width="77%">
+      <?php     
+    $read_handler = Mage::getSingleton('core/resource')->getConnection('core_read');
+    $_qur = "select prodcode from warrantyclientdb group by prodcode";
+    $_res = $read_handler->query($_qur);
+    $_rows = $_res->fetchAll();    
+    
+    /*$SKU_coll = Mage::getModel('catalog/product')->getCollection()->addAttributeToSelect('sku');
+    $SKU_data_coll = $SKU_coll->getData();*/    
+    if(count($_rows) > 0)
+    {
+        foreach($_rows as $v)
+        {
+            if($claim_collection['prod_code'] == trim($v['prodcode']))
+            {
+                 echo trim($v['prodcode']);
+            }    
+        }
+    }
+    ?>
+    </td>
+    </tr>
+  <tr>
+    <th align="right" valign="top"><label for="prod_srno" class="required">Serial Number:</label></th>
+    <td><?php echo $claim_collection['prod_srno']; ?></td>
+    </tr>  
+  <tr>
+    <th align="right" valign="top"><label for="prod_installedon" class="required">Date Installed:</label></th>
+    <td><?php echo $claim_collection['prod_installedon']; ?></td>
+    </tr>  
+  <tr>
+    <th align="right" valign="top"><label for="prod_serviceon" class="required">Service Date:</label></th>
+    <td><?php echo $claim_collection['prod_serviceon']; ?></td>
+    </tr>
+  <tr>
+    <th align="right" valign="top"><label for="prod_purchasedon" class="required">Purchase Date:</label></th>
+    <td><?php echo $claim_collection['prod_purchasedon']; ?></td>
+    </tr>    
+</table>  
+<br />
+
+<div class="warranty_block_class"><strong>3. - Servicing Contractor Information (?)</strong></div>
+<br />
+<table width="100%" border="0" cellspacing="1" cellpadding="1">
+  <tr>
+    <th width="22%" align="left" valign="top"><label for="serv_contra_name" class="required">Servicing Contractor Name:</label></th>
+    <td width="10%"><?php echo $claim_collection['serv_contra_name']; ?></td>
+    <td colspan="4" align="left" valign="top">&nbsp;</td>
+  </tr>
+  <tr>
+    <th align="left" valign="top"><label for="serv_contra_addr" class="required">Contractor's Street Address:</label></th>
+    <td><?php echo $claim_collection['serv_contra_addr']; ?></td>
+    <td colspan="4" align="left" valign="top">&nbsp;</td>
+  </tr>
+  <tr>
+    <th align="left" valign="top"><label for="serv_contra_city" class="required">City:</label></th>
+    <td width="15%"><?php echo $claim_collection['serv_contra_city']; ?></td>
+    <th width="7%" align="left" valign="top"><label for="serv_contra_state" class="required">State:</label></th>
+    <td><?php echo $claim_collection['serv_contra_state']; ?></td>
+    <th width="5%"><label for="serv_contra_zip" class="required">Zip:</label></th>
+    <td><?php echo $claim_collection['serv_contra_zip']; ?></td>
+  </tr>
+  <tr>
+    <th align="left" valign="top"><label for="serv_contra_ph" class="required">Phone No.:</label></th>
+    <td><?php echo $claim_collection['serv_contra_ph']; ?></td>
+    <td colspan="4" align="left" valign="top">&nbsp;</td>
+  </tr>
+  <tr>
+    <th align="left" valign="top"><label for="serv_contra_licenseno" class="required">Contractor's License Number:</label></th>
+    <td><?php echo $claim_collection['serv_contra_licenseno']; ?></td>
+    <td colspan="4" align="left" valign="top">&nbsp;</td>
+  </tr>  
+</table>
+<br />
+
+<div class="warranty_block_class"><strong>4. - Purchase from:</strong></div>
+<br />
+<table><tr><th><label for="purchasefrom_loc" class="required">Purchase from:</label></th><td><?php echo $claim_collection['purchasefrom_loc']; ?></td><th><label for="purchasefrom_ph" class="required">Phone No. :</label></th><td><?php echo $claim_collection['purchasefrom_ph']; ?></td></tr></table>
+<br />
+
+<div class="warranty_block_class"><strong>5. - Reason of Failure (Select from the window / table):</strong></div>
+<br />
+<table width="100%" cellpadding="0" cellspacing="0" border="0">
+<tr>
+<th><label for="res_failure_failedcompocode" class="required">Failed component code:</label></th>
+<td>
+<?php echo $claim_collection['res_failure_failedcompocode'];?>
+</td>
+<th><label for="res_failure_compocode" class="required">Component code:</label></th>
+<td>
+<?php echo $claim_collection['res_failure_compocode']; ?>
+</td>
+<th><label for="res_failure_causecode" class="required">Cause code:</label></th>
+<td>
+<?php echo $claim_collection['res_failure_causecode']; ?>
+</td>
+</tr></table>
+<br />
+<table cellspacing="0" cellpadding="2" style="border: 1px solid #000 !important;" width="100%" border="1">
+  <tr>
+    <td colspan="6">&nbsp;</td>
+    <td colspan="3" align="center" valign="top" class="warranty_block_class"><strong>Factory Use Only
+</strong></td>
+  </tr>
+  <tr align="center" valign="top">
+    <td colspan="2"><strong>Failed Part No. [?]
+</strong></td>
+    <td colspan="4"><strong>Description [?]
+</strong></td>
+    <td width="10%"><strong>Replacement P / No.
+</strong></td>
+    <td width="7%"><strong>Approved
+</strong></td>
+    <td width="6%"><strong>Credit
+</strong></td>
+  </tr>
+  <tr>
+    <td colspan="2"><?php echo $claim_collection['res_failure_failedpartno1']; if($claim_collection['res_failure_failedpartno1'] != ''){?><input type="hidden" name="hidden_res_failure_failedpartno1" value="<?php echo '<b>Failed Part No.:&nbsp;</b>'.$claim_collection['res_failure_failedpartno1'].'<br /><b>Description:&nbsp;</b>'.$claim_collection['res_failure_failedpartdescr1']; ?>" /><?php }?></td>
+    <td colspan="4"><?php echo $claim_collection['res_failure_failedpartdescr1']; ?></td>
+    <td><input type="text" name="res_failure_replacement_pno1" id="res_failure_replacement_pno1" value="<?php if($claim_collection['res_failure_replacement_pno1'] != '') { echo $claim_collection['res_failure_replacement_pno1']; } ?>" /></td>
+    <td><input type="checkbox" name="res_failure_replacement_approval1" id="res_failure_replacement_approval1" value="1"<?php if($claim_collection['res_failure_replacement_approval1'] == '1') {?> checked="checked"<?php }?> /></td>
+    <td><input type="text" name="res_failure_replacement_credit1" id="res_failure_replacement_credit1" value="<?php if($claim_collection['res_failure_replacement_credit1'] != '') { echo $claim_collection['res_failure_replacement_credit1']; } ?>" size="4" /></td>
+  </tr>
+  <tr>
+    <td colspan="2"><?php echo $claim_collection['res_failure_failedpartno2'];  if($claim_collection['res_failure_failedpartno2'] != ''){?><input type="hidden" name="hidden_res_failure_failedpartno2" value="<?php echo '<b>Failed Part No.:&nbsp;</b>'.$claim_collection['res_failure_failedpartno2'].'<br /><b>Description:&nbsp;</b>'.$claim_collection['res_failure_failedpartdescr2']; ?>" /><?php }?></td>
+    <td colspan="4"><?php echo $claim_collection['res_failure_failedpartdescr2']; ?></td>
+    <td><input type="text" name="res_failure_replacement_pno2" id="res_failure_replacement_pno2" value="<?php if($claim_collection['res_failure_replacement_pno2'] != '') { echo $claim_collection['res_failure_replacement_pno2']; } ?>" /></td>
+    <td><input type="checkbox" name="res_failure_replacement_approval2" id="res_failure_replacement_approval2" value="1"<?php if($claim_collection['res_failure_replacement_approval2'] == '1') {?> checked="checked"<?php }?> /></td>
+    <td><input type="text" name="res_failure_replacement_credit2" id="res_failure_replacement_credit2" value="<?php if($claim_collection['res_failure_replacement_credit2'] != '') { echo $claim_collection['res_failure_replacement_credit2']; } ?>" size="4" /></td>
+  </tr>
+  <tr>
+    <td colspan="2"><?php echo $claim_collection['res_failure_failedpartno3'];  if($claim_collection['res_failure_failedpartno2'] != ''){?><input type="hidden" name="hidden_res_failure_failedpartno3" value="<?php echo '<b>Failed Part No.:&nbsp;</b>'.$claim_collection['res_failure_failedpartno3'].'<br /><b>Description:&nbsp;</b>'.$claim_collection['res_failure_failedpartdescr3']; ?>" /><?php }?></td>
+    <td colspan="4"><?php echo $claim_collection['res_failure_failedpartdescr3']; ?></td>
+    <td><input type="text" name="res_failure_replacement_pno3" id="res_failure_replacement_pno3" value="<?php if($claim_collection['res_failure_replacement_pno3'] != '') { echo $claim_collection['res_failure_replacement_pno3']; } ?>" /></td>
+    <td><input type="checkbox" name="res_failure_replacement_approval3" id="res_failure_replacement_approval3" value="1"<?php if($claim_collection['res_failure_replacement_approval3'] == '1') {?> checked="checked"<?php }?> /></td>
+    <td><input type="text" name="res_failure_replacement_credit3" id="res_failure_replacement_credit3" value="<?php if($claim_collection['res_failure_replacement_credit3'] != '') { echo $claim_collection['res_failure_replacement_credit3']; } ?>" size="4" /></td>
+  </tr>
+  <tr>
+    <td width="11%" align="center" valign="top"><strong>Serial Number
+</strong></td>
+    <td width="9%"><?php echo $claim_collection['res_failure_srno1']; ?></td>
+    <td width="10%" align="center" valign="top"><strong>Compressor
+</strong></td>
+    <td width="7%"><?php echo $claim_collection['res_failure_compressor']; ?></td>
+    <td width="11%" align="center" valign="top"><strong>Serial Number
+</strong></td>
+    <td width="11%"><?php echo $claim_collection['res_failure_srno2']; ?></td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+</table> 
+
+
+<br />
+<div class="warranty_block_class"><strong>6. - Reason for Failure:</strong></div>
+<br />
+<table cellspacing="0" cellpadding="4" style="border: 1px solid #000 !important;" width="100%" border="1">        
+  <tr>
+    <td align="left" valign="top">
+    <?php echo $claim_collection['reason_for_failure']; ?>
+    </td>
+  </tr>  
+  </table>
+  
+<br />
+
+<div class="warranty_block_class"><strong>7. - Service Performed:</strong><span class="formInfo"><img height="18" width="18" alt="images3" src="<?php echo $this->getSkinUrl('js/js_tootip/images/question_img.jpg');?>" title="AC technician must provide specific test procedure used to determine the failed component." /><span style="display: none;" class="mycontent"><p>AC technician must provide specific test procedure used to determine the failed component.</p><br /><p>AC technician must provide specific test procedure used to determine the failed component.</p></span><br/>
+</span></div>
+<br />
+<table cellspacing="0" cellpadding="4" style="border: 1px solid #000 !important;" width="100%" border="1">
+  <tr>
+    <td align="left" valign="top">
+    <?php echo $claim_collection['service_performed']; ?>
+    </td>
+  </tr>
+  
+  </table>
+<br />
+
+<div class="warranty_block_class"><strong>8 - Extended Replacement Warranty (If applicable):</strong></div>
+<br />
+<table><tr><th><label for="extd_rplc_warranty_contractno" class="required">Contract No. :</label></th><td><?php echo $claim_collection['extd_rplc_warranty_contractno']; ?></td></tr></table>
+<br />
+
+<table width="100%">
+<tr><td class="warranty_block_class"><strong>9. - Factory Use Only</strong></td><td class="warranty_block_class"><strong>10. - Project Code / Special Authorization Code</strong></td></tr>
+<tr>
+<td width="50%" valign="top">
+<table cellspacing="0" cellpadding="4" style="border: 1px solid #000 !important;" width="100%" border="1">
+  <tr>
+    <td align="left" valign="top">
+    <div>(Max. 250 characters)</div>
+    <textarea name="factory_use_only" rows="5" cols="55" onKeyDown="textCounter(this.form.factory_use_only,this.form.remLen3,250);" onKeyUp="textCounter(this.form.factory_use_only,this.form.remLen3,250);"><?php if($claim_collection['factory_use_only'] != '') { echo $claim_collection['factory_use_only']; } ?></textarea>    
+    <div><input readonly="readonly" type="text" name="remLen3" size="3" maxlength="3" value="250"> characters left</div>
+    </td>
+  </tr>
+  
+  </table>
+</td>
+<td width="50%" valign="top">
+<table cellspacing="0" cellpadding="4" style="border: 1px solid #000 !important;" width="100%" border="1"><!--height: 142px;-->
+  <tr>
+    <td align="left" valign="top">
+    <div>(Max. 250 characters)</div>
+    <textarea name="sp_auth_code" rows="5" cols="55" onKeyDown="textCounter(this.form.sp_auth_code,this.form.remLen4,250);" onKeyUp="textCounter(this.form.sp_auth_code,this.form.remLen4,250);"><?php if($claim_collection['sp_auth_code'] != '') { echo $claim_collection['sp_auth_code']; } ?></textarea>
+    <div><input readonly="readonly" type="text" name="remLen4" size="3" maxlength="3" value="250"> characters left</div>
+    </td>
+  </tr>  
+</table>
+
+</td>
+</tr>
+</table>
+<br />
+
+<div class="warranty_block_class"><strong>11. - Special Labor Allowance Amount*</strong></div>
+<br />
+<table cellspacing="0" cellpadding="4" style="border: 1px solid #000 !important;" width="100%" border="1">  
+  <tr>
+    <td align="left" valign="top">
+    <div>(Max. 250 characters)</div>    
+    <textarea name="sp_labour_allowance_amt" rows="5" cols="117" onKeyDown="textCounter(this.form.sp_labour_allowance_amt,this.form.remLen5,250);" onKeyUp="textCounter(this.form.sp_labour_allowance_amt,this.form.remLen5,250);"><?php if($claim_collection['sp_labour_allowance_amt'] != '') { echo $claim_collection['sp_labour_allowance_amt']; } ?></textarea>
+  <div><input readonly="readonly" type="text" name="remLen5" size="3" maxlength="3" value="250"> characters left</div>
+    </td>
+  </tr>
+  
+</table>
+
+<div>* To be processed by company</div>
+
+<br />
+<!--<table cellspacing="0" cellpadding="0">  
+  <tr>
+    <td><u>Summay</u></td>
+  </tr>
+  <tr>
+    <td>Your warranty claim has been processed and based on the information provided by you and on the Klimaire Warranty    Policy</td>
+  </tr>
+  <tr>
+    <td>see below the results.</td>
+  </tr>
+  <tr>
+    <td>1. Outcome from box number 5 will be displayed</td>
+  </tr>
+  <tr>
+    <td>2. Outcome from box number 10 will be displayed</td>
+  </tr>
+  <tr>
+    <td>3. Outcome from box number 11 will be displayed</td>
+  </tr>
+  <tr>
+    <td>4. If there in not selection on boxes No. 5, 10,11 there wil be not display in this section for the corresponding box</td>
+  </tr>
+  <tr>
+    <td height="10">&nbsp;</td>
+  </tr>
+  <tr>
+    <td>To proceed with the above results pleaase contact your dealer where you purchased your unit or email us to    warranty@klimaire.com, or call Klimaire customer service department</td>
+  </tr>
+  <tr>
+    <td>at 305-593-8358. Make sure you have your claim number is included in your email or handy when calling.</td>
+  </tr>
+  <tr>
+    <td height="10">&nbsp;</td>
+  </tr>
+</table>-->
+
+<div align="center">
+<input type="hidden" name="hidden_claim_id" id="hidden_claim_id" value="<?php echo $_GET['claimID']; ?>" />
+<input type="submit" name="submit" value=" Confirm & Submit " /><input type="button" name="back" value=" Back " onclick="javascript:document.location.href='<?php echo $this->getUrl("warrantymanager/"); ?>';" /></div>
+</form>
+<?php unset($_SESSION['warranty_claim_succ_data_submit_flag']); ?>
+<?php
+}
+else
+{
+    header("Location: ".$this->getUrl('customer/account'));
+    exit;
+}
+?>

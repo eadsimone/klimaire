@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Klimaire_Customer>
+            <version>0.0.1</version>
+        </Klimaire_Customer>
+    </modules>
+    <global>    
+        <blocks>
+            <adminhtml>
+                <rewrite>
+                    <customer_edit_tabs>Klimaire_Customer_Block_Adminhtml_Customer_Edit_Tabs</customer_edit_tabs>
+                </rewrite>
+            </adminhtml>
+            <kcustomer>
+                <class>Klimaire_Customer_Block</class>
+            </kcustomer>
+        </blocks>
+    </global>
+    <admin>
+        <routers>
+            <kcustomer>
+                <use>admin</use>
+                <args>
+                    <module>Klimaire_Customer</module>
+                    <frontName>kcustomer</frontName>
+                </args>
+            </kcustomer>
+        </routers>
+    </admin>    
+</config>

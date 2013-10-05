@@ -1,0 +1,130 @@
+@charset "UTF-8";
+
+.homepage-hero-area {
+	background: url(../images/hero-swoop.png) bottom left no-repeat;
+	z-index: 98;
+	width: 1024px;
+	height: 114px;
+	position: absolute;
+	top: 370px;
+	left: 0;
+}
+
+.homepage-hero-area .airwater {
+	width: 1024px;
+	height: 106px;
+	padding-top:52px;
+	padding-left:420px;
+	color:#9b9a9a; text-transform:uppercase;
+}
+
+#gallery {
+	height: 480px;
+}
+
+#flipper {
+	position:absolute;
+	right: 10px;
+	top:346px;
+	width:100%;
+	height:63px;
+	z-index: 999;
+	background-image:url(../images/gallery_curve.png);
+	background-repeat:no-repeat;
+	background-position:top left;
+}
+
+#flipper ul {
+	margin:0;
+	padding: 44px 0px 0px 0px;
+	float:right;
+}
+
+#flipper li {
+	list-style:none;
+	display:block;
+	float:left;
+	padding:0px;
+	margin-right:5px;
+}
+
+#flipper li a {
+	font: bold 14px arial, sans-serif;
+	text-decoration:none;
+	padding:5px;
+	display:block;
+	outline:none;
+}
+
+.selected {
+	color: #444;
+	margin-right: 0px;
+	margin-left: 0px;
+	padding-right: 0px; /* sliding doors padding */
+	text-decoration: none;
+}
+
+.selected span {
+	display: block;
+	color: #D2222A;
+}
+
+.toclinks {
+	color:#666;
+}
+
+.stepcarousel {
+	position: absolute; /*leave this value alone*/
+	overflow: visible; /*leave this value alone: scroll*/
+	width: 1024px; /*Width of Carousel Viewer itself*/
+	height: 418px; /*Height should enough to fit largest content's height*/
+	margin:0 auto;
+	display: block;
+}
+
+.stepcarousel .belt {
+	position: absolute; /*leave this value alone*/
+	left: 0;
+	top: 0;
+}
+
+.stepcarousel .panel {
+	float: left; /*leave this value alone*/
+	overflow: hidden; /*clip content that go outside dimensions of holding panel DIV*/
+	margin: 0px; /*margin around each panel*/
+	width: 1024px; /*Width of each panel holding each content. If removed, widths should be individually defined on each content DIV then. */
+	height: 418px;
+}
+
+#arrows {
+	width:1024px;
+	height:30px;
+	position:absolute;
+	z-index:99;
+	top:120px;
+}
+
+#rightarrow {
+	width:30px;
+	height:30px;
+	display:block;
+	background:url(../images/arrows.png) no-repeat top right;
+	right:0px;
+	position:absolute;
+	margin-right:10px;
+	
+}
+
+#leftarrow {
+	width:30px;
+	height:30px;
+	display:block;
+	background:url(../images/arrows.png) no-repeat top left;
+	left:0px;
+	position:absolute;
+	margin-left:10px;
+}
+.divContent {width:1024px;}
+.bx-pager{width:200px; float:right; z-index: 9999; text-align:right; }
+.bx-prev { position:absolute; top:200px; left:0;}
+.bx-next { position:absolute; top:200px; right:0;}

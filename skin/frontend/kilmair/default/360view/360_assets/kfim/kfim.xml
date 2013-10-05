@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<config>
+  <settings>
+    <preloader image="images\Img01.jpg" />
+    <userInterface showZoomButtons="true" showToolTips="true" showHotspotsButton="true" showFullScreenButton="true" showTogglePlayButton="true" showArrows="true" toolbarAlign="center" toolbarBackColor="#FFFFFF" toolbarHoverColor="#808285" toolbarForeColor="#A7A9AE" toolbarBackAlpha="0.9" toolbarAlpha="1" flashEmbedFonts="true" showProgressNumbers="true" progressLoopColor="#e8e8e8" progressNumColor="#949494" />
+    <control dragSpeed="0.13" maxZoom="200" maxZoomFullScreen="200" fullScreenStretch="100" doubleClickZooms="true" disableMouseControl="false" reverseScroll="false" />
+    <rotation firstImage="0" rotate="once" rotatePeriod="7" bounce="false" rotateDirection="-1" forceDirection="false" />
+  </settings>
+  <hotspots />
+  <images highresWidth="2856" highresHeight="2440">
+    <image src="images\Img01.jpg">
+      <highres src="images\highres\Img01.jpg" />
+    </image>
+    <image src="images\Img02.jpg">
+      <highres src="images\highres\Img02.jpg" />
+    </image>
+    <image src="images\Img03.jpg">
+      <highres src="images\highres\Img03.jpg" />
+    </image>
+    <image src="images\Img04.jpg">
+      <highres src="images\highres\Img04.jpg" />
+    </image>
+    <image src="images\Img05.jpg">
+      <highres src="images\highres\Img05.jpg" />
+    </image>
+    <image src="images\Img06.jpg">
+      <highres src="images\highres\Img06.jpg" />
+    </image>
+    <image src="images\Img07.jpg">
+      <highres src="images\highres\Img07.jpg" />
+    </image>
+    <image src="images\Img08.jpg">
+      <highres src="images\highres\Img08.jpg" />
+    </image>
+  </images>
+</config>

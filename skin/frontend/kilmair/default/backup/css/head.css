@@ -1,0 +1,444 @@
+body{
+	margin:0;
+	/*background:#000 url(../images/bg-body.jpg) repeat-x;*/
+	font: 11px/14px Verdana,Geneva,Arial,Helvetica,sans-serif;
+	/*color:#000;*/
+}
+img{border-style:none;}
+a{
+	color:#df010a;
+	text-decoration:none;
+	outline: none;
+}
+a:hover{
+	text-decoration:none;
+}
+form,fieldset{
+	margin:0;
+	padding:0;
+	border:0;
+}
+input,select{
+	font:11px/14px Arial, Helvetica, sans-serif;
+	color:#5f5f5f;
+	vertical-align:text-bottom;
+	/*vertical-align:middle;*/
+}
+#wrapper{
+	width:100%;
+	overflow:hidden;
+	position:relative;
+}
+.w1{
+	float:left;
+	left:50%;
+	position:relative;
+}
+.w2{
+	float:left;
+	left:-50%;
+	position:relative;
+	width:1024px;
+	background: #fff;
+}
+
+#header{
+	width:100%;
+	height: 100px;
+	background: url(../images/bg-header.gif) repeat-x 0 100%;
+	position:relative;
+}
+.sub-wrapper #header {
+	background:#fff url(../images/bg-header-holder2.gif) repeat-x 0 100%;
+}
+#header.sub-header {
+	background:#fff;
+}
+.header-holder {
+	width:664px;
+	margin:0 auto;
+	padding:24px 17px 25px 420px;
+	background-image: none;
+	background-color: transparent;
+}
+#header:after , 
+.header-holder:after{
+	content:"";
+	display:block;
+	clear:both;
+}
+/*.logo{
+	position:absolute;
+	top:18px;
+	left:40px;
+	margin:0;
+	text-indent:-9999px;
+	overflow:hidden;
+	width:270px;
+	height:66px;
+	background: url(../images/logo.png) no-repeat;
+	z-index: 1090;
+}*/
+.logo img{
+	position:absolute;
+	top:18px;
+	left:40px;
+	margin:0;
+	text-indent:-9999px;
+	overflow:hidden;
+	width:270px;
+	height:66px;
+	background: url(../images/logo.png) no-repeat;
+	z-index: 1090;
+}
+.logo a{
+	display:block;
+	height:100%;
+}
+#nav{
+	margin:0;
+	padding:0;
+	list-style:none;
+	font-weight:bold;
+	line-height:20px;
+	text-transform:uppercase;
+	float:left;
+	font-size:11px;
+	/*z-index:1000 !important; */
+}
+#nav li{
+	float:left;
+	background: url(../images/separator.gif) no-repeat left;
+	padding:0 4px 0 6px;
+	position:relative;
+/* 	z-index:3000 !important; */
+	z-index:1000 !important;
+	color:#8f8e8e;
+}
+#nav li:first-child{background:none;}
+#nav a{color:#8f8e8e;}
+#nav .drop .item ul a:hover {
+	color: #000;
+}
+#nav li:hover a,
+#nav li.hover a,
+#nav .active a{
+	color:#000;
+	text-decoration:none;
+}
+#nav li:hover .drop,
+#nav li.hover .drop {top:5px;}
+#nav .drop{
+	position:absolute;
+	top:-99999px;
+	left:-417px;
+	width:1011px;
+	background:url(../images/bg-megadrop-t.png) no-repeat;
+	padding-top:118px;
+	font:11px/20px Verdana, Geneva, Arial, Helvetica, sans-serif;
+	text-transform:none;
+/* 	z-index:10000 !important; */
+	z-index:1010 !important;
+}
+#nav .drop .c{
+	float:left;
+	background:url(../images/bg-megadrop-c.png) repeat-y;
+	/*z-index:1000 !important;*/
+}
+#nav .drop .b{
+	width:1011px;
+	height:83px;
+	clear:both;
+	background:url(../images/bg-megadrop-b.png) no-repeat;
+	/*z-index:1000 !important;*/
+}
+#nav .drop .holder{
+	width:846px;
+	overflow:hidden;
+	margin:-30px 0 -63px;
+	padding:0 65px 20px 100px;
+	position:relative;
+	/*z-index:1000 !important;*/
+}
+#nav .drop .items{
+	width:1000px;
+	overflow:hidden;
+	/*z-index:1000 !important;*/
+	padding-bottom: 20px;
+}
+#nav .drop .item{
+	/*width:160px;*/
+	width:170px;
+	float:left;
+	display:inline;
+	overflow:hidden;
+/*	padding-top:70px; */
+	margin:0 10px 5px 0;
+	/*background: url(../images/bg-items-icons.png) no-repeat;*/
+	/*z-index:1000 !important;*/
+}
+
+.megamenu .product-icon {
+	/*width: 80px;
+	height: 70px;
+	display: block;
+	margin-left:40px;*/
+	width: 140px;
+	height: 70px;
+	display: block;
+	margin-left:20px;
+}
+#nav .drop .blankarea {
+	background-image: none;
+	display: none;
+}
+
+#nav .drop .indoor-air-quality{background-position:-251px 0; 	/*z-index:1 !important ;*/
+	margin-top: -90px;
+}
+#nav .drop .tank-water-heaters{background-position:-556px 0;	/*z-index:1 !important;*/}
+#nav .drop .solar-water-heaters{background-position:-842px 0;	/*z-index:1 !important;*/}
+#nav .drop .replacement-parts{
+	background-position:-1221px 0;
+	min-height:150px;
+	/*z-index:1000 !important;*/
+	margin-top: -100px;
+}
+#nav .drop .item strong:hover {
+	color: #DF010A;
+} 
+* html #nav .drop .replacement-parts{height:150px;overflow:visible;	/*z-index:1;*/
+	margin-top: -90px;
+}
+#nav .drop .pool-spa{background-position:-1578px 0;	/*z-index:1;*/}
+#nav .drop .tankless-water-heaters{background-position:-2029px 0;	/*z-index:1;*/}
+#nav .drop .home-generators{background-position:-2431px 0;	/*z-index:1;*/
+	margin-top: -90px;
+}
+#nav .drop .item strong{
+	display:block;
+	margin:15px 0 10px;
+	font-size:11px;
+	line-height:14px;
+	color:#000;
+	/*z-index:1000 !important;*/
+	text-align:center;
+}
+#nav .drop .item ul{
+	margin:0;
+	padding:0;
+	list-style:none;
+	/*z-index:1000 !important;*/
+}
+#nav .drop .item ul li{
+	height:1%;
+	vertical-align:top;
+	background:none;
+	float:none;
+	padding:0;
+	/*z-index:1000 !important;*/
+	text-align:center;
+}
+#nav .drop .item ul a{color:#676767; 	/*z-index:1;*/}
+/*#nav .drop .item ul a.drop{position:static;background:none;}*/
+#nav .drop .item ul a:hover{text-decoration:underline;	/*z-index:1 !important;*/}
+#nav .drop .ad-box{
+	/*width:119px;*/
+	float:left;
+	/*overflow:hidden;*/
+	padding:15px 20px 0;
+	/*background:#c8c9c9;*/
+	/*text-align:center;*/
+	/*font-size:9px;*/
+	line-height:12px;
+	/*color:#fff;*/
+	margin-top:10px;
+	position:relative;
+	margin-top: 0;
+	margin-left: 160px;
+	/*z-index:1000 !important;*/
+}
+#nav .drop .ad-box p{margin:0 0 15px;	/*z-index:1 !important ;*/}
+#nav .drop .ad-box strong,
+#nav .drop .ad-box span,
+#nav .drop .ad-box .go{display:block;	/*z-index:1 !important;*/}
+#nav .drop .ad-box strong{font:13px/16px Verdana, Geneva, Arial, Helvetica, sans-serif;	/*z-index:1 !important;*/}
+#nav .drop .ad-box span{
+	font-size:39px;
+	line-height:41px;
+	/*color:#ee3a43;*/
+	padding-bottom:5px;
+	/*z-index:1000 !important;*/
+}
+#nav .drop .ad-box .go{
+	width:159px;
+	margin:0 -20px;
+	border-top:2px solid #f4f4f4;
+	background:#e7e6e6 url(../images/bg-btn.gif) no-repeat 104px -30px;
+	font-size:12px;
+	line-height:23px;
+	color:#4c4c4c;
+	text-transform:uppercase;
+/* 	z-index:1000 !important; */
+	z-index:1010 !important;
+}
+
+.socialarea {
+	/*width: 200px;*/
+	/*display: none !important;*/
+	position: absolute;
+	top: 0;
+	right: 0;
+	padding: 4px;
+	border-left: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	-o-border-radius: 4px;
+	border-radius: 4px;
+}
+
+.addthis_separator {
+	display: none;
+}
+
+.social{
+	margin: 0;
+	padding:0;
+	list-style:none;
+	float:right;
+}
+.social li {
+	float:left;
+	margin-left:3px;
+	display:inline;
+}
+.social li:first-child {
+	margin-left: 0;
+}
+.social a{
+	display:block;
+	text-indent:-9999px;
+	overflow:hidden;
+	width:17px;
+	height:17px;
+	/* background: url(../images/ico-social.gif) no-repeat; */
+}
+.social .twitter{background-position:-20px 0;}
+.search-form fieldset{
+	float:right;
+	width:179px;
+	padding-right:3px;
+}
+.search-form .row{
+	width:100%;
+	overflow:hidden;
+	padding-bottom:15px;
+}
+.search-form label{
+	float:left;
+	width:21px;
+	height:17px;
+	text-indent:-9999px;
+	overflow:hidden;
+	background: url(../images/ico-search.gif) no-repeat;
+	margin:2px 5px 0 0;
+}
+.search-form .text{
+	width:135px;
+	height:14px;
+	float:left;
+	background: url(../images/bg-input.gif) no-repeat;
+	padding:3px 6px 3px 12px;
+}
+.search-form .text input{
+	width:135px;
+	height:14px;
+	float:left;
+	padding:0;
+	margin:0;
+	border:0;
+	background:none;
+	outline:none;
+}
+.search-form span{
+	width:152px;
+	display:block;
+	margin-left:27px;
+	font:11px/13px Arial, Helvetica, sans-serif;
+	color:#838383;
+}
+.search-form span a{
+	color:#838383;
+	text-decoration:underline;
+}
+.search-form span a:hover{text-decoration:none;}
+
+#localDealers {
+	padding-left: 10px;
+}
+
+#localDealers .city {
+    vertical-align: top;
+}
+
+#localDealers p {
+	margin-top: 10px;
+    color: #838383;
+    font: 11px/13px Arial,Helvetica,sans-serif;
+}
+
+/*#localDealers a:hover {
+	color: #dd333c;
+}*/
+
+.dealerHoverArea {
+	background-color: white;
+	border: 1px solid #ccc;
+	padding: 6px;
+	-o-border-radius: 8px;
+	-moz-border-radius: 8px;
+	border-radius: 8px;
+	margin-top: 20px;
+	margin-right: 46px !important;
+/* 	z-index: 10000; */
+	z-index: 1010;
+	text-align: center;
+}
+.dealerHoverArea div {
+	font-size: normal 9px/11px Helvetica, Arial, sans-serif !important;
+}
+
+.breadcrumb-container {
+	height: 20px;	
+}
+
+.breadcrumbs{
+	margin:0 auto;
+/*	margin-top: 10px; */
+	padding:0;
+	list-style:none;
+	width: 950px;
+	overflow:hidden;
+}
+.breadcrumbs li{
+	float:left;
+	padding: 0 2px;
+	margin: 0 6px 0 0;
+	color:#ee3c45;
+}
+.breadcrumbs a{color:#6e6e6e;}
+.breadcrumbs a:hover{
+	text-decoration:none;
+	color:#ee3c45;
+}
+.button {
+	border:none;
+	background:transparent;
+	height:18px;
+	width:25px;
+	cursor:pointer;
+}
+a.level-top:hover{
+	text-decoration:underline;
+}

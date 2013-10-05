@@ -1,0 +1,199 @@
+ol, ul  { list-style: none; margin:0px; padding:0px; }
+
+
+#slide-main {
+	width: 960px;
+	text-align: left;
+	margin: 0 auto;
+	background: url(../images/bg_container.gif) repeat-y;
+	height: auto !important; /* modern browsers */
+	height: 100%; /* IE6: treated as min-height */
+	min-height: 100%; /* modern browsers */
+	/*padding: 0 0 30px 0; *//*PXP90: Product Video - Buystreamtv: Solve cross browse issue - It doesn't pop up the video, when we click the button on IE6 & IE7: 07/01/2010 - Commented out by Vicky */
+}
+/* .slider
+----------------------------------------------------------------------------------------*/
+.slider {
+	position: relative;
+	margin-left:20px;
+}	
+	.slide_prev,
+	.slide_next {
+		text-indent: -1000em;
+		background-repeat: no-repeat;
+		display: block;
+		z-index: 10;
+	}
+	.slide_prev,
+	.slide_next { background-position: left bottom; }
+	
+	.slide_prev:hover,
+	.slide_next:hover{ background-position: left center; }
+	
+	.slide_prev.disabled,
+	.slide_prev.disabled:hover,
+	.slide_prev_disabled,
+	.slide_prev_disabled:hover,
+	.slide_next.disabled,
+	.slide_next.disabled:hover,
+	.slide_next_disabled,
+	.slide_next_disabled:hover { background-position: left top; }
+
+	.slider .overflow {
+		overflow: hidden;
+		position: relative;
+	}
+	.slider .slides {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100000px;
+	}
+		.slider .slides .slide { float: left; }
+	.slider .shade {
+		text-indent: -1000em;
+		background-repeat: no-repeat;
+		background-position: left bottom;
+		position: absolute;
+		z-index: 5;
+	}
+	.slider .overflow .slides ul li { float: left;}
+
+/* .home_slide
+----------------------------------------------------------------------------------------*/
+.home_slide {
+	padding: 0 0 0 10px; 
+	position: relative;
+}
+	.home_slide .hdr_common {
+		font-size: 1.6em;
+		margin: 0 0 -4px 0;
+	}
+		.home_slide .hdr_common em {
+			font-style: normal;
+			color: #848484;
+			font-size: .8em;
+			margin: 0 0 0 6px;
+			font-weight: normal;
+		}
+	.home_slide .slider {}
+		.home_slide .slider .slide_prev { 
+			background-image: url(../images/btn_slider_home_prev.gif);
+			width: 30px;
+			height: 162px;
+			position: absolute;
+			left: 0;
+			top: 14px;
+			border-top: 1px solid #dedbdb;
+			border-bottom: 1px solid #dedbdb;
+		}
+		.home_slide .slider .slide_next { 
+			background-image: url(../images/btn_slider_home_next.gif);
+			width: 29px;
+			height: 162px;
+			position: absolute;
+			left: 911px;
+			top: 14px;
+			border-top: 1px solid #dedbdb;
+			border-bottom: 1px solid #dedbdb;
+		}
+		.home_slide .slider .shade {
+			width: 40px;
+			height: 163px;
+			top: 14px;
+		}
+		.home_slide .slider .shade.left {
+			background-image: url(../images/bg_slider_shade_left.png);
+			_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/bg_slider_shade_left.png', sizingMethod='image');
+			_background: none;
+			left: 30px;
+		}
+		.home_slide .slider .shade.right {
+			background-image: url(../images/bg_slider_shade_right.png);
+			_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/bg_slider_shade_right.png', sizingMethod='image');
+			_background: none;
+			left: 871px;
+		}
+		.home_slide .slider .overflow {
+			/* height: 162px; */
+			height: 301px;
+			padding: 20px 0 0 0;
+		}
+			.home_slide .slider .overflow .slides { 
+			/* height: 162px; */
+				height: 301px;
+				margin: 14px 0 0 0;
+				padding: 0 0 0 29px;
+			}
+				.home_slide .slider .overflow .slides .slide { width: 940px; }
+						.home_slide .slider .overflow .slides ul {
+							position: relative;
+						}
+						.home_slide .slider .overflow .slides ul li {
+							height: 162px;
+							width: 187px;
+							background: url(../images/bg_slider_home_product.gif) repeat-x left bottom;
+							border-right: 1px solid #dedede;
+							border-top: 1px solid #dedbdb;
+							border-bottom: 1px solid #dedbdb;
+						}
+							.home_slide .slider .overflow .slides ul li h4 {
+								font-weight: bold;
+								/*font-size: 1.2em;*/
+								font-size: 0.9em;
+								text-transform: uppercase;
+								margin: 15px 0 0 0;
+								text-align:center;
+							}
+								.home_slide .slider .overflow .slides ul li h4 a em {
+									background: url(../images/icon_arrow_right_blue_slider.gif) no-repeat right -39px;
+									padding: 0 14px 0 0;
+									margin: 0 0 0 14px;
+									font-style: normal;
+								}
+								.home_slide .slider .overflow .slides ul li h4 a:hover em,
+								.home_slide .slider .overflow .slides ul li.active h4 a em,
+								.home_slide .slider .overflow .slides ul li.active h4 a:hover em { 
+									background-position: right 4px; 
+									color: #d46300;
+								}
+								
+	/* hover state */
+	.home_slide .slider .overflow .slides ul {}
+		.home_slide .slider .overflow .slides ul li.active {
+			background: url(../images/bg_slider_hover.png) no-repeat left bottom;
+			_background: url(../images/bg_slider_hover_8bit.gif) no-repeat left bottom;
+			width: 230px;
+			height: 301px;
+			/* margin: -15px -27px -15px -15px; */
+			margin: -15px -20px -15px -22px;
+			position: relative;
+			z-index: 11;
+			border: 0;
+		}
+		.home_slide .slider .overflow .slides ul li.active h4 { 
+			margin: 31px 14px 5px 15px;
+			padding: 0 0 0 7px;
+			background: url(bg_slider_item_active.jpg) repeat-x left bottom;
+		}
+	.home_slide .slider .overflow .slides ul li ul { 
+		display: none; 
+		border-top: 1px solid #e1e1e1;
+		margin: 0 32px;
+		padding: 12px 0 0 0;
+		position: static;
+	}
+	.home_slide .slider .overflow .slides ul li.active ul { display: block; }
+		.home_slide .slider .overflow .slides ul li ul li {
+			font-size: 1.1em;
+			float: none;
+			width: auto;
+			height: auto;
+			border: 0;
+			background: url(../images/bullet_arrow_gray_slider.gif) no-repeat left 4px;
+			padding: 0 0 0 9px;
+			position: relative;
+			margin: 0 -12px 3px 0;
+		}
+			.home_slide .slider .overflow .slides ul li ul li a {  }
+	

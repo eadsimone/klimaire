@@ -1,0 +1,72 @@
+/*----------------------------------------------------------------------------------------
+base.css
+----------------------------------------------------------------------------------------*/
+html { 
+	overflow-x: auto; 
+	
+}
+body {
+	background: #f2f2f2; font-size:11px;
+}
+#container {
+	width: 960px;
+	text-align: left;
+	margin: 0 auto;
+	background: url(../images/bg_container.gif) repeat-y;
+	height: auto !important; /* modern browsers */
+	height: 100%; /* IE6: treated as min-height */
+	min-height: 100%; /* modern browsers */
+	/*padding: 0 0 30px 0; *//*PXP90: Product Video - Buystreamtv: Solve cross browse issue - It doesn't pop up the video, when we click the button on IE6 & IE7: 07/01/2010 - Commented out by Vicky */
+}
+	#container #wrapper {
+		padding: 0 11px;
+	}
+
+/* .slider
+----------------------------------------------------------------------------------------*/
+.slider {
+	position: relative; height:200px;
+}	
+	.slide_prev,
+	.slide_next {
+		text-indent: -1000em;
+		background-repeat: no-repeat;
+		display: block;
+		z-index: 10;
+	}
+	.slide_prev,
+	.slide_next { background-position: left bottom; }
+	
+	.slide_prev:hover,
+	.slide_next:hover{ background-position: left center; }
+	
+	.slide_prev.disabled,
+	.slide_prev.disabled:hover,
+	.slide_prev_disabled,
+	.slide_prev_disabled:hover,
+	.slide_next.disabled,
+	.slide_next.disabled:hover,
+	.slide_next_disabled,
+	.slide_next_disabled:hover { background-position: left top; }
+
+	.slider .overflow {
+		overflow: hidden;
+		position: relative;
+		width:911px;
+	}
+	.slider .slides {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100000px;
+	}
+		.slider .slides .slide { float: left; }
+	.slider .shade {
+		text-indent: -1000em;
+		background-repeat: no-repeat;
+		background-position: left bottom;
+		position: absolute;
+		z-index: 5;
+	}
+	.slider .overflow .slides ul li { float: left;}
+

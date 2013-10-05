@@ -1,0 +1,175 @@
+
+#content_prod_detail_page {
+width:297px;
+}
+#contentInner {
+	margin: 0px auto; width: 297px; text-align: justify; padding-top: 0px; position: relative; z-index: 1;
+}
+.primaryContent {
+	width: 297px;
+}
+.twoColumn .primaryContent {
+	background: url("../../image/greyDotVerticalSpace.gif") repeat-y right top; margin: 0px; width: 297px; float: left;
+}
+.twoColumn .secondaryContent {
+	background: url("../../image/greyDotVerticalSpace.gif") repeat-y left top; left: -1px; width: 297px; float: left; position: relative;
+}
+#contentInner h2 {
+	background: url("../../image/greyDot.gif") repeat-x left bottom; font-family: arial, sans-serif; margin-bottom: 5px; position: relative;
+}
+#contentInner h3 {
+	background: url("../../image/greyDot.gif") repeat-x left bottom; font-family: arial, sans-serif; margin-bottom: 5px; position: relative;
+}
+#contentInner .primaryContent h2 span.date {
+	right: 5px; font-size: 60%; position: absolute;
+}
+#contentInner .primaryContent p a {
+	font-size: 95%; font-weight: bold;
+}
+.secondaryContent h2 {
+	margin-left: 20px;
+}
+#contentInner p {
+	margin: 0px 0px 20px; font-size: 90%;
+}
+.primaryContent ul {
+	margin-bottom: 10px; margin-left: 25px;
+}
+.secondaryContent ul {
+	margin-left: 25px; list-style-type: none;
+}
+.secondaryContent ul.sidebar {
+	margin-left: 0px;
+}
+.secondaryContent li {
+	margin: 0px 0px 10px;
+}
+.secondaryContent li a.selected {
+	color: rgb(0, 0, 0); font-size: 90%; font-weight: bold; text-decoration: none;
+}
+.secondaryContent iframe {
+	margin-left: 35px;
+}
+#contentInner blockquote {
+	margin: 20px 0px 20px 50px; color: rgb(255, 51, 0); font-weight: bold;
+}
+#contentInner dt {
+	padding-top: 5px; font-weight: bold; margin-left: 10px;
+}
+#contentInner dd {
+	padding-bottom: 5px; font-size: 90%; margin-left: 25px;
+}
+#atodoist .indent {
+	font-size: 90%; margin-left: 20px;
+}
+#jCarouselLiteDemo .carousel {
+	margin: 6px 0px 0px 0px; padding: 0; position: relative;
+}
+#jCarouselLiteDemo .digg {
+	left: 610px; top: 110px; position: absolute;
+}
+#jCarouselLiteDemo .main {
+	margin-left: 4px;
+}
+#jCarouselLiteDemo .demo em {
+	color: rgb(255, 51, 0); font-size: 60%; font-style: normal; font-weight: bold;
+}
+#jCarouselLiteDemo .carousel button {
+	float: left;
+}
+#jCarouselLiteDemo .carousel a.prev {
+	background: url("../../image/imageNavLeft.gif") no-repeat left 60px; width: 14px; height: 75px; text-decoration: none; float: left; display: block;
+}
+#jCarouselLiteDemo .carousel a.next {
+	background: url("../../image/imageNavLeft.gif") no-repeat left 60px; width: 14px; height: 75px; text-decoration: none; float: left; display: block;
+}
+#jCarouselLiteDemo .carousel a.next {
+	background: url("../../image/imageNavRight.gif") no-repeat right 60px;
+}
+#jCarouselLiteDemo .carousel a.next:hover {
+	background-image: url("../../image/imageNavRightHover.gif");
+}
+#jCarouselLiteDemo .carousel a.prev:hover {
+	background-image: url("../../image/imageNavLeftHover.gif");
+}
+#jCarouselLiteDemo .carousel a:hover {
+	border: currentColor;
+}
+#jCarouselLiteDemo .carousel a:active {
+	border: currentColor;
+}
+#jCarouselLiteDemo .carousel .jCarouselLite {
+	left: -5000px; float: left; visibility: hidden; position: relative;
+}
+#jCarouselLiteDemo .carousel ul {
+	margin: 0px;
+}
+
+
+#jCarouselLiteDemo .carousel li img {
+	margin:6px 4px 6px 4px; background-color: rgb(255, 255, 255);
+}
+
+#jCarouselLiteDemo .carousel li p {
+	margin: 10px; width: 150px; height: 118px; background-color: rgb(255, 255, 255);
+}
+#jCarouselLiteDemo .widget img {
+	cursor: pointer;
+}
+#jCarouselLiteDemo .mid {
+	width: 297px; height: 300px; margin-left: 80px;
+}
+#jCarouselLiteDemo .vertical {
+	margin-left: 170px;
+}
+#jCarouselLiteDemo .vertical .jCarouselLite {
+	width: 170px;
+}
+#jCarouselLiteDemo .imageSlider li img {
+	width: 297px; height: 300px;
+}
+#jCarouselLiteDemo .imageSlider li p {
+	width: 297px; height: 300px;
+}
+#jCarouselLiteDemo .imageSliderExt li img {
+	width: 297px; height: 300px;
+}
+#jCarouselLiteDemo .imageSliderExt li p {
+	width: 297px; height: 300px;
+}
+#contentInner #atodoist blockquote {
+	font-weight: normal; margin-right: 10px; margin-left: 10px;
+}
+#contentInner #atodoist blockquote a {
+	color: rgb(255, 51, 0); font-weight: bold;
+}
+#contentInner .curtain {
+	border: 5px solid lightgray; width: 275px; height: 215px; overflow: hidden; position: relative;
+}
+#contentInner .curtain .curtainInfo {
+	padding: 10px; line-height: 1.5; font-size: 12px;
+}
+#contentInner .curtain .curtainInfo p {
+	margin: 0px;
+}
+#contentInner .curtain .curtainImage {
+	left: 0px; top: 0px; width: 275px; height: 215px; position: absolute;
+}
+#contentInner .post {
+	margin-bottom: 40px; position: relative;
+}
+#contentInner .post p {
+	margin-left: 0px;
+}
+#contentInner .post h2 a {
+	border-bottom-color: currentColor; border-bottom-width: medium; border-bottom-style: none;
+}
+#contentInner .post .entry {
+	margin-top: 15px;
+}
+#contentInner commentlist li p {
+	margin: 0px;
+}
+.jCarouselLite {
+	width:260px !important;
+}

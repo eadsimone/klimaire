@@ -1,0 +1,112 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2010 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+
+<?php /* @var $this Mage_Catalog_Block_Product_View_Options_Type_Select */ ?>
+<?php $_option = $this->getOption() ?>
+<dt><label<?php if ($_option->getIsRequire()) echo ' class="required"' ?>><?php if ($_option->getIsRequire()) echo '<em>*</em>' ?><?php echo  $this->htmlEscape($_option->getTitle()) ?></label></dt>
+<dd<?php if ($_option->decoratedIsLast){?> class="last"<?php }?>>
+    <div class="input-box">
+        <?php if ($_option->getType() == Mage_Catalog_Model_Product_Option::OPTION_TYPE_CHECKBOX){ 
+            
+              $status = Mage::getSingleton('customer/session')->isLoggedIn();
+              if($status == true){
+                $customer = Mage::getSingleton('customer/session')->getCustomer();
+                
+                $orders = Mage::getResourceModel('sales/order_collection')
+                ->addFieldToSelect('*')
+                ->addFieldToFilter('customer_id', $customer->getId());
+
+                //$order_time = array();
+                $cur_product_sku = $_SESSION['curprod'];
+                $sku=array();
+                $ids=array();
+                foreach($orders as $order)
+                {    
+                    //$order_time[]=$order['created_at'];
+                    
+                    $order1 = Mage::getModel('sales/order')->load($order->getId());
+                    $items = $order1->getAllItems();
+                    
+                    $itemcount=count($items);
+                                       
+                    foreach ($items as $itemId => $item)
+                    {
+                        $sku[]=strtoupper($item->getSku());
+                        //echo $item->getSku();
+                        $ids[]=$item->getProductId();
+                        $otime[] = $order['created_at'];
+                    }
+                }
+               
+                $key1 = array_keys($sku,strtoupper($cur_product_sku));
+                $key = count($key1);
+                //print_r($sku);
+                if($key > 0)
+                {
+                    //echo $otime[$key1].'<br />';
+                    //print_r($otime);
+                    //print_r($sku);
+                    //display hide logic here
+                    $datetime1 = strtotime(date('Y-m-d h:s:i'));
+                    $datetime2 = strtotime($otime[$key1[(count($key1)-1)]]);
+                    $hours = floor($datetime1-$datetime2)/3600;
+                    //echo $hours.'<br />';
+                    
+                    if($hours < 24.0)
+                    {
+                        echo $this->getValuesHtml();
+                    }
+                    else {
+                        echo 'Please select below the Extended Warranty';
+                    }
+                }
+                else{
+                    echo 'Please select below the Extended Warranty';
+                }
+                
+                }
+                else
+                {
+                    echo $this->getValuesHtml();
+                }
+                
+        }else
+        {
+            echo $this->getValuesHtml();
+        }
+                
+              ?>
+        
+        
+
+        <?php if ($_option->getIsRequire()): ?>
+            <?php if ($_option->getType() == Mage_Catalog_Model_Product_Option::OPTION_TYPE_RADIO || $_option->getType() == Mage_Catalog_Model_Product_Option::OPTION_TYPE_CHECKBOX): ?>
+                <span id="options-<?php echo $_option->getId() ?>-container"></span>
+            <?php endif; ?>
+        <?php endif;?>
+    </div>
+</dd>

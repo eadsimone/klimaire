@@ -695,7 +695,8 @@ tr.summary-details-excluded { font-style:italic; }
 
 /* Category Page ========================================================================= */
 .category-title { margin:0 0 7px; }
-.category-title h1 { padding:3px 0; color:#5b9400; font-size:1.6em; font-weight:bold; line-height:1.25; }
+/*.category-title h1 { padding:3px 0; color:#5b9400; font-size:1.6em; font-weight:bold; line-height:1.25; }*/
+.category-title h1 { padding:3px 0; color:#e66c6b; font-size:1.6em; font-weight:bold; line-height:1.25; }
 .category-image { width:100%; overflow:hidden; margin:0 0 10px; text-align:center; }
 .category-image img {}
 .category-description { margin:0 0 10px; }

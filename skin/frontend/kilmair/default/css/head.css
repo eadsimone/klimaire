@@ -854,16 +854,16 @@ input.checkbox { margin-right:3px; }
 input.qty { width:2.5em !important; }
 button.button::-moz-focus-inner { padding:0; border:0; } /* FF Fix */
 button.button { -webkit-border-fit:lines; } /* <- Safari & Google Chrome Fix */
-button.button { overflow:visible; width:auto; border:1px solid #0D7F02; padding:5px;  background:none repeat scroll 0 0 #0D7F02; cursor:pointer; float:right; }
+/*original button.button { overflow:visible; width:auto; border:1px solid #0D7F02; padding:5px;  background:none repeat scroll 0 0 #0D7F02; cursor:pointer; float:right; }*/
 /*button.button span { display:block; height:19px;padding:0 3px; font:bold 12px/19px Arial, Helvetica, sans-serif; text-align:center; white-space:nowrap; color:#fff; }
 */
 
-.button span {
+/*original .button span {
     background: none repeat scroll 0 0 #0D7F02;
     color: #FFFFFF;
-    /*margin:5px 0px;*/
-    
-}
+    *//*margin:5px 0px;*//*
+
+}*/
 
 button.button span span { border:0; padding:0; }
 button.disabled span { border-color:#bbb !important; background:#bbb !important; }
@@ -2287,3 +2287,52 @@ margin:0 0 10px 0;
 .active .col_1 ul{padding-left:10px !important}
 .active h4{padding:0 !important; margin-left:0 !important}
 .active ul li strong {margin-left:10px}
+
+.comparepeche{
+
+background: url("../images/bkg_block-actions.gif") repeat-x scroll 0 0 #DEE5E8;
+    padding: 6px 9px;
+    text-align: right;
+    border-top: 1px solid #DDDDDD;
+    margin: 5px 0 0;
+    padding: 5px 0 0;
+    text-align: right;
+    height: 25px;
+
+}
+.comparepeche button.button{
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0) !important;
+    border: 0 none;
+    cursor: pointer;
+    margin: 0;
+    overflow: visible;
+    padding: 0;
+    width: auto;
+}
+.comparepeche  button.button span {
+    background-image: url("../images/bkg_btn-small.png") !important;
+    height: 23px;
+    line-height: 20px;
+    /**/
+    /*color: #555555;   ;*/
+    /*font: bold 11px/25px Tahoma,Verdana,Arial,sans-serif;*/
+    /*height: 28px;*/
+    /*padding: 0 0 0 6px;*/
+    /*text-align: center;*/
+    /*text-transform: uppercase;*/
+}
+.comparepeche button.button span span {
+    background-position: 100% 0;
+    padding: 0 15px 0 9px;
+}
+button.button span {
+    background: url("../images/bkg_btn.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+    color: #555555;
+    float: left;
+    font: bold 11px/25px Tahoma,Verdana,Arial,sans-serif;
+    height: 28px;
+    padding: 0 0 0 6px;
+    text-align: center;
+    text-transform: uppercase;
+    white-space: nowrap;
+}

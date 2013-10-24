@@ -2336,3 +2336,16 @@ button.button span {
     text-transform: uppercase;
     white-space: nowrap;
 }
+
+/*to have the input na search on the corner*/
+.form-search input.input-text {
+    float: left;
+    margin-right: 5px;
+    width: 212px;
+}
+.form-search button.button {
+    float: left;
+}
+.form-search {
+    float: right;
+}

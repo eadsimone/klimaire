@@ -68,9 +68,9 @@ Default layout, loads most of the pages
                 <!--<action method="addItem"><type>skin_css</type><name>css/faqPopup.css</name></action>-->
                 <action method="addItem"><type>skin_css</type><name>css/foot.css</name></action>
                 <action method="addItem"><type>skin_css</type><name>css/head.css</name></action>
-                <!--<action method="addItem"><type>skin_css</type><name>css/home.css</name></action>
+                <action method="addItem"><type>skin_css</type><name>css/home.css</name></action>
                 <action method="addItem"><type>skin_css</type><name>css/newAll.css</name></action>
-                <action method="addItem"><type>skin_css</type><name>css/reset.css</name></action>-->
+                <action method="addItem"><type>skin_css</type><name>css/reset.css</name></action>
                 <!--<action method="addItem"><type>skin_css</type><name>css/slide.css</name></action>-->
                 <!--<action method="addItem"><type>skin_css</type><name>SpryAssets/SpryTabbedPanels.css</name></action>-->
                 <!--<action method="addItem"><type>skin_js</type><name>SpryAssets/SpryTabbedPanels.js</name></action>-->

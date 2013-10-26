@@ -85,7 +85,7 @@ Find Dealer / Contrator <input type="text" name="finddealer" style="margin:0 8px
 <?php
    		if($status==true)
 		{ ?>
-			<div style="width:579px; margin:0 0 -4px; float:left; color:black; text-align: right;">
+			<div class="barlogged">
 			<a href="<?php echo Mage::getBaseUrl(); ?>checkout/cart/" style="color:#8F8E8E; font-weight:bold; text-transform: capitalize;">View Cart</a> | <a href="<?php echo Mage::getBaseUrl(); ?>customer/account/" style="color:#8F8E8E; font-weight:bold; text-transform: capitalize;">My Account</a> | <a href="<?php echo Mage::helper('customer')->getLogoutUrl(); ?>" style="color:#8F8E8E; font-weight:bold; text-transform: capitalize;" ><?php echo $this->__('Logout') ?></a>
 			</div>
         <?php  }

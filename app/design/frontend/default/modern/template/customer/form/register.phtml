@@ -1,0 +1,629 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2010 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php
+/**
+ * Create account form template
+ *
+ * @see Mage_Customer_Block_Form_Register
+ */
+?>
+<script type="text/javascript">
+
+function fillStateByCountry(countryID)
+{
+    var request1 = new Ajax.Request(
+        '<?php echo $this->getUrl("customer/account/ajaxfillstate/"); ?>?region=' + countryID,
+        {
+            method: 'post',
+            onComplete: function(transport){
+                var jsonResponse=transport.responseText;
+                document.getElementById('regi_state').innerHTML=jsonResponse;
+            },
+            parameters: Form.serialize($("createdealer"))
+        }
+    );
+}
+</script>
+<SCRIPT LANGUAGE="JavaScript">
+	
+function checkall(field)
+{	
+	var av = document.getElementsByName(field);
+	//alert(av.length);
+	for (e=0;e<av.length;e++) {
+		av[e].checked=true;
+	}
+	
+}
+function uncheckall(field)
+{	
+	var av = document.getElementsByName(field);
+	//alert(av.length);
+	for (e=0;e<av.length;e++) {
+		av[e].checked=false;
+	}
+	
+}
+</script>
+<script src="/skin/frontend/kilmair/default/SpryAssets/SpryValidationTextField.js" type="text/javascript"></script>
+<link href="/skin/frontend/kilmair/default/SpryAssets/SpryValidationTextField.css" rel="stylesheet" type="text/css" />
+
+<script src="/skin/frontend/kilmair/default/SpryAssets/SpryValidationTextarea.js" type="text/javascript"></script>
+
+<link href="/skin/frontend/kilmair/default/SpryAssets/SpryValidationTextarea.css" rel="stylesheet" type="text/css" />
+
+<div class="account-create">
+    <div class="page-title">
+        <h1><?php echo $this->__('Dealer Registration') ?></h1>
+    </div>
+<div style="text-align:center"><img src=" <?php echo $this->getSkinUrl("images/logo_main.png") ?> "/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <img src=" <?php echo $this->getSkinUrl("images/maxwel-high.png") ?> " style="margin:0 0 0 0px"/></div>
+<div style="margin:10px 0px; text-align:justify">Thank you for your interest in Klimaire and Maxwell brands. For over a quarter century, Klimaire and Maxwell brands have brought value and comfort to homeowners, with over one million units sold in more than 70 countries around the world. The quality of the design and manufacturing of Klimaire and Maxwell products is unrivaled in the industry. Products are tested daily in some of the words harshest weather conditions, such as the freezing Canadian Rockies, the scorching hot Arabian Desert, the salty air of the Caribbean, and the rainy tropical climate of the Amazon jungle.<br /><br />
+
+Today, Klimaire and Maxwell continue their mission of bringing value and comfort to homeowners across America by strategically teaming with HeatAndCool.com, Americas largest online distributer of HVAC products and one of Inc. magazines fastest growing private companies in America. Weather your interested in joining the HeatAndCool.com drop-ship program for online dealers, or the Klimaire & Maxwell national or international dealer programs, you will gain access to wealth of resources and cutting edge products that will surely propel your business to the next level.
+</div>
+<div style="text-align:right;"> <p class="required"><?php echo $this->__('* Required Fields') ?></p></div>
+    <?php echo $this->getChildHtml('form_fields_before')?>
+    <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+    <form action="<?php echo $this->getPostActionUrl() ?>" method="post" id="form-validate" name="createdealer">
+        <div class="fieldset">
+            <input type="hidden" name="success_url" value="<?php echo $this->getSuccessUrl() ?>" />
+            <input type="hidden" name="error_url" value="<?php echo $this->getErrorUrl() ?>" />
+            <ul class="form-list">
+			  <li class="fields">
+				 <div class="field ss_new_fields_final">
+				 <div class="ss_registration_custome_lable">
+				  <label for="regi_country"><?php echo $this->__('Prefix:') ?></label><br />
+				  </div>
+				  <div class="ss_registration_custome_box">
+						  <div class="input-box">               
+						<select name="regi_salutation" id="regi_salutation">
+						<option value="<?php echo $this->__('Mr.') ?>" <?php if($this->getFormData()->getregi_salutation() == 'Mr.') echo "selected='selected'";?>><?php echo $this->__('Mr.') ?></option>
+						<option value="<?php echo $this->__('Ms.') ?>" <?php if($this->getFormData()->getregi_salutation() == 'Ms.') echo "selected='selected'";?>><?php echo $this->__('Ms.') ?></option>
+						<option value="<?php echo $this->__('Mrs.') ?>" <?php if($this->getFormData()->getregi_salutation() == 'Mrs.') echo "selected='selected'";?>><?php echo $this->__('Mrs.') ?></option>
+						<option value="<?php echo $this->__('Miss.') ?>" <?php if($this->getFormData()->getregi_salutation() == 'Miss.') echo "selected='selected'";?>><?php echo $this->__('Miss.') ?></option>
+						</select> 
+						<br/> 
+				   </div>
+				   </div>
+				</div>
+				</li>
+				
+				<li class="fields">
+                    <?php echo $this->getLayout()->createBlock('customer/widget_name')->setObject($this->getFormData())->toHtml() ?>
+                </li>
+                
+				<li>
+                              
+                       <div class="ss_registration_custome_lable">
+           
+            
+                <label for="email_address" class="required"><em>*</em><?php echo $this->__('Email Address ( Username):') ?></label>
+          
+                       </div>
+         
+                 <div class="ss_registration_custome_box">
+       
+                <div class="input-box">
+                    <input type="text" name="email" id="email_address" value="<?php echo $this->htmlEscape($this->getFormData()->getEmail()) ?>" title="<?php echo $this->__('Email Address') ?>" class="input-text validate-email required-entry" />
+                </div>                    
+                         
+                       </div>
+                
+                </li>
+                
+				<li class="fields">
+                    <div class="field ss_new_fields_final">
+
+                     <!-- vishal -->                
+                           <div class="ss_registration_custome_lable">
+                  <!-- vishal -->
+                        <label for="password" class="required"><em>*</em><?php echo $this->__('Create Password:') ?></label>
+                        
+                   <!-- vishal -->                
+                           </div>
+                  <!-- vishal -->
+                        
+
+				<!-- vishal -->                
+		             <div class="ss_registration_custome_box">
+               <!-- vishal -->
+                        <div class="input-box">
+                            <input type="password" name="password" id="password" title="<?php echo $this->__('Create Password') ?>" class="input-text required-entry validate-password" />
+                        </div>
+                                                
+                   <!-- vishal -->                
+                           </div>
+                  <!-- vishal -->
+                    </div>
+               </li>
+               
+			   <li class="fields">
+                    <div class="field ss_new_fields_final">
+                    
+                     <!-- vishal -->                
+                           <div class="ss_registration_custome_lable">
+                  <!-- vishal -->
+                        <label for="confirmation" class="required"><em>*</em><?php echo $this->__('Confirm Password:') ?></label>
+                        
+                     <!-- vishal -->                
+                           </div>
+                  <!-- vishal -->
+                  
+                  <!-- vishal -->                
+		             <div class="ss_registration_custome_box">
+               <!-- vishal -->
+                        <div class="input-box">
+                            <input type="password" name="confirmation" title="<?php echo $this->__('Confirm Password') ?>" id="confirmation" class="input-text required-entry validate-cpassword" />
+                      </div>
+               <!-- vishal -->                
+		             </div>
+               <!-- vishal -->
+                    </div>
+               </li>
+			   
+	           <li class="fields">
+                    <div class="field ss_new_fields_final">
+                           <div class="ss_registration_custome_lable">
+                        <label for="Title" class="required"><?php echo $this->__('Title:') ?></label>
+                          </div>
+                           <div class="ss_registration_custome_box">               
+                        <div class="input-box">
+                            <input type="text" name="regi_title" style="width:258px; height:17px; border: 1px solid #b6b6b6;" title="<?php echo $this->__('Title') ?>" id="regi_title" value="<?php echo $this->htmlEscape($this->getFormData()->getRegiTitle()) ?>" />
+                        </div>
+                           </div>
+                    </div>
+              </li>
+				<li class="fields">
+				<div class="field ss_new_fields_final">
+					   <div class="ss_registration_custome_lable">
+					<label for="Company Name" class="required"><em>*</em><?php echo $this->__('Company Name:') ?></label>
+					  </div>
+					   <div class="ss_registration_custome_box">               
+					<div class="input-box"><span id="sprytextfield5">
+						<input type="text" name="regi_company_name" style="width:258px; height:17px; border: 1px solid #b6b6b6;" title="<?php echo $this->__('Company Name') ?>" id="regi_company_name" value="<?php echo $this->htmlEscape($this->getFormData()->getRegiCompanyName()) ?>" />
+					<span class="textfieldRequiredMsg">A value is required.</span></span>
+					</div>
+					   </div>
+				</div>
+				</li>
+                    <li class="fields">
+                    <div class="field ss_new_fields_final">
+                           <div class="ss_registration_custome_lable">
+                                       <label for="regi_country"><?php echo $this->__('Country:') ?></label><br />
+                          </div>
+                           <div class="ss_registration_custome_box">               
+							<?php /*?><?php $_countries = Mage::getResourceModel('directory/country_collection')
+                                    ->loadData()
+                                    ->toOptionArray(false) ?>
+                               <select name="regi_country" id="regi_country" value="<?php echo $this->htmlEscape($this->getFormData()->getregi_country()) ?>" onChange="fillStateByCountry(this.value)">
+                                <?php if (count($_countries) > 0): ?>
+        							<?php foreach($_countries as $_country): ?>
+            							<option value="<?php echo $_country['value']  ?>"  <?php if($_country['value'] == 'US') { echo 'selected="selected"'; }?>  >
+                						<?php echo $_country['label'] ?>
+            							</option>
+       	 							<?php endforeach; ?>
+								<?php endif; ?>
+                               </select>  <?php */?>
+                               <?php echo $this->getCountryHtmlSelect() ?>
+                                                  
+                           </div>
+                    </div>
+                    </li>
+                    <li class="fields">
+                    <div class="field ss_new_fields_final">
+                           <div class="ss_registration_custome_lable">
+                        <label for="Address" class="required"><em>*</em><?php echo $this->__('Address:') ?></label>
+                          </div>
+                           <div class="ss_registration_custome_box">               
+                        <div class="input-box">
+                           <!-- <input type="text" name="address" title="<?php //echo $this->__('Address') ?>" id="address" /> -->
+                           <span id="sprytextarea1">
+                           <textarea name="regi_address" title="<?php echo $this->__('Address') ?>" id="regi_address" />                           
+                           <?php echo $this->htmlEscape($this->getFormData()->getRegiAddress()) ?></textarea><span class="textareaRequiredMsg">A value is required.</span></span>
+
+                        </div>
+                           </div>
+                    </div>
+                    </li>
+                    <li class="fields">
+                    <div class="field ss_new_fields_final">
+                           <div class="ss_registration_custome_lable">
+                        <label for="City" class="required"><em>*</em><?php echo $this->__('City:') ?></label>
+                          </div>
+                           <div class="ss_registration_custome_box">               
+                        <div class="input-box"><span id="sprytextfield3">
+                          <input type="text" name="regi_city" style="width:258px; height:17px; border: 1px solid #b6b6b6;" title="<?php echo $this->__('City') ?>" id="regi_city" value="<?php echo $this->htmlEscape($this->getFormData()->getRegiCity()) ?>" />
+                          <span class="textfieldRequiredMsg">A value is required.</span></span></div>
+                           </div>
+                    </div>
+                    </li>
+                    <li class="fields">
+                    <div class="field ss_new_fields_final">
+                           <div class="ss_registration_custome_lable">
+                      
+                             <label for="regi_state"><?php echo $this->__('State/Province:') ?></label><br />
+                          </div>
+                           <div class="ss_registration_custome_box">               
+	
+		                      <?php /*?><select name="regi_state" id="regi_state" value="<?php echo $this->htmlEscape($this->getFormData()->getregi_state()) ?>">
+                               <?php $regionCollection = Mage::getModel('directory/region_api')->items('US');
+     
+    							if(!empty($regionCollection))
+								{
+									foreach($regionCollection as $region) {
+									echo '<option value="'.$region['name'] .'" >'. $region['name'].'</option>';
+								}
+								}
+		?>
+                                </select><?php */?>
+                                <select id="region_id" name="region_id" title="<?php echo $this->__('State/Province') ?>" class="validate-select" style="display:none;">
+                                    <option value=""><?php echo $this->__('Please select region, state or province') ?></option>
+                                </select>
+                                <script type="text/javascript">
+                                //<![CDATA[
+                                    $('region_id').setAttribute('defaultValue', "<?php echo $this->getFormData()->getRegionId() ?>");
+                                //]]>
+                                </script>
+                                <input type="text" id="region" name="region" value="<?php echo $this->htmlEscape($this->getRegion()) ?>" title="<?php echo $this->__('State/Province') ?>" class="input-text" style="display:none;" />
+                           </div>
+                    </div>
+                    </li>
+                    <li class="fields">
+                    <div class="field ss_new_fields_final">
+                           <div class="ss_registration_custome_lable">
+                        <label for="Zip" class="required"><em>*</em><?php echo $this->__('Zip:') ?></label>
+                          </div>
+                           <div class="ss_registration_custome_box">               
+                        <div class="input-box"><span id="sprytextfield4">
+                          <input type="text" name="regi_zip" class="input-text validate-zip" style="width:258px; height:17px; border: 1px solid #b6b6b6;" title="<?php echo $this->__('Zip') ?>" id="regi_zip" value="<?php echo $this->htmlEscape($this->getFormData()->getRegiZip()) ?>" />
+                          <span class="textfieldRequiredMsg">A value is required.</span><span class="textfieldInvalidFormatMsg">Invalid zipcode</span></span></div>
+                           </div>
+                    </div>
+                    </li>
+					<!-- Phone -->                                    
+					<li class="fields">
+					<div class="field ss_new_fields_final">
+					   <div class="ss_registration_custome_lable">
+					<label for="Regi_Phone" class="required"><em>*</em><?php echo $this->__('Phone:') ?></label>
+					</div>
+					   <div class="ss_registration_custome_box">
+					<div class="input-box"><span id="sprytextfield2">
+					  <input type="text" name="regi_phone" class="input-text " style="width:258px; height:17px; border: 1px solid #b6b6b6;" title="<?php echo $this->__('Phone') ?>" id="regi_phone" value="<?php echo $this->htmlEscape($this->getFormData()->getRegiPhone()) ?>" />
+					  <span class="textfieldRequiredMsg">A value is required.</span><span class="textfieldInvalidFormatMsg">Invalid format</span></span></div>
+					   </div>
+					</div>
+					</li>
+					<!-- Phone -->                  
+			
+					<!-- Added by Pankaj -->		
+					<!--<li>
+					<label for="phone" class="required"><em>*</em><?php echo $this->__('Phone') ?></label>
+					<div class="input-box">
+						<input type="text" name="phone" id="phone" value="<?php echo $this->escapeHtml($this->getFormData()->getphone()) ?>" title="<?php echo $this->__('Phone Number') ?>" class="input-text required-entry" />
+					</div>
+					</li>-->
+					<!-- End by Pankaj -->
+			
+			
+                  
+               <!-- Mobile -->                                    
+                      <li class="fields">
+                    <div class="field ss_new_fields_final">
+                           <div class="ss_registration_custome_lable">
+                        <label for="Regi_Mobile" class="required"><?php echo $this->__('Mobile:') ?></label>
+                      </div>
+                           <div class="ss_registration_custome_box">
+
+                        <div class="input-box"><span id="sprytextfield1">
+                          <input type="text" name="regi_mobile" class="input-text " style="width:258px; height:17px; border: 1px solid #b6b6b6;" title="<?php echo $this->__('Mobile') ?>" id="regi_mobile" value="<?php echo $this->htmlEscape($this->getFormData()->getRegiMobile()) ?>" />
+                          <span class="textfieldInvalidFormatMsg">use (435) 345-3453 format</span></span></div>
+                        
+
+                           </div>
+                    </div>
+                    </li>
+               <!-- Mobile -->        
+               
+               <!-- Fax -->                                    
+                      <li class="fields">
+                    <div class="field ss_new_fields_final">
+                        <div class="ss_registration_custome_lable">
+                    <label for="Regi_Fax" class="required"><?php echo $this->__('Fax:') ?></label>
+                      </div>
+                           <div class="ss_registration_custome_box">
+                        <div class="input-box">
+                            <input type="text" name="regi_fax" class="input-text validate-fax" style="width:258px; height:17px; border: 1px solid #b6b6b6;" title="<?php echo $this->__('Fax') ?>" id="regi_fax" value="<?php echo $this->htmlEscape($this->getFormData()->getRegiFax()) ?>" />
+                        </div>                     
+                           </div>
+                    </div>
+                    </li>
+               <!-- Fax --> 
+                 <!-- Website -->                                    
+                      <li class="fields">
+                    <div class="field ss_new_fields_final">
+                           <div class="ss_registration_custome_lable">
+                        <label for="Website" class="required"><?php echo $this->__('Website:') ?></label>
+                      </div>
+                           <div class="ss_registration_custome_box">
+                        <div class="input-box">
+                            <input type="text" name="website" style="width:258px; height:17px; border: 1px solid #b6b6b6;" title="<?php echo $this->__('Website') ?>" id="website" value="<?php echo $this->htmlEscape($this->getFormData()->getWebsite()) ?>" />
+                        </div>
+                           </div>
+                    </div>
+                    </li>
+               <!-- Website -->
+			   
+                <?php if ($this->isNewsletterEnabled()): ?>
+                <li class="control">
+                    <div class="input-box">
+                        <input type="checkbox" name="is_subscribed" title="<?php echo $this->__('Sign Up for Newsletter') ?>" value="1" id="is_subscribed"<?php if($this->getFormData()->getIsSubscribed()): ?> checked="checked"<?php endif; ?> class="checkbox" />
+                    </div>
+                    <label for="is_subscribed"><?php echo $this->__('Sign Up for Newsletter:') ?></label>
+                </li>
+                <?php endif ?>
+				
+				<?php $_dob = $this->getLayout()->createBlock('customer/widget_dob') ?>
+				<?php if ($_dob->isEnabled()): ?>
+					<li><?php echo $_dob->setDate($this->getFormData()->getDob())->toHtml() ?></li>
+				<?php endif ?>
+				<?php $_taxvat = $this->getLayout()->createBlock('customer/widget_taxvat') ?>
+				<?php if ($_taxvat->isEnabled()): ?>
+					<li><?php echo $_taxvat->setTaxvat($this->getFormData()->getTaxvat())->toHtml() ?></li>
+				<?php endif ?>
+				<?php $_gender = $this->getLayout()->createBlock('customer/widget_gender') ?>
+				<?php if ($_gender->isEnabled()): ?>
+					<li><?php echo $_gender->setGender($this->getFormData()->getGender())->toHtml() ?></li>
+				<?php endif ?>
+            
+
+                
+                <!-- Vishal -->     
+                <!-- Products of Interest (Klimare) -->           
+	             <li class="fields">
+    	            <div class="field ss_new_fields_final">
+                        <div class="ss_registration_custome_lable">
+                            <label for="products_of_interest_klimare" class="required"><?php echo $this->__('Products of Interest (Klimare):') ?></label>
+                        </div>
+	                    <div class="ss_registration_custome_box">
+                            <?php $_productOfKlimare = $this->helper('customer')->getKlimareProductOfInterest();?>
+                            <?php foreach($_productOfKlimare as $_key=>$_options):?>
+                                <label for="<?php echo $_key;?>"><?php echo ucwords(str_replace('-',' ',$_key));?></label><br />
+                                <?php foreach($_options as $_opKey=>$_option):?>
+                                    <input style="margin-left: 10px" type="checkbox" value="<?php echo $_opKey;?>" name="products_of_interest_klimaire[]" <?php if(in_array($_opKey,$this->getFormData()->getProductsOfInterestKlimaire())) echo "checked='checked'" ?> /><span style="padding-left: 10px" ><?php echo $this->__($_option);?></span><br />
+                                <?php endforeach;?>
+                            <?php endforeach;?>
+                            <br />
+                            <a href="javascript: void(0);" onclick="checkall('products_of_interest_klimaire[]');" >check all</a>&nbsp;&nbsp;&nbsp;<a href="javascript: void(0);" onclick="uncheckall('products_of_interest_klimaire[]');" >uncheck all</a>
+	                    </div>
+                    </div>
+                 </li>
+            <!-- Products of Interest (Klimare)-->           
+             <!-- Products of Interest (Maxwell) -->           
+				 <li class="fields">
+    	         	<div class="field ss_new_fields_final">
+                    	<div class="ss_registration_custome_lable">
+							<label for="products_of_interest_maxwell" class="required"><?php echo $this->__('Products of Interest (Maxwell):') ?></label>
+                        </div>
+					    <div class="ss_registration_custome_box">                
+			                <?php $_productOfMaxwell = $this->helper('customer')->getMaxwellProductOfInterest();?>
+                            <?php foreach($_productOfMaxwell as $_key=>$value):?>
+                                <input type="checkbox" value="<?php echo $_key;?>" name="products_of_interest_maxwell[]" <?php if(in_array($_key,$this->getFormData()->getProductsOfInterestMaxwell())) echo "checked='checked'" ?> /><span style="padding-left: 10px"><?php echo $value;?></span><br />
+                            <?php endforeach;?>
+                            <br />
+                            <a href="javascript: void(0);" onclick="checkall('products_of_interest_maxwell[]');" >check all</a>&nbsp;&nbsp;&nbsp;<a href="javascript: void(0);" onclick="uncheckall('products_of_interest_maxwell[]');" >uncheck all</a>
+		                 </div>
+				    </div>
+				 </li>
+                 <!-- Products of Interest (Maxwell) -->   
+                 <li class="fields">
+                     <div class="field ss_new_fields_final">
+                        <div class="ss_registration_custome_lable">
+                            <label for="products_of_interest_maxwell" class="required"><?php echo $this->__('Service Type:') ?></label>
+                        </div>
+                        <!--<div class="ss_registration_custome_box">                
+                            <?php $_serviceType = $this->helper('customer')->getServiceType(); //service_type?>
+                            <?php foreach($_serviceType as $_key=>$value):?> 
+                                <input type="checkbox" value="<?php echo $_key;?>" name="service_type[]" <?php if(in_array($_key,$this->getFormData()->getservice_type())) echo "checked='checked'" ?> /><span style="padding-left: 10px"><?php echo $value;?></span><br />
+                            <?php endforeach;?>
+                         </div> -->
+                         <div class="ss_registration_custome_box">                
+                                <input type="checkbox" name="service_type[]" value="installation"><span style="padding-left: 10px">Installation</span><br>
+                                <input type="checkbox" name="service_type[]" value="service"><span style="padding-left: 10px">Service</span><br>
+                                <input type="checkbox" name="service_type[]" value="sales"><span style="padding-left: 10px">Sales</span><br>
+                                
+                                <br />
+                            <a href="javascript: void(0);" onclick="checkall('service_type[]');" >check all</a>&nbsp;&nbsp;&nbsp;<a href="javascript: void(0);" onclick="uncheckall('service_type[]');" >uncheck all</a>
+                         </div>
+                    </div>
+                 </li>
+                  
+                   <!-- HVAC Brands currently carried -->   
+                    <li class="fields">
+                    <div class="field ss_new_fields_final">
+                           <div class="ss_registration_custome_lable">
+                        <label for="HVAC Brands currently carried" class="required"><?php echo $this->__('HVAC Brands currently carried:') ?></label>
+                          </div>
+                           <div class="ss_registration_custome_box">
+                        <div class="input-box">
+                            <input type="text" name="hvac_brands_currently_carried" style="width:258px; height:17px; border: 1px solid #b6b6b6;" title="<?php echo $this->__('HVAC Brands currently carried') ?>" id="hvac_brands_currently_carried" value="<?php echo $this->htmlEscape($this->getFormData()->getHvacBrandsCurrentlyCarried()) ?>" />
+                        </div>
+                           </div>
+                    </div>
+                    </li>
+               <!-- HVAC Brands currently carried -->   
+            
+                    <li class="fields">
+                    <div class="field ss_new_fields_final">
+                           <div class="ss_registration_custome_lable">
+                        <label for="Territory of Interest" class="required"><?php echo $this->__('Territory of Interest:') ?></label>
+          </div>
+                           <div class="ss_registration_custome_box">
+                        <div class="input-box">
+                            <input type="text" name="territory_of_interest" style="width:258px; height:17px; border: 1px solid #b6b6b6;" title="<?php echo $this->__('Territory of Interest') ?>" id="territory_of_interest" value="<?php echo $this->htmlEscape($this->getFormData()->getTerritoryOfInterest()) ?>" />
+                        </div>
+                           </div>
+                    </div>
+                    </li>
+                 <!-- HVAC Brands currently carried -->   
+                <!-- Type of Business -->                                    
+                      <li class="fields">
+                    <div class="field ss_new_fields_final">
+                           <div class="ss_registration_custome_lable">
+                        <label for="Type of Business" class="required"><?php echo $this->__('Type of Business:') ?></label>
+                      </div>
+                           <div class="ss_registration_custome_lable">
+								
+                                <select name="regi_business_type" id="regi_business_type" >
+                                <option value="<?php echo $this->__('Dealer') ?>" <?php if($this->getFormData()->getregi_business_type() == 'Dealer') echo "selected='selected'";?>><?php echo $this->__('Dealer') ?></option>
+                                <option value="<?php echo $this->__('Installing Contractor') ?>" <?php if($this->getFormData()->getregi_business_type() == 'Installing Contractor') echo "selected='selected'";?>><?php echo $this->__('Installing Contractor') ?></option>
+                                <option value="<?php echo $this->__('Distributor') ?>" <?php if($this->getFormData()->getregi_business_type() == 'Distributor') echo "selected='selected'";?>><?php echo $this->__('Distributor') ?></option>
+                                <option value="<?php echo $this->__('Exporter') ?>" <?php if($this->getFormData()->getregi_business_type() == 'Exporter') echo "selected='selected'";?>><?php echo $this->__('Exporter') ?></option>
+                                <option value="<?php echo $this->__('International (outside US, Puerto Rico, Guom U.S.V.I.)') ?>" <?php if($this->getFormData()->getregi_business_type() == 'International (outside US, Puerto Rico, Guom U.S.V.I.)') echo "selected='selected'";?>><?php echo $this->__('International (outside US, Puerto Rico, Guom U.S.V.I.)') ?></option>
+                                <option value="<?php echo $this->__('Manufacturer Rep') ?>" <?php if($this->getFormData()->getregi_business_type() == 'Manufacturer Rep') echo "selected='selected'";?>><?php echo $this->__('Manufacturer Rep') ?></option>
+                                <option value="<?php echo $this->__('Regional Distributor') ?>" <?php if($this->getFormData()->getregi_business_type() == 'Regional Distributor') echo "selected='selected'";?>><?php echo $this->__('Regional Distributor') ?></option>
+                                <option value="<?php echo $this->__('Online Retailer') ?>" <?php if($this->getFormData()->getregi_business_type() == 'Online Retailer') echo "selected='selected'";?>><?php echo $this->__('Online Retailer') ?></option>
+                                <option value="<?php echo $this->__('Other') ?>" <?php if($this->getFormData()->getregi_business_type() == 'Other') echo "selected='selected'";?>><?php echo $this->__('Other') ?></option>
+                                </select>                              
+                         </div>
+                    </div>
+                    </li>
+                <!-- Type of Business -->
+             <!-- Description (Tell us a little bit cbout yourself) -->                                    
+                      <li class="fields">
+                    <div class="field ss_new_fields_final">
+                           <div class="ss_registration_custome_lable">
+                        <label for="Description (Tell us a little bit cbout yourself)" class="required"><?php echo $this->__('Description (Tell us a little bit about yourself):') ?></label>
+                      </div>
+                           <div class="ss_registration_custome_box">
+                        <div class="input-box">
+                          <textarea name="regi_description" title="<?php echo $this->__('Description') ?>" id="regi_description" /><?php echo $this->htmlEscape($this->getFormData()->getRegiDescription()) ?></textarea>
+                        </div>
+                           </div>
+                    </div>
+                    </li>
+            </ul>
+        </div>
+    <?php if($this->getShowAddressFields()): ?>
+        <div class="fieldset">
+            <input type="hidden" name="create_address" value="1" />
+            <h2 class="legend"><?php echo $this->__('Address Information:') ?></h2>
+            <ul class="form-list">
+                <li class="fields">
+                    <div class="field">
+                        <label for="company"><em>*</em><?php echo $this->__('Company:') ?></label>
+                        <div class="input-box">
+                            <input type="text" name="company" id="company" value="<?php echo $this->htmlEscape($this->getFormData()->getCompany()) ?>" title="<?php echo $this->__('Company') ?>" class="input-text" />
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label for="telephone" class="required"><em>*</em><?php echo $this->__('Telephone:') ?></label>
+                        <div class="input-box">
+                            <input type="text" name="telephone" id="telephone" value="<?php echo $this->htmlEscape($this->getFormData()->getTelephone()) ?>" title="<?php echo $this->__('Telephone') ?>" class="input-text required-entry" />
+                        </div>
+                    </div>
+                </li>
+                <li class="wide">
+                    <label for="street_1" class="required"><em>*</em><?php echo $this->__('Street Address:') ?></label>
+                    <div class="input-box">
+                        <input type="text" name="street[]" value="<?php echo $this->htmlEscape($this->getFormData()->getStreet(1)) ?>" title="<?php echo $this->__('Street Address') ?>" id="street_1" class="input-text required-entry" />
+                    </div>
+                </li>
+            <?php for ($_i=2, $_n=$this->helper('customer/address')->getStreetLines(); $_i<=$_n; $_i++): ?>
+                <li class="wide">
+                    <div class="input-box">
+                        <input type="text" name="street[]" value="<?php echo $this->htmlEscape($this->getFormData()->getStreet($_i)) ?>" title="<?php echo $this->__('Street Address %s', $_i) ?>" id="street_<?php echo $_i?>" class="input-text" />
+                    </div>
+                </li>
+            <?php endfor ?>
+                <li class="fields">
+                    <div class="field">
+                        <label for="city" class="required"><em>*</em><?php echo $this->__('City:') ?></label>
+                        <div class="input-box">
+                            <input type="text" name="city" value="<?php echo $this->htmlEscape($this->getFormData()->getCity()) ?>" title="<?php echo $this->__('City') ?>" class="input-text required-entry" id="city" />
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label for="region_id" class="required"><em>*</em><?php echo $this->__('State/Province:') ?></label>
+                        <div class="input-box">
+                            <select id="region_id" name="region_id" title="<?php echo $this->__('State/Province') ?>" class="validate-select" style="display:none;">
+                                <option value=""><?php echo $this->__('Please select region, state or province') ?></option>
+                            </select>
+                            <script type="text/javascript">
+                            //<![CDATA[
+                                $('region_id').setAttribute('defaultValue', "<?php echo $this->getFormData()->getRegionId() ?>");
+                            //]]>
+                            </script>
+                            <input type="text" id="region" name="region" value="<?php echo $this->htmlEscape($this->getRegion()) ?>" title="<?php echo $this->__('State/Province') ?>" class="input-text" style="display:none;" />
+                        </div>
+                    </div>
+                </li>
+                <li class="fields">
+                    <div class="field">
+                        <label for="zip" class="required"><em>*</em><?php echo $this->__('Zip/Postal Code:') ?></label>
+                        <div class="input-box">
+                            <input type="text" name="postcode" value="<?php echo $this->htmlEscape($this->getFormData()->getPostcode()) ?>" title="<?php echo $this->__('Zip/Postal Code') ?>" id="zip" class="input-text validate-zip-international required-entry" />
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label for="country" class="required"><em>*</em><?php echo $this->__('Country:') ?></label>
+                        <div class="input-box">
+                            <?php echo $this->getCountryHtmlSelect() ?>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <input type="hidden" name="default_billing" value="1" />
+            <input type="hidden" name="default_shipping" value="1" />
+        </div>
+    <?php endif; ?>
+        <!--<div class="buttons-set">
+            <p class="back-link"><a href="<?php echo $this->escapeUrl($this->getBackUrl()) ?>" class="back-link"><small>&laquo; </small><?php echo $this->__('Back') ?></a></p>
+            <button type="submit" title="<?php echo $this->__('Submit') ?>" class="button-buynow"><span><span><?php echo $this->__('Submit') ?></span></span></button>
+        </div>-->
+		<div class="buttons-set">
+            <p class="back-link"><a href="<?php echo $this->escapeUrl($this->getBackUrl()) ?>" class="back-link"><small>&laquo; </small><?php echo $this->__('Back') ?></a></p>
+            <button type="submit" title="<?php echo $this->__('Submit') ?>" class="button-buynow"><span><span><?php echo $this->__('Submit') ?></span></span></button>
+        </div>
+    </form>
+    <script type="text/javascript">
+    //<![CDATA[
+        var dataForm = new VarienForm('form-validate', true);
+        <?php //if($this->getShowAddressFields()): ?>
+        new RegionUpdater('country', 'region', 'region_id', <?php echo $this->helper('directory')->getRegionJson() ?>, undefined, 'zip');
+        <?php //endif; ?>
+    //]]>
+    </script>
+</div>
+<script type="text/javascript">
+var sprytextfield1 = new Spry.Widget.ValidationTextField("sprytextfield1","phone_number",{isRequired:false,validateOn:["blur"]});
+var sprytextfield2 = new Spry.Widget.ValidationTextField("sprytextfield2","phone_number",{useCharacterMasking:true,validateOn:["blur"]});
+var sprytextarea1 = new Spry.Widget.ValidationTextarea("sprytextarea1",{minChars:10, validateOn:["blur"]});
+var sprytextfield3 = new Spry.Widget.ValidationTextField("sprytextfield3","none",{validateOn:["blur"]});
+var sprytextfield4 = new Spry.Widget.ValidationTextField("sprytextfield4","zip_code",{validateOn:["blur"]});
+var sprytextfield5 = new Spry.Widget.ValidationTextField("sprytextfield5","none",{validateOn:["blur"]});
+
+</script>

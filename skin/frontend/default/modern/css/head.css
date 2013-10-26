@@ -2306,3 +2306,5 @@ margin:0 0 10px 0;
 div.block.block-cart{
     display: none;
 }
+
+.barlogged{width:515px; margin:0 0 -4px; float:left; color:black; text-align: right;}

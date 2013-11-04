@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<config>
+	<modules>
+		<ZmoduleZ_FedexNationalLTLModule>
+			<version>1.6.0</version>
+		</ZmoduleZ_FedexNationalLTLModule>
+	</modules>
+	<global>
+		<models>
+			<fedexnationalltlmodule>
+				<class>ZmoduleZ_FedexNationalLTLModule_Model</class>
+			</fedexnationalltlmodule>
+		</models>
+		
+		<sales>
+            <shipping>
+                <carriers>
+                    <fedexnationalltl>
+                        <class>ZmoduleZ_FedexNationalLTLModule_Model_Carrier_Fedexnationalltl</class>
+                    </fedexnationalltl>                        
+                </carriers>
+            </shipping>
+        </sales>
+
+		<resources>
+			<!-- resource identifier -->
+			<fedexnationalltlmodule_setup>
+				<setup>
+					<module>ZmoduleZ_FedexNationalLTLModule</module>
+				</setup>
+			</fedexnationalltlmodule_setup>
+			<fedexnationalltlmodule_read>
+				<connection>
+					<use>core_read</use>
+				</connection>
+			</fedexnationalltlmodule_read>
+		</resources>
+	</global>
+	<default>
+        <carriers>
+            <fedexnationalltl>
+                    <active>1</active>
+                    <sallowspecific>0</sallowspecific>
+					<model>fedexnationalltlmodule/carrier_fedexnationalltl</model>
+                    <name>FedexNationalLTL</name>
+                    <title>FedEx National LTL</title>
+                    <gateway_url>http://fedexfreight.fedex.com/XMLLTLRatingNoCity.jsp</gateway_url>
+                    <tracking_url>http://www.fedex.com/Tracking?action=track&amp;language=english&amp;cntry_code=us&amp;initial=x&amp;tracknumbers=</tracking_url>
+                    <usefixedrate>0</usefixedrate>
+                    <activation_weight>0</activation_weight>
+                    <handling1_fee>0</handling1_fee>
+                    <handling2_fee>0</handling2_fee>
+                    <showdeliverydatemsg>1</showdeliverydatemsg>
+                    <adddaystodeliverydate>0</adddaystodeliverydate>
+                    <palletweight>0</palletweight>
+                    <methodtext>Standard Service</methodtext>
+                    <showResidentialFee>0</showResidentialFee>
+                    <residentialfee>80</residentialfee>
+                    <residentialratetext>Standard Service (residential delivery)</residentialratetext>
+                    <allowed_methods>STANDARD</allowed_methods>
+                    <max_package_weight>2000</max_package_weight>
+                    <showmethod>1</showmethod>
+                    <specificerrmsg>This shipping method is currently unavailable. If you would like to ship using this shipping method, please contact us.</specificerrmsg>
+            </fedexnationalltl>     
+        </carriers>
+    </default>
+</config>

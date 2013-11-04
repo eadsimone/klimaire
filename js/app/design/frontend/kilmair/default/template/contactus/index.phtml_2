@@ -1,0 +1,228 @@
+<html>
+<head>
+
+<script src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) .'js/klimaire/SpryValidationSelect.js'; ?>" type="text/javascript"></script>
+<link href="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) .'js/klimaire/SpryValidationSelect.css'; ?>" rel="stylesheet" type="text/css" />
+
+<script src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) .'js/klimaire/SpryValidationTextField.js'; ?>" type="text/javascript"></script>
+<link href="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) .'js/klimaire/SpryValidationTextField.css'; ?>" rel="stylesheet" type="text/css" />
+
+<script src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) .'js/klimaire/SpryValidationTextarea.js'; ?>" type="text/javascript"></script>
+<link href="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) .'js/klimaire/SpryValidationTextarea.css'; ?>" rel="stylesheet" type="text/css" />
+
+
+
+</head>
+<body>
+
+<div class="main-frame">
+<div class="heading-holder">
+<div class="heading">
+<div style="display: none;">
+<ul class="breadcrumbs">
+<li><a href="index.html">Home</a></li>
+<li>&gt;</li>
+<li><a href="index.html">Homeowner Reseach Center</a></li>
+<li>&gt;</li>
+<li><a href="index.html">Contact Rheem</a></li>
+</ul>
+</div>
+</div>
+</div>
+
+<div>
+<div id="ctl00_middle_SendMail1_panelUpdateProgress">
+<div id="ctl00_middle_SendMail1__UpdateProgress" style="display: none;">
+<div id="ctl00_middle_SendMail1_divProgress" class="LoadingPanel"><label>Loading, please wait ... Thank you for your patience.</label> <img style="margin-top: 10px;" src="{{skin_url = images/Contact_Loading.gif}}" alt="" /></div>
+</div>
+</div>
+
+
+
+<h1><img class="ListItemImage" src = " <?php echo $this->getSkinUrl('images/icon-contact-30px.png') ?> " alt="" />Contact Form</h1>
+<div class="ltgray-bkg contact-container">
+
+<p><strong>We highly appriciate your Interest in our products.Your valued Questions and Comments are Welcomed.</strong></p>
+
+<form action="<?php echo $this->getUrl('contactus/index/post/'); ?>" id="warranty_contactus_Form" name="contactus_Form" method="post">
+<table class="contactformstuff" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td>
+<table style="width: 330px;">
+<tbody>
+<tr class="header">
+<td colspan="2"><strong>Personal Contact Information</strong></td>
+</tr>
+
+<tr>
+<td colspan="2">
+<!-- <p>Your questions and comments are important to us.</p> -->
+<p>*Please fill out all information to submit.</p>
+</td>
+</tr>
+
+<tr>
+<td align="right"><label>Name: <span id="lab_name" style="color: red;">*</span></label></td>
+<td>
+<span id="sprytextfield1">
+<input id="name" class="required-entry" name="name" type="text" />
+<span class="textfieldRequiredMsg">Name is required.</span><span class="textfieldInvalidFormatMsg">Invalid Phone</span></span>
+</td>
+
+</tr>
+
+<tr>
+<td align="right"><label>City: <span id="lab_city" class="Medium EntryField" style="color: red;">*</span></label></td>
+<td>
+<span id="sprytextfield3">
+<input id="city" class="required-entry" name="city" type="text" />
+<span class="textfieldRequiredMsg">City is required.</span><span class="textfieldInvalidFormatMsg">Invalid Phone</span>
+</span>
+</td>
+</tr>
+<tr>
+<td align="right"><label>State:</label> <span id="lab_state" style="color: red;">*</span></td>
+<td>
+
+
+<span id="spryselect11">
+<select id="state" class="required-entry validate-state" name="state" style="width:137px;"> 
+<option value="" selected>Select a State</option> <option value="Alabama">Alabama</option> <option value="Alaska">Alaska</option> <option value="Arizona">Arizona</option> <option value="Arkansas">Arkansas</option>
+<option value="CANADA">Canada</option>
+<option value="California">California</option> <option value="Colorado">Colorado</option> <option value="Connecticut">Connecticut</option> <option value="Delaware">Delaware</option> <option value="Florida">Florida</option> <option value="Georgia">Georgia</option> <option value="Hawaii">Hawaii</option> <option value="Idaho">Idaho</option> <option value="Illinois">Illinois</option> <option value="Indiana">Indiana</option> <option value="Iowa">Iowa</option> <option value="Kansas">Kansas</option> <option value="Kentucky">Kentucky</option> <option value="Louisiana">Louisiana</option> <option value="Maine">Maine</option> <option value="Maryland">Maryland</option> <option value="Massachusetts">Massachusetts</option> <option value="Michigan">Michigan</option> <option value="Minnesota">Minnesota</option> <option value="Mississippi">Mississippi</option> <option value="Missouri">Missouri</option> <option value="Montana">Montana</option> <option value="Nebraska">Nebraska</option> <option value="Nevada">Nevada</option> <option value="New Hampshire">New Hampshire</option> <option value="New Jersey">New Jersey</option> <option value="New Mexico">New Mexico</option> <option value="New York">New York</option> <option value="North Carolina">North Carolina</option> <option value="North Dakota">North Dakota</option> <option value="Ohio">Ohio</option> <option value="Oklahoma">Oklahoma</option> <option value="Oregon">Oregon</option> <option value="Pennsylvania">Pennsylvania</option> <option value="Rhode Island">Rhode Island</option> <option value="South Carolina">South Carolina</option> <option value="South Dakota">South Dakota</option> <option value="Tennessee">Tennessee</option> <option value="Texas">Texas</option>
+<option value="UNITED STATES">United State</option>
+ <option value="Utah">Utah</option> <option value="Vermont">Vermont</option> <option value="Virginia">Virginia</option> <option value="Washington">Washington</option> <option value="West Virginia">West Virginia</option> <option value="Wisconsin">Wisconsin</option> <option value="Wyoming">Wyoming</option><option value="Alberta">Alberta</option> <option value="British Columbia">British Columbia</option> <option value="Manitoba">Manitoba</option> <option value="New Brunswick">New Brunswick</option> <option value="Newfoundland and Labrador">Newfoundland and Labrador</option> <option value="Northwest Territories">Northwest Territories</option> <option value="Nova Scotia">Nova Scotia</option> <option value="Nunavut">Nunavut</option> <option value="Ontario">Ontario</option> <option value="Prince Edward Island">Prince Edward Island</option> <option value="Quebec">Quebec</option> <option value="Saskatchewan">Saskatchewan</option> <option value="Yukon">Yukon</option> </select>
+	<span class="selectRequiredMsg">Please select a rating.</span>
+	</span>
+			
+</td>
+</tr>
+
+<tr>
+<td align="right"><label>Country: </label>&nbsp;</td>
+<td>
+<?php $_countries = Mage::getResourceModel('directory/country_collection')
+                                    ->loadData()
+                                    ->toOptionArray(false) ?>
+<?php if (count($_countries) > 0): ?>
+    <select name="country" id="country" style="width:137px;">
+        <?php foreach($_countries as $_country): ?>
+            <option value="<?php echo $_country['value']  ?>"  <?php if($_country['value'] == 'US') { echo 'selected="selected"'; }?>  >
+                <?php echo $_country['label'] ?>
+            </option>
+        <?php endforeach; ?>
+    </select>
+<?php endif; ?>
+&nbsp;</td>
+</tr>
+<tr>
+<td align="right"><label>ZIP: <span id="lab_zipcode" style="color: red;">*</span></label></td>
+<td>
+<span id="sprytextfield4">
+<input id="zipcode" class="required-entry validate-zip" name="zipcode" type="text" />
+<span class="textfieldRequiredMsg">Zip is required.</span><span class="textfieldInvalidFormatMsg">Invalid Zip</span>
+</td>
+</tr>
+<tr>
+<td align="right"><label>Company Name:</label></td>
+<td><input id="company_name" class="Medium EntryField" name="company_name" type="text" style="width:132px;"/></td>
+</tr>
+<tr>
+
+<td align="right"><label>Phone: <span id="lab_phone" style="color: red;">*</span></label></td>
+<td>
+<span id="sprytextfield5">
+<input id="phone" class=" required-entry validate-phoneStrict" name="phone" type="text" />
+<span class="textfieldRequiredMsg">Phone is required.</span><span class="textfieldInvalidFormatMsg">Invalid Phone</span></span>
+</td>
+</tr>
+<tr>
+<td align="right"><label>Email:</label> <span id="email" style="color: red;">*</span></td>
+<td>
+<span id="sprytextfield6">
+<input id="email" class="required-entry validate-email" name="email" type="text" /> &nbsp;
+<span class="textfieldRequiredMsg">Email is required.</span><span class="textfieldInvalidFormatMsg">Invalid Email</span>
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+<td>
+<table style="width: 290px;">
+<tbody>
+<tr class="header">
+<!-- <td colspan="2"><strong>Product Information</strong></td> -->
+<td colspan="2"><strong>Requested</strong></td>
+</tr>
+<tr>
+<td align="right"><label>Select Topic:</label><span id="ctl00_middle_SendMail1_RequiredFieldValidator1" style="color: red;">*</span></td>
+<td>
+<span id="spryselect9">
+<select id="topic" style="width: 190px;" name="topic" class=" required-entry validate-select"> <option selected="selected">Choose an option</option>
+
+<option value="General">General</option>
+<option value="Heating Cooling">Heating &amp; Cooling</option>
+<option value="Water Heating">Water Heating</option>
+<option value="Ventilation">Ventilation</option>
+<option value="Indoor Air Quality">Indoor Air Quality</option>
+<option value="Replacement Port">Replacement Port</option>
+<option value="International">International</option>
+<option value="Inquiry">Inquiry</option>
+
+</select>
+
+<span class="selectRequiredMsg">Please select an item.</span>
+</span>
+ </td>
+</tr>
+
+
+<tr>
+<td colspan="2"><span style="padding-bottom: 6px; font-size: 12px; color: #000; display: block;">Comments <span id="comment" style="color: red;">*</span> </span> 
+
+<span id="sprytextarea7">
+<textarea id="comment" class="required-entry" style="width: 300px; height: 190px;" cols="20" rows="15" name="comment"></textarea><br />
+<span class="textareaRequiredMsg">The value is required.</span> </span>
+</td>
+</tr>
+<tr>
+<td style="padding: 6px 10px 0 0; margin: 0px;" colspan="4">
+<input type="submit" name="submit" value=" Submit " class="button-buynow" onClick="contact_custom_validation();" style="margin:25px 10px 15px 217px;" />
+
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+
+</form>
+<script type="text/javascript">
+<!-- var sprytextfield1 = new Spry.Widget.ValidationTextField("sprytextfield1"); -->
+var sprytextfield1 = new Spry.Widget.ValidationTextField("sprytextfield1", "zip_code", {format:"phone_custom" ,validateOn:["blur", "change"]});
+<!-- var sprytextfield2 = new Spry.Widget.ValidationTextField("sprytextfield2"); -->
+var sprytextfield3 = new Spry.Widget.ValidationTextField("sprytextfield3", "zip_code", {format:"phone_custom" ,validateOn:["blur", "change"]});
+var sprytextfield4 = new Spry.Widget.ValidationTextField("sprytextfield4","zip_code", {format:"zip_us5",validateOn:["blur", "change"]});
+
+var sprytextfield5 = new Spry.Widget.ValidationTextField("sprytextfield5", "zip_code", {format:"phone_custom" , pattern:"000-000-0000",validateOn:["blur", "change"]});
+
+
+
+var sprytextfield6= new Spry.Widget.ValidationTextField("sprytextfield6", "email",{validateOn:["blur", "change"]}); 
+var sprytextarea7 = new Spry.Widget.ValidationTextarea("sprytextarea7",{validateOn:["blur", "change"]});
+
+
+
+ <!--var ValidSelect11 = new Spry.Widget.ValidationSelect("spryselect11","none",{validateOn:['blur','change'],invalidValue:""});
+ -->
+var spryselect11 = new Spry.Widget.ValidationSelect("spryselect11", {validateOn:["blur", "change"]});
+
+<!-- var comments2 = new Spry.Widget.ValidationTextarea("comments2", {validateOn:["blur", "change"]}); -->
+
+
+</script>
+</body>
+</html>

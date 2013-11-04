@@ -1,0 +1,285 @@
+<html>
+<head>
+
+<script src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) .'js/klimaire/SpryValidationTextField.js'; ?>" type="text/javascript"></script>
+<link href="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) .'js/klimaire/SpryValidationTextField.css'; ?>" rel="stylesheet" type="text/css" />
+
+<script src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) .'js/klimaire/SpryValidationSelect.js'; ?>" type="text/javascript"></script>
+<link href="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) .'js/klimaire/SpryValidationSelect.css'; ?>" rel="stylesheet" type="text/css" />
+
+<script src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) .'js/klimaire/SpryValidationTextarea.js'; ?>" type="text/javascript"></script>
+<link href="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) .'js/klimaire/SpryValidationTextarea.css'; ?>" rel="stylesheet" type="text/css" />
+
+
+
+</head>
+<body>
+<script type="text/javascript">
+<?php $_countries = Mage::getResourceModel('directory/country_collection')
+                                    ->loadData()
+                                    ->toOptionArray(false) 
+									?>										
+									
+									
+<?php if (count($_countries) > 0): ?>
+   
+        <?php foreach($_countries as $_country): ?>
+          //var country['<?php //echo $_country['country_code']?>']="<?php// echo $_country['value']  ?>" 
+		   //$regionCollection = Mage::getModel('directory/region_api')->items();
+     <?php
+	 $regionCollection1 = Mage::getModel('directory/region_api')->items($_country['value']);
+    if(!empty($regionCollection1))
+    {
+		foreach($regionCollection1 as $region1) {?>
+              var <?php echo $_country['value']?>['<?php echo $region1['name']?>']; 
+			  <?php
+        }
+
+    }
+         endforeach; ?>
+    
+<?php endif; ?>
+<?php
+
+
+   
+
+?>
+function fillStateByCountry(countryID)
+{
+	alert("hello");
+	
+  //  var request1 = new Ajax.Request(
+//        '<?php //echo $this->getUrl("contactus/index/ajaxregion/"); ?>?region=' + countryID,
+//        {
+//            method: 'post',
+//            onComplete: function(transport){
+//                var jsonResponse=transport.responseText;
+//                document.getElementById('state').innerHTML=jsonResponse;
+//            },
+//            parameters: Form.serialize($("contactus_Form"))
+//        }
+//    );
+
+for (i=0;i<count(countryID);i++)
+{
+	alert(countryID[i]);	
+}
+
+
+}
+</script>
+
+<div class="main-frame">
+<div class="heading-holder">
+<div class="heading">
+</div>
+</div>
+
+<div>
+<div id="ctl00_middle_SendMail1_panelUpdateProgress">
+<div id="ctl00_middle_SendMail1__UpdateProgress" style="display: none;">
+<div id="ctl00_middle_SendMail1_divProgress" class="LoadingPanel"><label>Loading, please wait ... Thank you for your patience.</label> <img style="margin-top: 10px;" src="{{skin_url = images/Contact_Loading.gif}}" alt="" /></div>
+</div>
+</div>
+
+
+<div id="ctl00_middle_SendMail1__UpdatePanel">
+<div class="contactus">
+<div class="hrc-container">
+<h1><img class="ListItemImage" src = " <?php echo $this->getSkinUrl('images/icon-contact-30px.png') ?> " alt="" />Contact Form</h1>
+<div class="ltgray-bkg contact-container">
+<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('contactmsg')->toHtml(); ?> 
+<form action="<?php echo $this->getUrl('contactus/index/post/'); ?>" id="warranty_contactus_Form" name="contactus_Form" method="post">
+<table class="contactformstuff" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td>
+<table style="width: 330px;">
+<tbody>
+<tr class="header">
+<td colspan="2"> <!-- <strong>Personal Contact Information</strong> --> </td>
+</tr>
+<tr>
+<td colspan="2">
+<!-- <p>Your questions and comments are important to us.</p> -->
+<p>*Please fill out all information to submit.</p>
+</td>
+</tr>
+<tr>
+<td align="right"><label>Name: <span id="lab_name" style="color: red;">*</span></label></td>
+<td>
+<span id="sprytextfield1">
+<input id="name" class="required-entry" name="name" type="text" />
+<span class="textfieldRequiredMsg">Name is required.</span><span class="textfieldInvalidFormatMsg">Invalid Phone1</span></span>
+</td>
+
+</tr>
+
+<tr>
+<td align="right"><label>City: <span id="lab_city" class="Medium EntryField" style="color: red;">*</span></label></td>
+<td>
+<span id="sprytextfield3">
+<input id="city" class="required-entry" name="city" type="text" />
+<span class="textfieldRequiredMsg">City is required.</span><span class="textfieldInvalidFormatMsg">Invalid Phone</span>
+</span>
+</td>
+</tr>
+
+<tr>
+<td align="right"><label>Country: </label>&nbsp;</td>
+<td>
+
+<div class="field">
+    <div class="input-box">
+        <?php echo $this->getCountryHtmlSelect() ?>
+    </div>
+</div>
+&nbsp;</td>
+</tr>
+<tr>
+<td align="right"><label>State:</label></td>
+<td>
+
+<div class="field">
+<div class="input-box">
+    <select id="region_id" name="region_id" title="<?php echo $this->__('State/Province') ?>" class="validate-select required-entry" style="display:none;">
+        <option value=""><?php echo $this->__('Please select region, state or province') ?></option>
+    </select>
+    <script type="text/javascript">
+    //<![CDATA[
+        $('region_id').setAttribute('defaultValue', "<?php echo $this->getFormData()->getRegionId() ?>");
+    //]]>
+    </script>
+    <input type="text" id="region" name="region" value="<?php echo $this->htmlEscape($this->getRegion()) ?>" title="<?php echo $this->__('State/Province') ?>" class="input-text required-entry" style="display:none;" />
+</div>
+</div>
+
+<?php /* ?>                  
+<div id="thestate">
+<select id="state" class="required-entry validate-state" name="state" style="width:137px;"> 
+<option value="" selected>Select a State</option>
+
+</select>
+<br />
+<span class="selectRequiredMsg">Please select a State.</span>
+</div>
+<span class="selectRequiredMsg">Please select an State.</span> </span>
+<?php */ ?>	
+</td>
+</tr>
+<tr>
+<td align="right"><label>ZIP: <span id="lab_zipcode" style="color: red;">*</span></label></td>
+<td>
+<span id="sprytextfield4">
+<input id="zipcode" class="required-entry validate-zip" name="zipcode" type="text" />
+<span class="textfieldRequiredMsg">Zip is required.</span><span class="textfieldInvalidFormatMsg">Invalid Zip</span>
+</td>
+</tr>
+<tr>
+<td align="right"><label>Company Name:</label></td>
+<td><input id="company_name" class="Medium EntryField" name="company_name" type="text" style="width:132px;"/></td>
+</tr>
+<tr>
+
+<td align="right"><label>Phone: <span id="lab_phone" style="color: red;">*</span></label></td>
+<td>
+<span id="sprytextfield5">
+<input id="phone" class=" required-entry validate-phoneStrict" name="phone" type="text" />
+<span class="textfieldRequiredMsg">Phone is required.</span><span class="textfieldInvalidFormatMsg">Please enter a valid phone number. For example 123-456-7890.</span></span>
+</td>
+</tr>
+<tr>
+<td align="right"><label>Email:</label> <span id="email" style="color: red;">*</span></td>
+<td>
+<span id="sprytextfield6">
+<input id="email" class="required-entry validate-email" name="email" type="text" /> &nbsp;
+<span class="textfieldRequiredMsg">Email is required.</span><span class="textfieldInvalidFormatMsg">Invalid Email</span>
+</td>
+</tr>
+<tr>
+<td colspan="2">
+Additional Contact Information:<br />
+<br />
+<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('address')->toHtml(); ?> 
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+<td>
+<table style="width: 290px;">
+<tbody>
+<tr class="header">
+<td colspan="2"> <!-- <strong>Product Information</strong> --> </td>
+</tr>
+<tr>
+<td align="right"><label>Select Topic:</label><span id="ctl00_middle_SendMail1_RequiredFieldValidator1" style="color: red;">*</span></td>
+<td>
+<div id="thetopic">
+<select id="topic" style="width: 190px;" name="topic" class=" required-entry validate-select"> <option selected="selected">Choose an option</option>
+
+<option value="General">General</option>
+<option value="Heating Cooling">Heating &amp; Cooling</option>
+<option value="Indoor Air Quality">Indoor Air Quality</option>
+<option value="International">International</option>
+<option value="Inquiry">Inquiry</option>
+<option value="Replacement Port">Replacement Part</option>
+<option value="Ventilation">Ventilation</option>
+<option value="Water Heating">Water Heating</option>
+
+</select><br />
+<span class="selectRequiredMsg">Please select a Topic.</span>
+</div>
+<span class="selectRequiredMsg">Please select an Topic.</span> </span>
+ </td>
+</tr>
+<tr>
+<td colspan="2"><span style="padding-bottom: 6px; font-size: 12px; color: #000; display: block;">Comments <span id="ctl00_middle_SendMail1_MessageRequiredField" style="color: red;">*</span> </span>
+<span id="comments2">
+<textarea id="ctl00_middle_SendMail1_txtMessage" class="EntryField" style="width: 300px; height: 190px;" cols="20" rows="15" name="ctl00$middle$SendMail1$txtMessage"></textarea>
+<span class="textareaRequiredMsg">Please write Comments.</span> </span>
+</td>
+</tr>
+<tr>
+<td>
+<input type="submit" name="submit" value=" Submit " class="button-buynow" onClick="contact_custom_validation();" />
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</form>
+
+<script language="javascript">
+var sprytextfield1 = new Spry.Widget.ValidationTextField("sprytextfield1", "zip_code", {format:"phone_custom" ,validateOn:["blur", "change"]});
+var sprytextfield3 = new Spry.Widget.ValidationTextField("sprytextfield3", "zip_code", {format:"phone_custom" ,validateOn:["blur", "change"]});
+
+var comments2 = new Spry.Widget.ValidationTextarea("comments2", {hint:"Write a Comments", validateOn:["blur"]});
+	
+var theRating = new Spry.Widget.ValidationSelect("thetopic", {validateOn:["change"]});
+
+var thestate = new Spry.Widget.ValidationSelect("thestate", {validateOn:["change"]});
+
+var sprytextfield4 = new Spry.Widget.ValidationTextField("sprytextfield4","zip_code", {format:"zip_us5",validateOn:["blur", "change"]});
+
+var sprytextfield5 = new Spry.Widget.ValidationTextField("sprytextfield5", "zip_code", {format:"phone_custom" , pattern:"000-000-0000",validateOn:["blur", "change"]});
+
+var sprytextfield6= new Spry.Widget.ValidationTextField("sprytextfield6", "email",{validateOn:["blur", "change"]}); 
+
+new RegionUpdater('country', 'region', 'region_id', <?php echo $this->helper('directory')->getRegionJson() ?>, undefined, 'zip');
+</script>
+</body>
+</html>

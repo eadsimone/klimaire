@@ -1,0 +1,7 @@
+<?php
+$html = $this->getChildHtml();
+?>
+	<?php if ($this->countChildren() > 0 && $html != ''): ?>
+		<?php echo $this->getChildHtml() ?>
+	<?php endif ?>
+	

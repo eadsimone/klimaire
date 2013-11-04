@@ -1,0 +1,407 @@
+<?php
+/**
+ * Unirgy_StoreLocator extension
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ *
+ * @category   Unirgy
+ * @package    Unirgy_StoreLocator
+ * @copyright  Copyright (c) 2008 Unirgy LLC
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+
+/**
+ * @category   Unirgy
+ * @package    Unirgy_StoreLocator
+ * @author     Boris (Moshe) Gurevich <moshe@unirgy.com>
+ */
+?>
+<?php
+$_apiKey = Mage::getStoreConfig('ustorelocator/general/google_api_key');
+$_showMap = Mage::getStoreConfig('ustorelocator/general/show_map');
+$_showSearch = Mage::getStoreConfig('ustorelocator/general/show_search');
+$_defaultLocation = Mage::getStoreConfig('ustorelocator/general/default_location');
+$_defaultRadius = Mage::getStoreConfig('ustorelocator/general/default_radius');
+?>
+<script src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) .'js/klimaire/SpryValidationTextField.js'; ?> " type="text/javascript"></script>
+<link href=" <?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) .'js/klimaire/SpryValidationTextField.css'; ?> " rel="stylesheet" type="text/css" />
+<style type="text/css">
+#sidebar a {
+	cursor:pointer;
+	background:url(<?php echo $this->getSkinUrl('images/line.jpg') ?>) repeat-y left top #fff;
+	display:block;
+	float:left;
+	padding:5px;
+	color:#444;
+	border: solid 1px #ddd;
+	width:588px;
+	border-bottom:none;
+}
+#sidebar a:hover {
+	background:url(<?php echo $this->getSkinUrl('images/line_hover.jpg') ?>) repeat-y left top #eee;
+}
+#storelocator-container { /*width:655px;*/
+	font-family:Arial, sans-serif;
+	font-size:11px; /*border:1px solid black;*/
+	background:white;
+}
+#sidebar {
+	overflow: auto;
+	font-size: 11px;
+	color: #000;
+	width:600px !important;
+	border-bottom:solid 1px #ddd;
+	padding:0;
+}
+.product-installed {
+	width:304px !important;
+	padding-left:10px;
+	margin-left:10px;
+}
+.product-installed .title {
+	top:0;
+	left:0;
+	position:relative;
+	padding-left:0
+}
+#sidebar li {
+	color:#444;
+	list-style: disc;
+}
+#map {
+	overflow: hidden; /*width:410px;*/
+	height:400px;
+}
+.button-map {
+	background: none repeat scroll 0 0 #0D7F02;
+	border: 1px solid #076300;
+	color: #FFFFFF;
+	cursor: pointer;
+	height: 25px;
+	padding: 0 2px;
+	width: auto;
+}
+#sidebar ul{ padding-left:10px;}
+</style>
+<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=<?php echo $_apiKey ?>" type="text/javascript"></script>
+<script type="text/javascript">
+//<![CDATA[
+
+function UnirgyStoreLocator(config) {
+    var map;
+    var geocoder;
+
+    function searchLocationsNear(center, params) {
+        var searchUrl = config.searchUrl+'?lat='+center.lat()+'&lng='+center.lng()+'&'+Object.toQueryString(params);
+        GDownloadUrl(searchUrl, function(data) {
+            var xml = GXml.parse(data);
+            var entries = xml.documentElement.getElementsByTagName('marker');
+            map.clearOverlays();
+
+            var sidebar = config.sidebarEl;
+            sidebar.innerHTML = '';
+            if (entries.length == 0) {
+                sidebar.innerHTML = 'No results found.';
+                map.setCenter(new GLatLng(40, -100), 4);
+                return;
+            }
+
+            var bounds = new GLatLngBounds();
+            for (var i = 0; i < entries.length; i++) {
+                var entry = {};
+                for (var j = 0, l = entries[i].attributes.length; j < l; j++) {
+                    entry[entries[i].attributes[j].nodeName] = entries[i].attributes[j].nodeValue;
+                };
+                var point = new GLatLng(parseFloat(entry.latitude), parseFloat(entry.longitude));
+                bounds.extend(point);
+                var marker = createMarker(entry, point);
+                map.addOverlay(marker);
+                var sidebarEntry = createSidebarEntry(entry, marker);
+                sidebar.appendChild(sidebarEntry);
+             }
+             map.setCenter(bounds.getCenter(), map.getBoundsZoomLevel(bounds));
+        });
+    }
+
+    function escapeUserText(text) {
+        if (text === undefined) {
+            return null;
+        }
+        text = text.replace(/@/, "@@");
+        text = text.replace(/\\/, "@\\");
+        text = text.replace(/'/, "@'");
+        text = text.replace(/\[/, "@[");
+        text = text.replace(/\]/, "@]");
+        return encodeURIComponent(text);
+    };
+
+    function createLabeledMarkerIcon(m) {
+        var opts = config.iconOpts || {};
+
+        var primaryColor = opts.primaryColor || "#DA7187";
+        var strokeColor = opts.strokeColor || "#000000";
+        var starPrimaryColor = opts.starPrimaryColor || "#FFFF00";
+        var starStrokeColor = opts.starStrokeColor || "#0000FF";
+        var label = escapeUserText(opts.label) || "";
+        var labelColor = opts.labelColor || "#000000";
+        var addStar = m.star || false;
+
+        var pinProgram = (addStar) ? "pin_star" : "pin";
+        var baseUrl = "http://chart.apis.google.com/chart?cht=d&chdp=mapsapi&chl=";
+        var iconUrl = baseUrl + pinProgram + "'i\\"
+            + "'[" + m.marker_label +  "'-4'f\\"  + "hv'a\\]" + "h\\]o\\"
+            + primaryColor.replace("#", "")  + "'fC\\"
+            + labelColor.replace("#", "")  + "'tC\\"
+            + strokeColor.replace("#", "")  + "'eC\\";
+        if (addStar) {
+            iconUrl += starPrimaryColor.replace("#", "") + "'1C\\"
+                + starStrokeColor.replace("#", "") + "'0C\\";
+        }
+        iconUrl += "Lauto'f\\";
+
+        var icon = new GIcon(G_DEFAULT_ICON);
+        icon.image = iconUrl + "&ext=.png";
+        icon.iconSize = (addStar) ? new GSize(23, 39) : new GSize(21, 34);
+        return icon;
+    }
+
+    function createMarker(m, point) {
+        var icon = createLabeledMarkerIcon(m);
+        var marker = new GMarker(point, icon);
+        GEvent.addListener(marker, 'click', function() {
+            marker.openInfoWindowHtml(config.generateMarkerHtml(m));
+        });
+        return marker;
+    }
+
+    function createSidebarEntry(m, marker) {
+        var a = document.createElement('a');
+        a.href = "javascript:void(0)";
+        var icon = createLabeledMarkerIcon(m);
+        //var html = '<img src="'+icon.image+'" style="float:left"/>';
+		var html = '<div style="float:left; display: none;"><img src="'+icon.image+'" /></div>';
+        html += config.generateSidebarHtml(m);
+        a.innerHTML = html;
+        GEvent.addDomListener(a, 'click', function() {
+            GEvent.trigger(marker, 'click');
+        });
+        return a;
+    }
+
+    return {
+        load: function () {
+            if (!GBrowserIsCompatible()) return;
+            geocoder = new GClientGeocoder();
+            map = new GMap2(config.mapEl);
+            map.addControl(new GSmallMapControl());
+            map.addControl(new GMapTypeControl());
+            map.setCenter(new GLatLng(40, -100), 4);
+        },
+        search: function(address, params) {
+            geocoder.getLatLng(address, function(latlng) {
+                if (!latlng) {
+                    alert('Zip is not valid: '+address);
+                } else {
+                    searchLocationsNear(latlng, params);
+                }
+            });
+        }
+    };
+}
+
+//]]>
+</script>
+<div id="body-part">
+  <div class="page-title category-title">
+    <h1><?php echo $this->__('Find a Dealer')?></h1>
+  </div>
+  <div>
+    <div style="width:25%; float:left;">
+      <!-- zip form -->
+      <div>
+        <?php if ($_showSearch): ?>
+        <form id="store_locator_form" onsubmit="return false">
+          <fieldset class="group-select">
+          <ul>
+            <li> <span id="sprytextfield1">
+              <label for="address"><strong><?php echo $this->__('Enter Zip Code')?></strong></label>
+              <br/>
+              <input type="text" class="input-text" id="address" name="address" style="width:74px;"/>
+              <span class="textfieldRequiredMsg">Zip is required.</span><span class="textfieldInvalidFormatMsg">Invalid Zip</span></span> </li>
+            <li>
+              <div class="input-box" style="width:95px;">
+                <label for="radius"><strong><?php echo $this->__('Radius')?></strong></label>
+                <br/>
+                <select id="radius" name="radius" style="width:80px;">
+                  <option value="5">5</option>
+                  <option value="10">10</option>
+                  <option value="15" selected>15</option>
+                  <option value="25">25</option>
+                </select>
+              </div>
+              <!--
+                            <div class="input-box">
+                            <label for="product_type"><?php echo $this->__('Product Type')?></label><br/>
+                            <select id="product_type" name="product_type" style="width:211px;">
+                              <option value="" selected><?php echo $this->__('All')?></option>
+                              <option value="type1"><?php echo $this->__('Type 1')?></option>
+                              <option value="type2"><?php echo $this->__('Type 2')?></option>
+                              <option value="type3"><?php echo $this->__('Type 3')?></option>
+                            </select>
+                            </div>
+                            -->
+              <?php /*?><label for="products_of_interest" class="required"><strong><?php echo $this->__('Products of Interest:') ?></strong></label><?php */?>
+              <br />
+              <div style="margin-left:10px;">
+                <?php /* ?>
+                <label><strong class="main_title"><?php echo $this->__('Products of Interest (Klimaire):');?></strong></label>
+                <br />
+                <?php $_productOfKlimare = $this->helper('customer')->getKlimareProductOfInterest();?>
+                <?php foreach($_productOfKlimare as $_key=>$_options):?>
+                <label for="<?php echo $_key;?>"><?php echo ucwords(str_replace('-',' ',$_key));?></label>
+                <br />
+                <?php foreach($_options as $_opKey=>$_option):?>
+                <input style="margin-left: 10px" type="checkbox" value="<?php echo $_opKey;?>" name="products_of_interest_klimaire[]" class="products-of-interest-klimare" />
+                <span style="padding-left: 10px"><?php echo $this->__($_option);?></span><br />
+                <?php endforeach;?>
+                <?php endforeach;?>
+                <label ><strong class="main_title"><?php echo $this->__('Products of Interest (Maxwell):');?></strong></label>
+                <br />
+                <?php $_productOfMaxwell = $this->helper('customer')->getMaxwellProductOfInterest();?>
+                <?php foreach($_productOfMaxwell as $_key=>$value):?>
+                <input type="checkbox" value="<?php echo $_key;?>" name="products_of_interest_maxwell[]" class="products-of-interest-maxwell" />
+                <span style="padding-left: 10px"><?php echo $value;?></span><br />
+                <?php endforeach;?>
+                <?php */ ?>
+                <label><strong class="main_title"><?php echo $this->__('Products of Interest (Klimaire):');?></strong></label>
+                <br />
+                <label for="1">Ductless Split Systems</label><br />
+                           <input class="products-of-interest-klimare" style="margin-left: 10px" type="checkbox" value="1-1" name="products_of_interest_klimaire[]" <?php /*if(in_array($_opKey,$this->getFormData()->getProductsOfInterestKlimaire())) echo "checked='checked'" */?> /><span style="padding-left: 10px" >Multi-Split</span><br />
+                            <input class="products-of-interest-klimare" style="margin-left: 10px" type="checkbox" value="1-2" name="products_of_interest_klimaire[]" <?php /*if(in_array($_opKey,$this->getFormData()->getProductsOfInterestKlimaire())) echo "checked='checked'" */?> /><span style="padding-left: 10px" >Mini-Split</span><br />
+                            <input class="products-of-interest-klimare" style="margin-left: 10px" type="checkbox" value="1-3" name="products_of_interest_klimaire[]" <?php /*if(in_array($_opKey,$this->getFormData()->getProductsOfInterestKlimaire())) echo "checked='checked'" */?> /><span style="padding-left: 10px" >Mini VRF</span><br />
+                            <label for="2">Package Terminal Systems</label><br />
+                           <input class="products-of-interest-klimare" style="margin-left: 10px" type="checkbox" value="2-1" name="products_of_interest_klimaire[]" <?php /*if(in_array($_opKey,$this->getFormData()->getProductsOfInterestKlimaire())) echo "checked='checked'" */?> /><span style="padding-left: 10px" >PTAC</span><br />
+                            <input class="products-of-interest-klimare" style="margin-left: 10px" type="checkbox" value="2-2" name="products_of_interest_klimaire[]" <?php /*if(in_array($_opKey,$this->getFormData()->getProductsOfInterestKlimaire())) echo "checked='checked'" */?> /><span style="padding-left: 10px" >PTHP</span><br />
+                            <label for="3">Indoor Air Quality</label><br />
+                           <input class="products-of-interest-klimare" style="margin-left: 10px" type="checkbox" value="3-1" name="products_of_interest_klimaire[]" <?php /*if(in_array($_opKey,$this->getFormData()->getProductsOfInterestKlimaire())) echo "checked='checked'" */?> /><span style="padding-left: 10px" >Air Cleaners</span><br />
+                            <input class="products-of-interest-klimare" style="margin-left: 10px" type="checkbox" value="3-2" name="products_of_interest_klimaire[]" <?php /*if(in_array($_opKey,$this->getFormData()->getProductsOfInterestKlimaire())) echo "checked='checked'" */?> /><span style="padding-left: 10px" >Dehudimification Systems</span><br />
+                            <input class="products-of-interest-klimare" style="margin-left: 10px" type="checkbox" value="3-3" name="products_of_interest_klimaire[]" <?php /*if(in_array($_opKey,$this->getFormData()->getProductsOfInterestKlimaire())) echo "checked='checked'" */?> /><span style="padding-left: 10px" >Energy Recovery Units ER</span><br />
+                            <input class="products-of-interest-klimare" style="margin-left: 10px" type="checkbox" value="3-4" name="products_of_interest_klimaire[]" <?php /*if(in_array($_opKey,$this->getFormData()->getProductsOfInterestKlimaire())) echo "checked='checked'" */?> /><span style="padding-left: 10px" >Heat Recovery Units HR</span><br />
+                           <label for="4">Central Heating Cooling</label><br />
+                           <input class="products-of-interest-klimare" style="margin-left: 10px" type="checkbox" value="4-1" name="products_of_interest_klimaire[]" <?php /*if(in_array($_opKey,$this->getFormData()->getProductsOfInterestKlimaire())) echo "checked='checked'" */?> /><span style="padding-left: 10px" >Air Conditioners</span><br />
+                           <input class="products-of-interest-klimare" style="margin-left: 10px" type="checkbox" value="4-2" name="products_of_interest_klimaire[]" <?php /*if(in_array($_opKey,$this->getFormData()->getProductsOfInterestKlimaire())) echo "checked='checked'" */?> /><span style="padding-left: 10px" >Commercial VRF Systems</span><br />
+                           <input class="products-of-interest-klimare" style="margin-left: 10px" type="checkbox" value="4-3" name="products_of_interest_klimaire[]" <?php /*if(in_array($_opKey,$this->getFormData()->getProductsOfInterestKlimaire())) echo "checked='checked'" */?> /><span style="padding-left: 10px" >Cooling Coils</span><br />
+                           <input class="products-of-interest-klimare" style="margin-left: 10px" type="checkbox" value="4-4" name="products_of_interest_klimaire[]" <?php /*if(in_array($_opKey,$this->getFormData()->getProductsOfInterestKlimaire())) echo "checked='checked'" */?> /><span style="padding-left: 10px" >Gas Furnace</span><br />
+                           <input class="products-of-interest-klimare" style="margin-left: 10px" type="checkbox" value="4-5" name="products_of_interest_klimaire[]" <?php /*if(in_array($_opKey,$this->getFormData()->getProductsOfInterestKlimaire())) echo "checked='checked'" */?> /><span style="padding-left: 10px" >Heat Pumps</span><br />
+                           <input class="products-of-interest-klimare" style="margin-left: 10px" type="checkbox" value="4-6" name="products_of_interest_klimaire[]" <?php /*if(in_array($_opKey,$this->getFormData()->getProductsOfInterestKlimaire())) echo "checked='checked'" */?> /><span style="padding-left: 10px" >Package Air Conditioner</span><br />
+                           <input class="products-of-interest-klimare" style="margin-left: 10px" type="checkbox" value="4-7" name="products_of_interest_klimaire[]" <?php /*if(in_array($_opKey,$this->getFormData()->getProductsOfInterestKlimaire())) echo "checked='checked'" */?> /><span style="padding-left: 10px" >Package Gas/Electric</span><br />
+                           <input class="products-of-interest-klimare" style="margin-left: 10px" type="checkbox" value="4-8" name="products_of_interest_klimaire[]" <?php /*if(in_array($_opKey,$this->getFormData()->getProductsOfInterestKlimaire())) echo "checked='checked'" */?> /><span style="padding-left: 10px" >Package Heat Pump</span><br />
+                           <input class="products-of-interest-klimare" style="margin-left: 10px" type="checkbox" value="4-9" name="products_of_interest_klimaire[]" <?php /*if(in_array($_opKey,$this->getFormData()->getProductsOfInterestKlimaire())) echo "checked='checked'" */?> /><span style="padding-left: 10px" >Package Water Source</span><br />
+                            <br />
+                            <label for="products_of_interest_maxwell" class="required"><?php echo $this->__('Products of Interest (Maxwell):') ?></label><br />
+                            <input class="products-of-interest-maxwell" type="checkbox" value="1" name="products_of_interest_maxwell[]" <?php /*if(in_array($_key,$this->getFormData()->getProductsOfInterestMaxwell())) echo "checked='checked'"*/ ?> /><span style="padding-left: 10px">Air Curtains</span><br />
+                                <input class="products-of-interest-maxwell" type="checkbox" value="2" name="products_of_interest_maxwell[]" <?php /*if(in_array($_key,$this->getFormData()->getProductsOfInterestMaxwell())) echo "checked='checked'"*/ ?> /><span style="padding-left: 10px">Boiler & Heaters</span><br />
+                                <input class="products-of-interest-maxwell" type="checkbox" value="3" name="products_of_interest_maxwell[]" <?php /*if(in_array($_key,$this->getFormData()->getProductsOfInterestMaxwell())) echo "checked='checked'"*/ ?> /><span style="padding-left: 10px">Tankless Water Heaters</span><br />
+                            <br />
+              </div>
+            </li>
+          </ul>
+          <br/>
+          <input type="hidden" name="type" value="1-1,1-2" />
+          <input type="submit" class="form-button button-map" value="<?php echo $this->__('Submit')?>" />
+          <input type="reset" onclick="return resetContent()" class="form-button button-map" value="<?php echo $this->__('Reset')?>" />
+          <br/>
+          </fieldset>
+        </form>
+        <script type="text/javascript">
+			var sprytextfield1 = new Spry.Widget.ValidationTextField("sprytextfield1","zip_code", {format:"zip_us5",validateOn:["blur", "change"]});
+			</script>
+        <?php endif ?>
+      </div>
+      <!-- end zip form -->
+    </div>
+    <div style="width:75%; float:left;">
+
+      <div id="storelocator-results"  style="visibility:hidden;	width:600px; float:left;"> <span class="contractor_information"><?php echo $this->__('Contractor Information');?></span><span class="products_installed"><?php echo $this->__('Products of Interest (Klimaire & Maxwell)');?></span>
+        <div id="sidebar"></div>
+      </div>
+
+      <?php /*?><div id="storelocator-results" <?php if (!$_showMap): ?>style="visibility:hidden;"<?php endif ?> style="display:none"><?php */?>
+      <div style="display:none">
+        <div id="storelocator-container">
+          <div id="cm_mapTR">
+            <div id="map"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+function resetContent()
+{
+    $('sidebar').update('');
+}
+var ex;
+(function(){
+    var storeLocator = new UnirgyStoreLocator({
+        mapEl: $('map'),
+        sidebarEl: $('sidebar'),
+        searchUrl: '<?php echo $this->getUrl('ustorelocator/location/search')?>',
+        generateSidebarHtml: function(m) {
+			
+            return '<div style="float: left; margin: 0pt 0pt 0pt 10px; width: 226px; border-right: 1px solid #DDDDDD;  padding-right: 20px;"><b>' + m.title + '</b> <br/>'
+                + m.address_display.replace(/\n/, '<br/>')+'<br />Phone : '+m.phone+'<br />Distance : '+ parseFloat(m.distance).toFixed(1) + ' ' + m.units +'</div><div class="product-installed" style="float:left;width:auto">'+m.product_types+'</div><div class="clear"></div>';
+        },
+        generateMarkerHtml: function(m) {
+            var url = m.website_url.replace(/\s/,'');
+            return '<b>' + m.customer_name + '</b> <br/>'
+                + m.address_display.replace(/\n/, '<br/>') + '<br/>'
+                + (m.phone.length>5 ? m.phone + '<br/>' : '')
+                + '<br/>'
+                + (url.length>5 ? '<a href="' + (url.match(/@/) ? 'mailto:' : '') + url + '"><strong>' + url + '</strong></a><br/>' : '')
+                + '<p>' + m.notes + '</p>';
+        }
+    });
+	
+    Event.observe(window, 'load', function () {
+        storeLocator.load();
+
+<?php if ($_defaultLocation): ?>
+        $('storelocator-results').style.visibility = 'visible';
+        storeLocator.search('<?php echo addslashes($_defaultLocation) ?>', {
+            radius: '<?php echo addslashes($_defaultRadius) ?>'
+            /*, type: $('product_type').value*/
+        });
+<?php endif ?>
+    });
+
+    Event.observe(window, 'unload', GUnload);
+
+<?php if ($_showSearch): ?>
+    Event.observe($('store_locator_form'), 'submit', function() {
+        $('storelocator-results').style.visibility = 'visible';
+        var productType = '';
+        $$('.products-of-interest-klimare').each(function(element){
+           if(element.checked) {
+             productType += element.value+','; //alert(productType);
+		   }
+        });
+        $$('.products-of-interest-maxwell').each(function(element){
+           if(element.checked)
+             productType += element.value+',';
+        });
+        storeLocator.search($('address').value, {
+            radius: $('radius').value,
+            type: productType
+        });
+    });
+<?php endif ?>
+
+})();
+</script>

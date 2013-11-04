@@ -1,0 +1,327 @@
+<script type="text/javascript">
+function reset_lookup()
+{    
+    //document.getElementById('hidden_reset_flg').value='set';        
+    document.location.href = '<?php echo $this->getUrl('warrantyclaim/index/warrantylookup/'); ?>?hidden_reset_flg=set';
+}
+jQuery(document).ready(function() {
+		jQuery('#rdzipcode').click(function(){
+			if(jQuery('#rdzipcode').attr('checked')=='checked')
+			{
+				alert('Hi');
+			}
+		});
+	});
+</script>
+<style type="text/css">
+.validation-failed
+{
+    border-color: #EB340A !important;
+    background-color: #FAEBE7 !important; 
+}
+.validation-advice {
+    background-color: transparent;    
+    clear: both;
+    color: #EB340A;
+    font-size: 11px;
+    /*font-weight: bold;*/
+    line-height: 13px;
+    margin: 3px 0px 0px 0px;
+    min-height: 13px;
+    padding: 0px;
+}
+.warranty_block_class
+{ 
+    background-color: #CCC; 
+    padding: 2px; 
+    border: 1px solid #000;        
+}
+
+.button-wattantylookup {
+    background: none repeat scroll 0 0 #0D7F02;
+    border: 1px solid #076300;
+    color: #FFFFFF;
+    cursor: pointer;
+    height: 25px;
+    padding: 0 2px;
+    width: auto;
+}
+
+</style>
+
+<br />
+<form action="<?php echo $this->getUrl('warrantyclaim/index/warrantylookup/'); ?>" id="warranty_lookup_Form" name="warrantylookupForm" method="post" onsubmit="return Submit_LookUp();">
+<table width="100%" border="0" cellspacing="3" cellpadding="3" style="border: 1px solid #000;">
+  <tr>
+    <td width="200" rowspan="3" align="left" valign="top" scope="row" style="text-align: justify !important; border-right: 1px solid #000 !important;"><p><strong>Company</strong><br>
+      <br>
+    <strong>Klimaire</strong> is one of the youngest and fastest growing manufacturers of  mini and multi-split type air conditioning and heat pump systems, in the world.  Quick to recognize the potential and eager to participate as a major manufacturer in this industry. <strong>Klimaire</strong> has been continuously expanding  both its manufacturing and distribution operations at a very fast pace since  its founding. Today, its manufacturing operation has spread into several fully equipped factories located through the Globe.</p></td>
+    <td height="50" align="left" valign="top" style="text-align: justify !important; border-bottom: 1px solid #000 !important;"><strong>Advertisement</strong>.</td>
+  </tr>
+  <tr>
+    <td height="35" align="left" valign="middle"><p align="center"><strong>WARRANTY  &amp; REGISTRATION LOOK-UP</strong></p></td>
+  </tr>
+  <tr>
+    <td align="left" valign="top">
+      <table width="100%" border="0" cellspacing="1" cellpadding="1">
+        
+        <tr><th align="left" valign="top">Registration code:</th>
+        <td colspan="5" align="left" valign="top">
+        
+        <input type="text" name="reg_code" id="reg_code" value="<?php echo $_SESSION['warranty_lookup_result_data_reserve']['reg_code']; ?>" />
+        
+        </td></tr>
+                
+        <tr>
+          <th width="14%" align="left" valign="top" scope="row">(<span style="color:red">*</span>)First name:</th>
+          <td colspan="5" align="left" valign="top"><input type="text" name="fname" id="fname" class="input-text required-entry" value="<?php echo $_SESSION['warranty_lookup_result_data_reserve']['fname']; ?>" /></td>
+        </tr>
+        <tr>
+          <th align="left" valign="top" scope="row">(<span style="color:red">*</span>)Last name:</th>
+          <td colspan="5" align="left" valign="top"><input type="text" name="lname" id="lname" class="input-text required-entry" value="<?php echo $_SESSION['warranty_lookup_result_data_reserve']['lname']; ?>" /><br /></td>
+        </tr>  
+        <tr>
+            <td height="26" colspan="6" align="left" valign="middle" scope="row"> <span style="color:red">*</span><strong> Please enter one of the following fields</strong> </td>
+        </tr>  
+        <tr>
+           
+         <th width="15%" align="left" valign="top" scope="row">(<span style="color:red">*</span>)&nbsp;<input type="radio" name="cliamchecked" value="zipcode" id="rdzipcode" checked="checked" />Zip code:</th>
+          <td width="18%" align="left" valign="top"><input type="text" name="zipcode" id="txtzipcode" class="input-text required-entry" value="<?php echo $_SESSION['warranty_lookup_result_data_reserve']['zipcode']; ?>" size="15" /></td>
+          <th width="18%" align="left" valign="top">(<span style="color:red">*</span>)&nbsp;<input type="radio" name="cliamchecked" id="rdphoneno" value="phoneno" />Phone No.:</th>
+          <td width="16%" align="left" valign="top"><input type="text" name="phno" id="txtphoneno" class="input-text required-entry" value="<?php echo $_SESSION['warranty_lookup_result_data_reserve']['phno']; ?>" size="15" /></td>
+          <th width="18%" align="left" valign="top">(<span style="color:red">*</span>)&nbsp;<input type="radio" name="cliamchecked" value="serialno" id="rdserialno" />Serial No.:</th>
+          <td width="20%" align="left" valign="top"><input type="text" name="srno" id="txtserialno" class="input-text required-entry validate-code" value="<?php echo $_SESSION['warranty_lookup_result_data_reserve']['srno']; ?>" size="15" /></td>
+   </tr>
+        
+        <tr>
+          <td colspan="6" align="left" valign="top"><br />
+         <!--   * What happens when there is more. <br /> -->
+	  <br />
+            Subject to the terms and conditions of the applicable Limited warranty for more information please contact Klimaire Customer Relations 1-800 -261 COOL&reg;. When contacting customer relations, please have available your product serial number, and model number.
+          </td>
+        </tr>
+        <tr><td colspan="6" align="center" valign="top"><input type="submit" id="submit" value="   Search   " class="button-wattantylookup" name="submit" />&nbsp;<input type="hidden" name="hidden_reset_flg" id="hidden_reset_flg" value="" /><input type="button" name="reset" class="button-wattantylookup" value="   Reset   " onclick="reset_lookup();" /></td></tr>
+  </table>
+    </td>
+  </tr>
+</table>
+</form>
+
+
+<br /><br /><br />
+<?php
+    
+    //print_r($_SESSION['warranty_lookup_prod_result_arr']);     
+  
+    $warranty_lookup_prod_result_arr = Mage::helper('core')->jsonDecode($_SESSION['warranty_lookup_prod_result_arr']);
+ 	
+	//display message if no result found
+	if(count($warranty_lookup_prod_result_arr) == 0 && $_SESSION['noresult'] == '0')
+	{
+		echo "<center><strong>::&nbsp;Warranty Information&nbsp;::</strong></center><br />No Data exists based on the given criteria. Please change your criteria and search again.";	
+	}
+	
+	//end of display message 
+ 
+    if(count($warranty_lookup_prod_result_arr) > 0 )
+    {
+    ?>
+    <center><strong>::&nbsp;Warranty Information&nbsp;::</strong></center>
+    <br />
+<?php    
+        foreach($warranty_lookup_prod_result_arr as $result_val):
+		//foreach(list($result_val) = each($warranty_lookup_claim_result)):
+?>
+<br />
+<table width="100%" border="0" cellspacing="1" cellpadding="1" style="border: 1px solid #000;">
+  <tr align="left" valign="top">
+    <th colspan="2"><strong><u>Warranty Information</u></strong></th>
+  </tr>
+  <tr>
+    <td width="124" align="left" valign="top" scope="row"><strong>Model:</strong></td>
+    <td align="left" valign="top">
+    <?php
+    if(isset($result_val['prodcode']) && $result_val['prodcode'] != '')
+    echo 'Product Code: ',$result_val['prodcode'];
+    if(isset($result_val['prodcode']) && $result_val['prodcode'] != '' && isset($result_val['serialno']) && $result_val['serialno'] != '')
+    {
+        echo ',&nbsp;Serial No.: ',$result_val['serialno'];
+    }
+    else if(isset($result_val['serialno']) && $result_val['serialno'] != '')
+    {
+        echo 'Serial No.: ',$result_val['serialno'];
+    }    
+    ?>
+    </td>
+  </tr>
+  <!--<tr>
+    <td align="left" valign="top" scope="row"><strong>Model Description:</strong></td>
+    
+    <td align="left" valign="top">
+    <?php
+	//foreach($warranty_lookup_prod_result_arr as $vj_val):
+	 echo $result_val['short_description']; 
+	  //endforeach;
+	 ?>
+   </td>
+  </tr>-->  
+    <tr>
+    <td align="left" valign="top" scope="row"><strong>Warranty Type:</strong></td>
+    <td align="left" valign="top">
+    <?php
+	$warr_type = "";
+	//foreach($warranty_lookup_prod_result_arr as $vj_val1):
+	 $warr_type= $result_val['warr_type']; 
+	  //endforeach;
+	  //echo $warr_type;
+	 $warr_type = explode(',', $warr_type);
+	 echo "<ul>";
+	 for($j=0;$j<count($warr_type);$j++)
+	 {
+		echo "<li style=\"list-style:disc inside none\">".$warr_type[$j]."</li>"; 
+	 }
+	 echo "</ul>";
+	 ?>
+	
+    </td>
+  </tr>
+</table>
+<br />
+<br />
+<table width="100%" border="0" cellspacing="1" cellpadding="6" style="border: 1px solid #000;">  
+  <tr>
+      <td width="191" align="left" valign="top" scope="row"><strong>Dealer Name:&nbsp;</strong></td>
+    <td align="left" valign="top"><?php echo $result_val['dealername']; ?></td>
+  </tr>
+  <tr>
+    <td align="left" valign="top" scope="row"><strong>Date Installed:&nbsp;</strong></td>
+    <td align="left" valign="top">
+    <?php 
+    $tmp = explode(' ',$result_val['installedon']);
+    $tmp_dt = $tmp[0];
+    $tmp_yr = str_replace('-','',strstr($tmp_dt,'-',true));
+    $tmp_dt = str_replace($tmp_yr.'-','',$tmp_dt);
+    $tmp_mn = str_replace('-','',strstr($tmp_dt,'-',true));
+    $tmp_dt = str_replace($tmp_mn.'-','',$tmp_dt);
+    echo $tmp_mn.'-'.$tmp_dt.'-'.$tmp_yr;
+    
+    //echo $tmp_yr."===";
+    //echo $tmp[0]; 
+    ?>
+    </td>
+  </tr>
+  <tr>
+    <td align="left" valign="top" scope="row"><strong>Date Registered:&nbsp;</strong></td>
+    <td align="left" valign="top">
+    <?php 
+    $tmp = explode(' ',$result_val['created_time']);
+    $tmp_dt = $tmp[0];
+    $tmp_yr = str_replace('-','',strstr($tmp_dt,'-',true));
+    $tmp_dt = str_replace($tmp_yr.'-','',$tmp_dt);
+    $tmp_mn = str_replace('-','',strstr($tmp_dt,'-',true));
+    $tmp_dt = str_replace($tmp_mn.'-','',$tmp_dt);
+    echo $tmp_mn.'-'.$tmp_dt.'-'.$tmp_yr;
+
+    
+   // $tmp = explode(' ',$result_val['created_time']); 
+    //echo $tmp[0];
+    ?>
+    </td>
+  </tr>
+  <tr>
+    <td align="left" valign="top" scope="row"><strong>Product Code(s):&nbsp;</strong></td>
+    <td align="left" valign="top">
+    <?php 
+    $tmp = explode(' ',$result_val['prodcode']); 
+    echo $tmp[0];
+    ?>
+    </td>
+  </tr>
+  <tr>
+    <td align="left" valign="top" scope="row"><strong>Serial No(s):&nbsp;</strong></td>
+    <td align="left" valign="top">
+    <?php 
+    $tmp = explode(' ',$result_val['serialno']); 
+    echo $tmp[0];
+    ?>
+    </td>
+  </tr>
+  <tr>
+    <td align="left" valign="top" scope="row"><strong>Matching Unit Model #:&nbsp;</strong></td>
+    <td align="left" valign="top">
+    <?php 
+    $tmp = explode(' ',$result_val['indr_prodcode']); 
+    echo $tmp[0];
+    ?>
+    </td>
+  </tr>
+  <tr>
+    <td align="left" valign="top" scope="row"><strong>Matching Unit Serial #:&nbsp;</strong></td>
+    <td align="left" valign="top">
+    <?php 
+    $tmp = explode(' ',$result_val['indr_userialno']); 
+    echo $tmp[0];
+    ?>
+    </td>
+  </tr>    
+  <tr>
+    <td align="left" valign="top" scope="row"><strong>Building Type:&nbsp;</strong></td>
+    <td align="left" valign="top">
+
+<!-- Building Type 23-2-2012 -->
+    <?php 
+    $tmp = explode(' ',$result_val['indr_prodtype']);
+    echo "<span style='text-transform:capitalize;'>".$tmp[0]."</span>";
+    ?>
+<!-- Building Type 23-2-2012 -->
+   </td>
+  </tr>
+  </table>
+<?php endforeach; ?>
+<?php    } 	?>
+<script type="text/javascript">
+//<![CDATA[
+    //var warranty_lookup_Form = new VarienForm('warranty_lookup_Form', true);
+//]]>
+</script>
+<script type="text/javascript">
+function Submit_LookUp()
+{
+    if(document.getElementById('reg_code').value == '')
+    {
+        if(document.warrantylookupForm.fname.value == '' && document.warrantylookupForm.lname.value == '' && document.warrantylookupForm.zipcode.value == '' && document.warrantylookupForm.phno.value == '' && document.warrantylookupForm.srno.value == '')
+        {
+            alert('Please enter valid FirstName, LastName\nand any 1 of the 3 fields (Zipcode, Phone No., Serial No.)\nOR Please enter valid Registration Code');
+            return false;    
+        }
+        else
+        {
+			if(document.warrantylookupForm.fname.value == '' && document.warrantylookupForm.lname.value == '')
+			{
+				alert('Please, input the fields\n - Firstname.\n - Lastname.');
+				return false;
+			}
+			else if(document.warrantylookupForm.fname.value == '' || document.warrantylookupForm.lname.value == '')
+			{
+				alert('Please, input the fields\n - Firstname.\nOR\n - Lastname.');
+				return false;
+			}
+			else
+			{
+				if(document.warrantylookupForm.zipcode.value == '' && document.warrantylookupForm.phno.value == '' && document.warrantylookupForm.srno.value == '')
+				{
+					alert('Please, input the fields\n - Zip code.\nOR\n - Phone No.\nOR\n - Serial No.');
+					return false;	
+				}
+			}
+            return true;    
+        } 
+		       
+    }
+    else
+    {     
+        return true;
+    }
+   //document.warrantylookupForm.submit();
+}
+</script>

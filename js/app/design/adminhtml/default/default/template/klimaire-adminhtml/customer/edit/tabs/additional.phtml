@@ -1,0 +1,177 @@
+<?php
+    $customer = Mage::registry('current_customer');
+    $typeOfBusiness = array(
+        'Dealer'                                                    => 'Dealer',
+        'Installing Contractor'                                        => 'Installing Contractor',
+        'Distributor'                                               => 'Distributor',
+        'Exporter'                                                  => 'Exporter',
+        'International (outside US, Puerto Rico, Guom U.S.V.I.)'    => 'International (outside US, Puerto Rico, Guom U.S.V.I.)',
+        'Manufacturer Rep'                                          => 'Manufacturer Rep',
+        'Regional Distributor'                                         => 'Regional Distributor',
+        'Online Retailer'                                           => 'Online Retailer',
+        'other'                                                     => 'Other'
+    )
+?>
+<SCRIPT LANGUAGE="JavaScript">
+	
+function checkall(field)
+{	
+	var av = document.getElementsByName(field);
+	//alert(av.length);
+	for (e=0;e<av.length;e++) {
+		av[e].checked=true;
+	}
+	
+}
+function uncheckall(field)
+{	
+	var av = document.getElementsByName(field);
+	//alert(av.length);
+	for (e=0;e<av.length;e++) {
+		av[e].checked=false;
+	}
+	
+}
+</script>
+<div class="entry-edit">
+    <div class="entry-edit-head"><h4 class="icon-head head-customer-view"><?php echo $this->__('Additional Information');?></h4></div>
+    <fieldset>
+        <table cellspacing="2" class="box-left">
+            <tbody>
+                <tr>
+                    <td><strong><?php echo $this->__('Salutation');?>:</strong></td>
+                    <td><?php echo $customer->getRegiSalutation() ?></td>
+                </tr>
+                <?php if($customer->getRegiCompanyName()):?>
+                <tr>
+                    <td><strong><?php echo $this->__('Company Name');?>:</strong></td>
+                    <td><?php echo $customer->getRegiCompanyName() ?></td>
+                </tr>
+                <?php endif;?>
+                <?php if($customer->getWebsite()):?>
+                <tr>
+                    <td><strong><?php echo $this->__('Website');?>:</strong></td>
+                    <td><?php echo $customer->getWebsite() ?></td>
+                </tr>
+                <?php endif;?>
+                <?php $_currentProductOfKlimare = array(); if($customer->getProductsOfInterestKlimaire()):?>
+                    <?php $_currentProductOfKlimare = explode(',',$customer->getProductsOfInterestKlimaire());?>
+                <?php endif;?>
+                <?php if(!empty($_currentProductOfKlimare)):?>
+                    <tr>
+                        <td><strong><?php echo $this->__('Products of Interest(Klimaire)');?>:</strong></td>
+                        <td>
+                            <?php $_productOfKlimare = $this->helper('customer')->getKlimareProductOfInterest();?>
+                            <?php foreach($_productOfKlimare as $_key=>$_options): $labelPrint = false;?>
+                                <?php foreach($_options as $_opKey=>$_option):?>
+                                    <?php // if(in_array($_opKey,$_currentProductOfKlimare)):?>
+                                        <?php if(!$labelPrint):?>
+                                        <label for="<?php echo $_key;?>"><?php echo ucwords(str_replace('-',' ',$_key));?></label><br />
+                                        <?php $labelPrint=true; endif;?> <input style="margin-left: 10px" type="checkbox" value="<?php echo $_opKey;?>" name="products_of_interest_klimaire[]" <?php if(in_array($_opKey,$_currentProductOfKlimare)) echo "checked='checked'" ?> />
+                                        <span style="padding-left: 10px"><?php echo $this->__($_option);?></span><br />
+                                    <?php //gfgdfvcbendif;?>
+                                <?php endforeach;?>
+                            <?php endforeach;?>
+                               <br />
+                            <a href="javascript: void(0);" onclick="checkall('products_of_interest_klimaire[]');" >check all</a>&nbsp;&nbsp;&nbsp;<a href="javascript: void(0);" onclick="uncheckall('products_of_interest_klimaire[]');" >uncheck all</a>
+                        </td>
+                    </tr>
+                <?php endif;?>
+                
+           
+                
+                
+                
+                <?php $_currentProductOfMaxwell = array(); if($customer->getProductsOfInterestMaxwell()):?>
+                    <?php $_currentProductOfMaxwell = explode(',',$customer->getProductsOfInterestMaxwell());?>
+                <?php endif;?>
+                <?php //if(!empty($_currentProductOfMaxwell)):?>
+                <tr>
+                    <td><strong><?php echo $this->__('Products of Interest(Maxwell)');?>:</strong></td>
+                    <td>
+                        
+                        <?php $_productOfMaxwell = $this->helper('customer')->getMaxwellProductOfInterest();?>
+                        <?php foreach($_productOfMaxwell as $_key=>$value):?>
+                            <?php // if(in_array($_key,$_currentProductOfMaxwell)):?>
+                             <input type="checkbox" value="<?php echo $_key;?>" name="products_of_interest_maxwell[]" <?php if(in_array($_key,$_currentProductOfMaxwell)) echo 'checked="checked"';?> /><span style="padding-left: 10px"><?php echo $value;?></span><br />
+                            <?php //endif;?>
+                        <?php endforeach;?>
+                         <br />
+                            <a href="javascript: void(0);" onclick="checkall('products_of_interest_maxwell[]');" >check all</a>&nbsp;&nbsp;&nbsp;<a href="javascript: void(0);" onclick="uncheckall('products_of_interest_maxwell[]');" >uncheck all</a>
+                    </td>
+                </tr>
+                <?php //dfgendif;?>
+                <?php //if($customer->getServiceType()):?>
+               <tr>
+                    <td><strong><?php echo $this->__('Service Type');?>:</strong></td>
+                    <td>
+                       <?php /*?> <?php $_serviceType = $this->helper('customer')->getServiceType(); //service_type?>
+                        <?php foreach($_serviceType as $_key=>$value):?>
+                            <?php if($customer->getServiceType() == $_key):?>
+                                <?php echo $value;?>
+                            <?php endif;?>
+                          
+                        <?php endforeach;?><?php */?>
+                       
+                       <?php $_serviceType = $this->helper('customer')->getServiceType();
+					    //service_type?>
+                               
+                                <?php foreach($_serviceType as $_key=>$value):?>
+                                    <input type="checkbox" value="<?php echo $_key;?>" name="service_type[]" <?php 
+									if(in_array($_key,explode(',',$customer->getServiceType())))
+									{
+										echo 'checked="checked"';
+									}
+									//echo $this->getCustomer()->getServiceType() == $_key ? 'checked="checked"' : ''; 
+									
+									?>/><span style="padding-left: 10px"><?php //echo $value;?>
+                                    <?php if($_key == 'installation') { echo "Installation";}?>
+                                    <?php if($_key == 'service') { echo "Service";}?>
+                                    <?php if($_key == 'both') { echo "Sales";}?> 
+                                    </span><br />
+                                <?php endforeach;?>
+                                <br />
+                            <a href="javascript: void(0);" onclick="checkall('service_type[]');" >check all</a>&nbsp;&nbsp;&nbsp;<a href="javascript: void(0);" onclick="uncheckall('service_type[]');" >uncheck all</a>
+                    </td>
+                </tr> 
+                <?php //endif;?>
+                <tr>
+                    <td><strong><?php echo $this->__('Type of Business');?>:</strong></td>
+                    <td><?php //echo $typeOfBusiness[$customer->getRegiBusinessType()] ?>
+                       <select name="regi_business_type" id="regi_business_type" >
+                                <option value="<?php echo $this->__('Dealer') ?>" <?php if($customer->getRegiBusinessType() == 'Dealer') echo "selected='selected'";?>><?php echo $this->__('Dealer') ?></option>
+                                <option value="<?php echo $this->__('Installing Contractor') ?>" <?php if($customer->getRegiBusinessType() == 'Installing Contractor') echo "selected='selected'";?>><?php echo $this->__('Installing Contractor') ?></option>
+                                <option value="<?php echo $this->__('Distributor') ?>" <?php if($customer->getRegiBusinessType() == 'Distributor') echo "selected='selected'";?>><?php echo $this->__('Distributor') ?></option>
+                                <option value="<?php echo $this->__('Exporter') ?>" <?php if($customer->getRegiBusinessType() == 'Exporter') echo "selected='selected'";?>><?php echo $this->__('Exporter') ?></option>
+                                <option value="<?php echo $this->__('International (outside US, Puerto Rico, Guom U.S.V.I.)') ?>" <?php if($customer->getRegiBusinessType() == 'International (outside US, Puerto Rico, Guom U.S.V.I.)') echo "selected='selected'";?>><?php echo $this->__('International (outside US, Puerto Rico, Guom U.S.V.I.)') ?></option>
+                                <option value="<?php echo $this->__('Manufacturer Rep') ?>" <?php if($customer->getRegiBusinessType() == 'Manufacturer Rep') echo "selected='selected'";?>><?php echo $this->__('Manufacturer Rep') ?></option>
+                                <option value="<?php echo $this->__('Regional Distributor') ?>" <?php if($customer->getRegiBusinessType() == 'Regional Distributor') echo "selected='selected'";?>><?php echo $this->__('Regional Distributor') ?></option>
+                                <option value="<?php echo $this->__('Online Retailer') ?>" <?php if($customer->getRegiBusinessType() == 'Online Retailer') echo "selected='selected'";?>><?php echo $this->__('Online Retailer') ?></option>
+                                <option value="<?php echo $this->__('Other') ?>" <?php if($customer->getRegiBusinessType() == 'Other') echo "selected='selected'";?>><?php echo $this->__('Other') ?></option>
+                                </select>        
+                    
+                    
+                    </td>
+                </tr>
+                <?php if($customer->getHvacBrandsCurrentlyCarried()):?>
+                <tr>
+                    <td><strong><?php echo $this->__('HVAC Brands currently carried');?>:</strong></td>
+                    <td><?php echo $customer->getHvacBrandsCurrentlyCarried() ?></td>
+                </tr>
+                <?php endif;?>
+                <?php if($customer->getTerritoryOfInterest()):?>
+                <tr>
+                    <td><strong><?php echo $this->__('Territory of Interest');?>:</strong></td>
+                    <td><?php echo $customer->getTerritoryOfInterest() ?></td>
+                </tr>
+                <?php endif;?>
+                <tr>
+                    <td><strong><?php echo $this->__('Description');?>:</strong></td>
+                    <td><?php echo $customer->getRegiDescription() ?></td>
+                </tr>
+             
+            </tbody>
+        </table>
+    </fieldset>
+    
+</div>

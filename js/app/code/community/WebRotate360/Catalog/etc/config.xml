@@ -1,0 +1,93 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * @category   WebRotate 360
+ * @package    WebRotate360_Catalog
+ * @author     WebRotate 360 LLC
+ * @copyright  Copyright (c) 2010 WebRotate 360 LLC. (http://www.webrotate360.com)
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+-->
+<config>
+   <modules>
+        <WebRotate360_Catalog>
+            <version>2.2.3</version>
+        </WebRotate360_Catalog>
+   </modules>
+
+   <global>
+        <helpers>
+            <WebRotate360_Catalog>
+                <class>WebRotate360_Catalog_Helper</class>
+            </WebRotate360_Catalog>
+        </helpers>
+   </global>
+
+   <admin>
+         <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <wr360_product_view after="Mage_Adminhtml">WebRotate360_Catalog</wr360_product_view>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+   </admin>
+
+   <frontend>
+        <layout>
+            <updates>
+                <wr360_product_view>
+                    <file>wr360_product_view.xml</file>
+                </wr360_product_view>
+            </updates>
+        </layout>
+   </frontend>
+
+   <adminhtml>
+        <acl>
+            <resources>
+                <admin>
+                    <children>
+                        <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <wr360_product_view translate="title" module="WebRotate360_Catalog">
+                                            <title>WebRotate 360 Settings</title>
+                                        </wr360_product_view>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+   </adminhtml>
+
+   <default>
+      <wr360_product_view>
+          <settings>
+              <enabled>1</enabled>
+              <demo_mode>1</demo_mode>
+              <viewer_path>http://www.webrotate360.com/components/component_magento/magento_demo.swf</viewer_path>
+              <config_path>http://www.webrotate360.com/components/component_magento</config_path>
+              <popup_width>300</popup_width>
+              <popup_height>250</popup_height>
+              <image_label_id>360view</image_label_id>
+          </settings>
+      </wr360_product_view>
+   </default>
+</config>

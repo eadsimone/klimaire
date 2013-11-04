@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<!-- 
+/**
+ * @category   EM
+ * @package    EM_Catalogmenu
+ * @author     ModuleCreator
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+ -->
+<config>
+    <modules>
+        <EM_Catalogmenuwidget>
+            <version>0.0.1</version>
+        </EM_Catalogmenuwidget>
+    </modules>
+    <!-- <frontend>
+        <routers>
+            <catalogmenuwidget>
+                <use>standard</use>
+                <args>
+                    <module>EM_CatalogMenuWidget</module>
+                    <frontName>catalogmenuwidget</frontName>
+                </args>
+            </catalogmenuwidget>
+        </routers>
+        <layout>
+            <updates>
+                <catalogmenu>
+                    <file>catalogmenu.xml</file>
+                </catalogmenu>
+            </updates>
+        </layout>
+    </frontend>-->
+     <admin>
+        <routers>
+            <catalogmenuwidget>
+                <use>admin</use>
+                <args>
+                    <module>EM_Catalogmenuwidget</module>
+                    <frontName>catalogmenuwidget</frontName>
+                </args>
+            </catalogmenuwidget>
+        </routers>
+    </admin>
+   
+    <global>
+        <models>
+            <catalogmenuwidget>
+                <class>EM_Catalogmenuwidget_Model</class>
+            </catalogmenuwidget>
+        </models>
+        <blocks>
+            <catalogmenuwidget>
+                <class>EM_Catalogmenuwidget_Block</class>
+            </catalogmenuwidget>
+        </blocks>
+        <helpers>
+            <catalogmenuwidget>
+                <class>EM_Catalogmenuwidget_Helper</class>
+            </catalogmenuwidget>
+        </helpers>
+    </global>
+</config>

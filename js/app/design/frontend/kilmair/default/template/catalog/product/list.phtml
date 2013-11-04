@@ -1,0 +1,596 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2010 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php
+/**
+ * Product list template
+ *
+ * @see Mage_Catalog_Block_Product_List
+ */
+?>
+
+<?php ########################################## ?>
+
+
+<?php
+Mage::getSingleton('core/session', array('name' => 'frontend'));
+$status = Mage::getSingleton('customer/session')->isLoggedIn();
+
+$page = Mage::app()->getFrontController()->getRequest()->getRouteName();
+
+if($page == 'cms' && Mage::getSingleton('cms/page')->getIdentifier() == 'home')
+{
+    $product_display_flg = true;   
+}
+$prod_disp_flg = true;
+
+$curr_category = Mage::registry('current_category');
+if(!$curr_category){
+    $curr_category = Mage::getModel('catalog/category')->load(Mage::app()->getStore()->getRootCategoryId());
+}
+/*
+// fetch write database connection that is used in Mage_Core module
+$write = Mage::getSingleton('core/resource')->getConnection('core_write');
+// now $write is an instance of Zend_Db_Adapter_Abstract
+//$result = $write->query("SELECT * FROM catalog_category_layout WHERE category_id = '".$curr_category->getId()."'");
+$g=$write->query("SELECT value FROM catalog_category_entity_varchar WHERE attribute_id = '131' AND entity_id = '".$curr_category->getId()."'");
+
+$g1 =$g->fetch();
+$result =$write->query("SELECT value FROM eav_attribute_option_value WHERE option_id = '".$g1['value']."'");
+
+$row = $result->fetch();
+//$categoryId = $row['category_id'];
+$categoryId = $curr_category->getId();
+$layout = $row['value'];
+
+*/
+/********/// Display the [single level] Sub categories of Top level category only ///********/
+ 
+$product_display_flg;
+//18-01-2012
+$css_class_box_top='';
+$css_class_box_1='';
+$category123 = Mage::getModel("catalog/category")->load($curr_category->getId());
+switch($category123->getCategoryLayout())
+{
+	case '':
+		$css_class_box_top="box-top_col3";
+		$css_class_box_1="box-1_col3";
+		break;
+	case 3:
+		$css_class_box_top="box-top_col1";
+		$css_class_box_1="box-1_col1";
+		break;
+	case 4:
+		$css_class_box_top="box-top_col2";
+		$css_class_box_1="box-1_col2";
+		break;
+	case 5:	
+		$css_class_box_top="box-top_col3";
+		$css_class_box_1="box-1_col3";
+		break;
+	default:
+		$css_class_box_top="box-top_col3";
+		$css_class_box_1="box-1_col3";
+}
+
+/*
+if($layout=="1 Column")
+{
+	$css_class_box_top="box-top_col1";
+	$css_class_box_1="box-1_col1";
+}
+else if($layout=="2 Column")
+{
+	$css_class_box_top="box-top_col2";
+	$css_class_box_1="box-1_col2";
+}
+else if($layout=="3 Column")
+{
+	$css_class_box_top="box-top_col3";
+	$css_class_box_1="box-1_col3";
+}
+else
+{
+	$css_class_box_top="box-top_col3";
+	$css_class_box_1="box-1_col3";
+}
+*/
+$_productCollection=$this->getLoadedProductCollection();
+
+$category = Mage::getModel('catalog/category')->load($curr_category->getId());
+//$products = $category->getProductCollection()->addCategoryFilter($category)->addAttributeToSelect('*');
+$products = $category->getProductCollection();
+//if($page != 'catalogsearch' && $curr_category->getLevel() == 2 && count($products)==0)
+if($page != 'catalogsearch' && $curr_category->getLevel() == 2 )
+{
+   
+    $cat_collection = Mage::getModel('catalog/category')->getCollection()
+    //->addFieldToFilter('level',Array('eq'=>3))
+    ->addFieldToFilter('level',Array('eq'=>3))
+            
+    //->addFieldToFilter('is_active',Array('eq'=>1))
+    ->addFieldToFilter('is_active',Array('eq'=>1))
+    ->addAttributeToSelect('*');
+    /*->addAttributeToSelect('name')    
+    ->addAttributeToSelect('image')
+    ->addAttributeToSelect('thumbnail')        
+    ->addAttributeToSelect('is_active');*/
+   
+    ?>
+   
+<?php $_collectionSize = count($cat_collection);
+if($_collectionSize > 0)
+{?>
+   <div class="<?php echo $css_class_box_top; ?>">
+    <?php
+    $j=1;
+    $k=1;
+    
+    foreach($cat_collection as $obj_cat)
+    { 
+?>       
+<?php
+    //if($obj_cat->getParentId() == $curr_category->getId())
+         if($obj_cat->getParentId() == $curr_category->getId())
+
+     {
+       //if($layout=="3 Column" && $k==count($cat_collection) && ($k-1)%3==0)
+	   if($css_class_box_1=="box-1_col3" && $k==count($cat_collection) && ($k-1)%3==0)
+        {             
+         $css_class_box_1="box-1_col_center"; //echo $i;                                               
+        }
+		
+     ?>
+                        <div class="<?php echo $css_class_box_1; ?>">
+                            <h2><?php echo $obj_cat->getName(); ?></h2>
+                            <div class="box-img-1">
+                            <a href="<?php echo $obj_cat->getUrl() ?>" title="<?php echo $obj_cat->getName(); ?>" class="product-image"><img src="<?php echo $obj_cat->getImageUrl(); ?>" width="135" height="135" alt="<?php echo $obj_cat->getName(); ?>" /></a>
+                            </div>
+                            <div class="box-text"><?php echo substr($obj_cat->getDescription(),0,1100); ?></div></div>
+     <?php   
+        $prod_disp_flg = false;
+        if(($j%4) == 0)
+        {            
+        ?>
+        </div><div class="<?php echo $css_class_box_top; ?>">
+        <?php    
+        }
+    $j++;
+     }    
+    $k++;
+    ?>
+    <?php            
+    } ?>
+    <script type="text/javascript">decorateTable('product-list-table')</script>
+<?php
+}
+?>
+</div>
+
+<?php
+}
+/********/// Display the [single level] Sub categories of Top level category only ///********/
+
+
+/********/// Display the [Second level] Sub categories of Top level category only ///********/
+
+else if($page != 'catalogsearch' && $curr_category->getLevel() == 3)
+{   
+   
+    $cat_collection = Mage::getModel('catalog/category')->getCollection()
+    //->addFieldToFilter('level',Array('eq'=>3))
+    ->addFieldToFilter('level',Array('eq'=>4))
+                
+    //->addFieldToFilter('is_active',Array('eq'=>1))
+    ->addFieldToFilter('is_active',Array('eq'=>1))
+    ->addAttributeToSelect('*');
+    /*->addAttributeToSelect('name')    
+    ->addAttributeToSelect('image')
+    ->addAttributeToSelect('thumbnail')        
+    ->addAttributeToSelect('is_active');*/
+   
+    ?>
+   
+<?php $_collectionSize = count($cat_collection);
+if($_collectionSize > 0)
+{?>
+   <div class="<?php echo $css_class_box_top; ?>">
+    <?php
+    $j=1;
+    $k=1;
+    
+    foreach($cat_collection as $obj_cat)
+    { 
+?>       
+<?php
+    //if($obj_cat->getParentId() == $curr_category->getId())
+         if($obj_cat->getParentId() == $curr_category->getId())
+             //$parentCategory = Mage::getModel('catalog/category')->load($subCategory->getParentId());
+     {
+      if($css_class_box_1=="box-1_col3" && $k==count($cat_collection) && ($k-1)%3==0)
+      {             
+         $css_class_box_1="box-1_col_center"; //echo $i;                                               
+      }
+     ?>
+                        <div class="<?php echo $css_class_box_1; ?>">
+                            <h2><?php echo $obj_cat->getName(); ?></h2>
+                            <div class="box-img-1">
+                            <a href="<?php echo $obj_cat->getUrl() ?>" title="<?php echo $obj_cat->getName(); ?>" class="product-image"><img src="<?php echo $obj_cat->getImageUrl(); ?>" width="135" height="135" alt="<?php echo $obj_cat->getName(); ?>" /></a>
+                            </div>
+                            <div class="box-text"><?php echo substr($obj_cat->getDescription(),0,1100); ?></div>
+                          </div>     
+     <?php   
+        $prod_disp_flg = false;
+        if(($j%4) == 0)
+        {            
+        ?>
+        </div><div class="<?php echo $css_class_box_top; ?>">
+        <?php    
+        }
+    $j++;
+     }   
+    $k++;
+    ?>
+    <?php            
+    } ?>
+    <script type="text/javascript">decorateTable('product-list-table')</script>
+<?php
+}
+?>
+</div>
+
+<?php
+}
+
+/********/// Display the [second level] Sub categories of Top level category only ///********/
+
+/********/// Display the [third level] Sub categories of Top level category only ///********/
+
+else if($page != 'catalogsearch' && $curr_category->getLevel() == 4 )
+{   
+   
+    $cat_collection = Mage::getModel('catalog/category')->getCollection()
+    //->addFieldToFilter('level',Array('eq'=>3))
+    ->addFieldToFilter('level',Array('eq'=>5))
+                
+    //->addFieldToFilter('is_active',Array('eq'=>1))
+    ->addFieldToFilter('is_active',Array('eq'=>1))
+    ->addAttributeToSelect('*');
+    /*->addAttributeToSelect('name')    
+    ->addAttributeToSelect('image')
+    ->addAttributeToSelect('thumbnail')        
+    ->addAttributeToSelect('is_active');*/
+   
+    ?>
+   
+<?php $_collectionSize = count($cat_collection);
+if($_collectionSize > 0)
+{?>
+   <div class="<?php echo $css_class_box_top; ?>">
+    <?php
+    $j=1;
+    $k=1;
+    
+    foreach($cat_collection as $obj_cat)
+    { 
+?>       
+<?php
+    //if($obj_cat->getParentId() == $curr_category->getId())
+         if($obj_cat->getParentId() == $curr_category->getId())
+             //$parentCategory = Mage::getModel('catalog/category')->load($subCategory->getParentId());
+     {
+      if($css_class_box_1=="box-1_col3" && $k==count($cat_collection) && ($k-1)%3==0)
+      {             
+         $css_class_box_1="box-1_col_center"; //echo $i;                                               
+      }
+             
+     ?>
+                        <div class="<?php echo $css_class_box_1; ?>">
+                            <h2><?php echo $obj_cat->getName(); ?></h2>
+                            <div class="box-img-1">
+                            <a href="<?php echo $obj_cat->getUrl() ?>" title="<?php echo $obj_cat->getName(); ?>" class="product-image"><img src="<?php echo $obj_cat->getImageUrl(); ?>" width="135" height="135" alt="<?php echo $obj_cat->getName(); ?>" /></a>
+                            </div>
+                            <div class="box-text"><?php echo substr($obj_cat->getDescription(),0,1100); ?></div>
+                          </div>     
+     <?php   
+        $prod_disp_flg = false;
+        if(($j%4) == 0)
+        {            
+        ?>
+        </div><div class="<?php echo $css_class_box_top; ?>">
+        <?php    
+        }
+    $j++;
+     }    
+    $k++;
+    ?>
+    <?php            
+    } ?>
+    <script type="text/javascript">decorateTable('product-list-table')</script>
+<?php
+}
+?>
+</div>
+
+<?php
+}
+
+
+/********/// Display the [third level] Sub categories of Top level category only ///********/
+
+
+/********/// Display the [forth level] Sub categories of Top level category only ///********/
+else if($page != 'catalogsearch' && $curr_category->getLevel() == 5 )
+{   
+   
+    $cat_collection = Mage::getModel('catalog/category')->getCollection()
+    //->addFieldToFilter('level',Array('eq'=>3))
+    ->addFieldToFilter('level',Array('eq'=>6))
+                
+    //->addFieldToFilter('is_active',Array('eq'=>1))
+    ->addFieldToFilter('is_active',Array('eq'=>1))
+    ->addAttributeToSelect('*');
+    /*->addAttributeToSelect('name')    
+    ->addAttributeToSelect('image')
+    ->addAttributeToSelect('thumbnail')        
+    ->addAttributeToSelect('is_active');*/
+   
+    ?>
+   
+<?php $_collectionSize = count($cat_collection);
+
+
+if($_collectionSize > 0)
+{?>
+   <div class="<?php echo $css_class_box_top; ?>">
+    <?php
+    $j=1;
+    $k=1;
+    
+    foreach($cat_collection as $obj_cat)
+    { 
+?>       
+<?php
+    //if($obj_cat->getParentId() == $curr_category->getId())
+         if($obj_cat->getParentId() == $curr_category->getId())            
+     {       
+	if($css_class_box_1=="box-1_col3" && $k==count($cat_collection) && ($k-1)%3==0)
+      {             
+         $css_class_box_1="box-1_col_center"; //echo $i;                                               
+      }
+                    
+                            
+     ?>
+       
+          <div class="<?php echo $css_class_box_1; ?>">
+           <h2><?php echo $obj_cat->getName(); ?></h2>
+           <div class="box-img-1">
+           <a href="<?php echo $obj_cat->getUrl() ?>" title="<?php echo $obj_cat->getName(); ?>" class="product-image"><img src="<?php echo $obj_cat->getImageUrl(); ?>" width="135" height="135" alt="<?php echo $obj_cat->getName(); ?>" /></a>
+           </div>
+           <div class="box-text"><?php echo substr($obj_cat->getDescription(),0,1100); ?></div>
+           </div>  
+      
+    <?php
+     
+        $prod_disp_flg = false;
+        if(($j%4) == 0)
+        {            
+        ?>
+        </div>
+        <?php    
+        }
+    $j++;
+    
+     }
+     $k++;
+    ?>
+    <?php            
+    } ?>
+    <script type="text/javascript">decorateTable('product-list-table')</script>
+<?php
+}
+?>
+</div>
+
+<?php
+}
+/********/// Display the [forth level] Sub categories of Top level category only ///********/
+
+/********/// Display the [fifth level] Sub categories of Top level category only ///********/
+else if($page != 'catalogsearch' && $curr_category->getLevel() == 6 )
+{  
+
+    $cat_collection = Mage::getModel('catalog/category')->getCollection()
+    //->addFieldToFilter('level',Array('eq'=>3))
+    ->addFieldToFilter('level',Array('eq'=>7))
+                
+    //->addFieldToFilter('is_active',Array('eq'=>1))
+    ->addFieldToFilter('is_active',Array('eq'=>1))
+    ->addAttributeToSelect('*');
+    //->addAttributeToSelect('name')    
+//    ->addAttributeToSelect('image')
+//    ->addAttributeToSelect('thumbnail')        
+//    ->addAttributeToSelect('is_active');
+   
+    ?>
+   
+<?php $_collectionSize = count($cat_collection);
+
+
+if($_collectionSize > 0)
+{?>
+   <div class="<?php echo $css_class_box_top; ?>">
+    <?php
+    $j=1;
+    $k=1;
+    
+    foreach($cat_collection as $obj_cat)
+    { 
+?>       
+<?php
+    //if($obj_cat->getParentId() == $curr_category->getId())
+      if($obj_cat->getParentId() == $curr_category->getId())            
+     {       
+	if($css_class_box_1=="box-1_col3" && $k==count($cat_collection) && ($k-1)%3==0)
+      {             
+         $css_class_box_1="box-1_col_center"; //echo $i;                                               
+      }
+      
+                    
+                            
+     ?>
+       
+          <div class="<?php echo $css_class_box_1; ?>">
+           <h2><?php echo $obj_cat->getName(); ?></h2>
+           <div class="box-img-1">
+           <a href="<?php echo $obj_cat->getUrl() ?>" title="<?php echo $obj_cat->getName(); ?>" class="product-image"><img src="<?php echo $obj_cat->getImageUrl(); ?>" width="135" height="135" alt="<?php echo $obj_cat->getName(); ?>" /></a>
+           </div>
+           <div class="box-text"><?php echo substr($obj_cat->getDescription(),0,1100); ?></div>
+           </div>  
+      
+    <?php
+     
+        $prod_disp_flg = false;
+        if(($j%4) == 0)
+        {            
+        ?>
+        </div>
+        <?php    
+        }
+    $j++;
+    
+     }
+     $k++;
+    ?>
+    <?php            
+    } ?>
+    <script type="text/javascript">decorateTable('product-list-table')</script>
+<?php
+}
+?>
+</div>
+
+<?php
+}
+/********/// Display the [fifth level] Sub categories of Top level category only ///********/	
+else    
+{
+ $product_display_flg = true;  
+}
+
+//print_r($curr_category->getLevel());
+
+if(count($products)<=0 && $prod_disp_flg == true)
+	echo '<p class="note-msg">There are no products matching the selection.</p>';
+else if($prod_disp_flg == true)
+
+{
+    $_productCollection=$this->getLoadedProductCollection();
+    $_helper = $this->helper('catalog/output');
+?>
+<div class="<?php echo $css_class_box_top; ?>">
+    
+ <?php $k=1; ?>
+<?php foreach ($_productCollection as $_product): ?>  
+<?php $lasttwo= substr($_helper->productAttribute($_product, $_product->getName() , 'name'),-2);      
+if($lasttwo != "-O")
+{
+?>
+
+<div class="<?php echo $css_class_box_1; ?>">
+<h2>
+<?php 
+
+$lasttwo= substr($_helper->productAttribute($_product, $_product->getName() , 'name'),-2);
+//echo $lasttwo;
+if($lasttwo=="-I")
+{
+$pizza  = $_helper->productAttribute($_product, $_product->getName() , 'name');
+$pieces = explode("-I", $pizza);
+echo $pieces[0]; 
+
+}
+elseif($lasttwo=="-O")
+{
+$pizza  = $_helper->productAttribute($_product, $_product->getName() , 'name');
+$pieces = explode("-O", $pizza);
+echo $pieces[0]; 
+
+}
+else{
+
+echo $_helper->productAttribute($_product, $_product->getName() , 'name'); 
+ } 
+ ?>
+</h2>
+<div class="box-img-1">
+<a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" class="product-image"><img src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->resize(135); ?>" width="135" height="135" alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" /></a>
+</div>
+<!-- <div class="box-text"><?php //echo substr($_product->getShortDescription(),0,1100); ?></div> -->
+
+<div class="box-text"><?php 
+$descr=$_product->getShortDescription();
+if (count_chars($descr)> 125)
+{
+	echo substr($_product->getShortDescription(),0,125);
+	?>
+	<a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" class="product-image">Read More</a>
+<?php
+}
+else
+{
+	echo $_product->getShortDescription();
+}
+?>
+
+</div>
+
+<!--Buy Now Button-->
+
+
+<!-- 16-2-2012 -->
+
+   <?php if($_product->isSaleable()):
+   		if($status==true): ?>
+        <button type="button" title="<?php echo $this->__('Buy Now') ?>" class="button-buynow" onclick="setLocation('<?php echo $this->getAddToCartUrl($_product) ?>')"><span><span><?php echo $this->__('Buy Now') ?></span></span></button>
+        <?php endif; ?>
+     <?php else: ?>
+           <p class="availability out-of-stock"><span><?php echo $this->__('Out of stock') ?></span></p>
+   <?php endif; ?>
+
+<!-- 16-2-2012 -->
+
+
+<!--Buy Now Button-->
+
+</div>  
+<?php }//end if ?>                                    
+<?php endforeach; ?>
+</div>
+<?php } ?>
+<?php echo $this->getToolbarHtml(); ?>
+</div>

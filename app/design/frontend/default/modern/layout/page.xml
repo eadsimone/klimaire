@@ -69,7 +69,7 @@ Default layout, loads most of the pages
                 <action method="addItem"><type>skin_css</type><name>css/foot.css</name></action>
                 <action method="addItem"><type>skin_css</type><name>css/head.css</name></action>
                 <action method="addItem"><type>skin_css</type><name>css/home.css</name></action>
-                <action method="addItem"><type>skin_css</type><name>css/newAll.css</name></action>
+                <!--<action method="addItem"><type>skin_css</type><name>css/newAll.css</name></action>-->
                 <action method="addItem"><type>skin_css</type><name>css/reset.css</name></action>
                 <!--<action method="addItem"><type>skin_css</type><name>css/slide.css</name></action>-->
                 <!--<action method="addItem"><type>skin_css</type><name>SpryAssets/SpryTabbedPanels.css</name></action>-->
@@ -79,7 +79,7 @@ Default layout, loads most of the pages
                 <action method="addItem"><type>js</type><name>lib/ds-sleight.js</name><params/><if>lt IE 7</if></action>
                 <action method="addItem"><type>skin_js</type><name>js/ie6.js</name><params/><if>lt IE 7</if></action>
 
-                <action method="addItem"><type>skin_js</type><name>js/jquery-1.js</name></action>
+                <!--<action method="addItem"><type>skin_js</type><name>js/jquery-1.js</name></action>-->
                 <action method="addItem"><type>skin_js</type><name>js/vscrollarea.js</name></action>
                 <action method="addItem"><type>skin_js</type><name>js/ie-hover-pack.js</name></action>
                 <action method="addItem"><type>skin_js</type><name>js/inputs.js</name></action>
@@ -87,16 +87,41 @@ Default layout, loads most of the pages
                 <action method="addItem"><type>skin_js</type><name>js/tabs.js</name></action>
 
 
-                <action method="addItem"><type>skin_js</type><name>js/faqPopup.js</name></action>
-                <action method="addItem"><type>skin_js</type><name>js/stepcarousel.js</name></action>
-                <action method="addItem"><type>skin_js</type><name>js/carousel-setup.js</name></action>
-                <action method="addItem"><type>skin_js</type><name>js/jquery-2.js</name></action>
-                <action method="addItem"><type>skin_js</type><name>js/prototype.js</name></action>
+                <!--<action method="addItem"><type>skin_js</type><name>js/faqPopup.js</name></action>-->
+                <!--<action method="addItem"><type>skin_js</type><name>js/stepcarousel.js</name></action>-->
+                <!--<action method="addItem"><type>skin_js</type><name>js/carousel-setup.js</name></action>-->
+                <!--<action method="addItem"><type>skin_js</type><name>js/jquery-2.js</name></action>-->
+
+
+
+                <!--<action method="addItem"><type>skin_js</type><name>js/prototype.js</name></action>-->
                 <action method="addItem"><type>skin_js</type><name>js/scriptaculous.js</name></action>
                 <action method="addItem"><type>skin_js</type><name>js/controls.js</name></action>
                 <action method="addItem"><type>skin_js</type><name>js/dragdrop.js</name></action>
                 <action method="addItem"><type>skin_js</type><name>js/base.js</name></action>
                 <action method="addItem"><type>skin_js</type><name>js/home.js</name></action>
+
+                <!--slider-->
+                <!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>-->
+                <!--<block type="core/text" name="google.cdn.jquery">-->
+                    <!--<action method="setText">-->
+                        <!--<text><![CDATA[<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script><script type="text/javascript">jQuery.noConflict();</script>]]>-->
+                        <!--</text>-->
+                    <!--</action>-->
+                <!--</block>-->
+
+
+                <action method="addItem"><type>skin_js</type><name>js/jquery-182.js</name></action>
+
+                <!--<script src="js/simple-slider.js"></script>-->
+                <action method="addJs"><script>slider/simple-slider.js</script></action>
+
+
+                <!--<link href="css/simple-slider.css" rel="stylesheet" type="text/css" />-->
+                <!--<link href="css/simple-slider-volume.css" rel="stylesheet" type="text/css" />-->
+                <action method="addItem"><type>skin_css</type><name>css/simple-slider.css</name></action>
+                <action method="addItem"><type>skin_css</type><name>css/simple-slider-volume.css</name></action>
+
 
             </block>
 

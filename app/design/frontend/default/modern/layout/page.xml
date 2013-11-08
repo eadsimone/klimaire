@@ -101,27 +101,6 @@ Default layout, loads most of the pages
                 <action method="addItem"><type>skin_js</type><name>js/base.js</name></action>
                 <action method="addItem"><type>skin_js</type><name>js/home.js</name></action>
 
-                <!--slider-->
-                <!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>-->
-                <!--<block type="core/text" name="google.cdn.jquery">-->
-                    <!--<action method="setText">-->
-                        <!--<text><![CDATA[<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script><script type="text/javascript">jQuery.noConflict();</script>]]>-->
-                        <!--</text>-->
-                    <!--</action>-->
-                <!--</block>-->
-
-
-                <action method="addItem"><type>skin_js</type><name>js/jquery-182.js</name></action>
-
-                <!--<script src="js/simple-slider.js"></script>-->
-                <action method="addJs"><script>slider/simple-slider.js</script></action>
-
-
-                <!--<link href="css/simple-slider.css" rel="stylesheet" type="text/css" />-->
-                <!--<link href="css/simple-slider-volume.css" rel="stylesheet" type="text/css" />-->
-                <action method="addItem"><type>skin_css</type><name>css/simple-slider.css</name></action>
-                <action method="addItem"><type>skin_css</type><name>css/simple-slider-volume.css</name></action>
-
 
             </block>
 

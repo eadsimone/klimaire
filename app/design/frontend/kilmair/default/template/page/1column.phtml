@@ -35,9 +35,11 @@
 <?php echo $this->getChildHtml('head') ?>
 <script type="text/javascript"> focname=0;focname2=0;</script>
 <script type="text/javascript">
-	jQuery(document).ready(function() {
-		jQuery('.col_1 a').removeClass('drop');
-	});
+    var $jq = jQuery.noConflict();
+
+    $jq(document).ready(function() {
+        $jq('.col_1 a').removeClass('drop');
+    });
 </script>
 
 </head>

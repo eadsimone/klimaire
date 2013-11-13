@@ -92,6 +92,8 @@ Default layout, loads most of the pages
                 <!--<action method="addItem"><type>skin_js</type><name>js/carousel-setup.js</name></action>-->
                 <!--<action method="addItem"><type>skin_js</type><name>js/jquery-2.js</name></action>-->
 
+                <action method="addItem"><type>skin_js</type><name>js/jquery-182.js</name></action>
+
 
 
                 <!--<action method="addItem"><type>skin_js</type><name>js/prototype.js</name></action>-->

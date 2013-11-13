@@ -35,10 +35,35 @@
     <?php echo $this->getChildHtml('head') ?>
     <script type="text/javascript"> focname=0;focname2=0;</script>
     <script type="text/javascript">
-        jQuery(document).ready(function() {
-            jQuery('.col_1 a').removeClass('drop');
+        var $jq = jQuery.noConflict();
+
+        $jq(document).ready(function() {
+            $jq('.col_1 a').removeClass('drop');
         });
+
+
+//        var $jq = jQuery.noConflict();
+//        $jq(document).ready(function() {
+//            $jq('#prod_serviceon').Zebra_DatePicker();
+//            //$jq('#prod_serviceon').removeAttr('readonly');
+//            $jq('.button-wattantyclim').click(function() {
+//                var prdsrvdate = $jq('#prod_serviceon').attr('value');
+//                //alert(prdsrvdate);
+//                var lastprpdate = $jq('#prod_installedon').attr('value');
+//                var prdsrv = Date.parse(prdsrvdate);
+//                var lastprp = Date.parse(lastprpdate);
+//                if (prdsrv < lastprp)
+//                {
+//                    alert('Service date is must greater than install date');
+//                    return false;
+//                }
+//            });
+//        });
+
     </script>
+
+
+
 </head>
 <body<?php echo $this->getBodyClass()?' class="'.$this->getBodyClass().'"':'' ?>>
 <?php echo $this->getChildHtml('after_body_start') ?>

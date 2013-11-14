@@ -31,6 +31,7 @@
  * @see Mage_Catalog_Block_Layer_View
  */
 ?>
+
 <?php if($this->canShowBlock()): ?>
 <div class="block block-layered-nav">
     <div class="block-title">
@@ -47,11 +48,52 @@
                 <?php $_filters = $this->getFilters() ?>
                 <?php foreach ($_filters as $_filter): ?>
                 <?php if($_filter->getItemsCount()): ?>
+
+                        <?php
+                        $name=$this->__($_filter->getName());
+                        if ( $name =="Coverage Area"){
+
+                        $jscript='<script type="text/javascript">
+                            var info='.$_filter->getHtml().'
+                        </script>';
+
+                            $slider='<div><dt>'.$name.'</dt>
+                                    <div id="track1" class="track" style="width: 17em; margin: 15px 0 20px;" >
+                                    <div id="handle1" class="handle" style="width: 0.5em;" ></div>
+                                  </div>
+                            <p id="sliding" ></p>
+                            <p id="changed" ></p>';
+
+
+                            echo $jscript.$slider;
+                        }else{?>
+
                     <dt><?php echo $this->__($_filter->getName()) ?></dt>
                     <dd><?php echo $_filter->getHtml() ?></dd>
+
+                            <?php } ?>
                 <?php endif; ?>
                 <?php endforeach; ?>
             </dl>
+            <script type="text/javascript">
+
+                          window.onload = function() {
+                          new Control.Slider('handle1' , 'track1',
+                          {
+                          range: $R(1,100),
+                          values: [1,25,50,75,100],
+                          sliderValue: 1,
+                          onChange: function(v){
+                          $('changed').innerHTML = 'Changed Value : '+v;
+                          },
+                          onSlide: function(v) {
+                          $('sliding').innerHTML = 'Sliding Value: '+v;
+                          }
+                          } );
+
+                          }
+                </script>
+
             <script type="text/javascript">decorateDataList('narrow-by-list')</script>
         <?php endif; ?>
     </div>

@@ -53,17 +53,73 @@
                         $name=$this->__($_filter->getName());
                         if ( $name =="Coverage Area"){
 
+                         $htmlpuro=   $_filter->getHtml();
+
+//                            echo "<pre>";
+//                            print_r($htmlpuro);
+//                            echo "</pre>";
+
+                            //preg_match_all("'/<li>.*?<\/li>/',$htmlpuro,$matches);
+                            preg_match_all("/(<li>)(.*?)(<\/li>)/is", $htmlpuro, $output_array);
+                            //preg_match_all("/(<li>)(.*?)(<\/li>)/is", $input_lines, $output_array);
+
+                            $matches=$output_array[0];
+//                            echo "<pre>";
+//                          print_r($matches);
+//                            echo "</pre>";
+
+                         /*$fruits = ["Banana", "Orange", "Apple", "Mango"];*/
+                            $result='';
+                            $valores='';
+                        for ($i=0;$i<count($matches);$i++){
+
+                            $order   = array("\r\n", "\n", "\r");
+
+                            $v1 = str_replace($order, '', $matches[$i]);
+
+                            $v1 = str_replace("&amp;", '&', $v1);
+
+//                            $pieces = explode("&", $v1);
+//
+//                            $v1=$pieces[1];
+
+                            $v2 = htmlspecialchars($v1, ENT_QUOTES);
+
+                            $www= array("http://", "http://www.");
+                            $v3 = str_replace($www,'http://www.', $v2);
+
+                            $matches[$i]=$v3;
+
+                            if($i==0){
+                            $result.='["'.$matches[$i].'"';
+                            $valores.='['.$i;
+                            }elseif($i==count($matches)-1 ){
+                                $result.=',"'.$matches[$i].'"]';
+                                $valores.=','.$i.']';
+                            }else{
+                                $result.=',"'.$matches[$i].'"';
+                                $valores.=','.$i;
+                            }
+
+                        }
+
                         $jscript='<script type="text/javascript">
+                            var myCars='.$result.';
+
                             var info='.$_filter->getHtml().'
                         </script>';
 
                             $slider='<div><dt>'.$name.'</dt>
-                                    <div id="track1" class="track" style="width: 17em; margin: 15px 0 20px;" >
-                                    <div id="handle1" class="handle" style="width: 0.5em;" ></div>
+                                    <div id="track1" class="track" style="width: 17em; margin: 15px 0 20px 1px;" >
+                                    <div id="handle1" class="handle" style="height: 15px;
+    left: 0;
+    top: -5px;
+    width: 0.5em;" ></div>
                                   </div>
-                            <p id="sliding" ></p>
+                            <div style="float:left;margin-top: -15px;">400 sqft</div>
+                            <div style="float: right;margin-top: -15px;">1600 sqft</div>
                             <!--p id="changed" ></p-->
-                            <a id="changed" href="http://klimaire.local/index.php/ductless-split-systems/mini-split.html?coveragearea=11%2C10"></a>
+                            <div id="changed"> </div>
                             ';
 
                             echo $jscript.$slider;
@@ -79,18 +135,22 @@
             </dl>
             <script type="text/javascript">
 
+                var arraylink=<?php echo $result ?>;
+                var valores=<?php echo $valores ?>;
+
                           window.onload = function() {
                           new Control.Slider('handle1' , 'track1',
                           {
-                          range: $R(1,100),
-                          values: [1,25,50,75,100],
-                          sliderValue: 1,
+                          range: $R(0,valores.length-1),
+                          /*values: [1,25,50,75,100],*/
+                          values: valores,
+                          sliderValue: 0,
                           onChange: function(v){
-                          $('changed').innerHTML = 'Changed Value : '+v;
-                          },
+                          $('changed').innerHTML = arraylink[v].unescapeHTML();
+                          }/*,
                           onSlide: function(v) {
                           $('sliding').innerHTML = 'Sliding Value: '+v;
-                          }
+                          }*/
                           } );
 
                           }
@@ -101,3 +161,9 @@
     </div>
 </div>
 <?php endif; ?>
+
+<?php
+echo count($matches)."<pre>";
+                          print_r($result);
+                            echo "</pre>";
+?>

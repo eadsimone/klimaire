@@ -1,10 +1,17 @@
 h1{ font-size: 1.5em; }
-/*.track {*/
-/*background-color: #aaa;*/
-/*position: relative;*/
-/*height: 0.5em; width: 10em;*/
-/*cursor: pointer; z-index: 0;*/
-/*}*/
+/*.track {
+    background-color: #aaa;
+    position: relative;
+    height: 0.5em; width: 10em;
+    cursor: pointer; z-index: 0;
+}
+/*
+.handle {
+    background-color: red;
+    position: absolute;
+    height: 1em; width: 0.25em; top: -0.25em;
+    cursor: move; z-index: 2;
+}*/
 .handle {
     background: #00A4E7;
     background: -webkit-linear-gradient(top, #1E1F1C, #0377a7);
@@ -18,7 +25,9 @@ h1{ font-size: 1.5em; }
     border-radius: 10px;
     border: 1px solid #054b67; /*496805*/
     width: 16px;
-    height: 16px;
+    /*height: 16px;*/
+    height: 1em; width: 0.25em; top: -0.25em;
+    position: absolute;
 }
 .track.vertical {
     width: 0.5em; height: 10em;
@@ -85,5 +94,10 @@ h1{ font-size: 1.5em; }
     -moz-border-radius: 8px;
     border-radius: 8px;
     border: 1px solid #aaa;
-    height: 4px;
+
+
+    background-color: #aaa;
+    position: relative;
+    height: 0.5em; width: 10em;
+    cursor: pointer; z-index: 0;
 }

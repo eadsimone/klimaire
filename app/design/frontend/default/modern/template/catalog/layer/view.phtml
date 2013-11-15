@@ -71,7 +71,8 @@
                          /*$fruits = ["Banana", "Orange", "Apple", "Mango"];*/
                             $result='';
                             $valores='';
-                        for ($i=0;$i<count($matches);$i++){
+                      /*  if(count($matches)>0){*/
+                            for ($i=0;$i<count($matches);$i++){
 
                             $order   = array("\r\n", "\n", "\r");
 
@@ -85,8 +86,14 @@
 
                             $v2 = htmlspecialchars($v1, ENT_QUOTES);
 
-                            $www= array("http://", "http://www.");
-                            $v3 = str_replace($www,'http://www.', $v2);
+                            //$currentUrl = $this->helper('core/url')->getCurrentUrl();
+                            $currentUrl = Mage::helper('core/url')->getCurrentUrl(); //http://domain.com/shoes.html
+                            // echo basename($currentUrl); //outputs shoes.html
+                            // echo $currentUrl; //outputs shoes.html
+                            //$www= array("http://", "http://www.");
+                            $v3 = str_replace($currentUrl,basename($currentUrl), $v2);
+
+
 
                             $matches[$i]=$v3;
 
@@ -101,7 +108,10 @@
                                 $valores.=','.$i;
                             }
 
-                        }
+                            }
+                        /*}else{
+                            $result='[]';
+                        }*/
 
                         $jscript='<script type="text/javascript">
                             var myCars='.$result.';
@@ -111,10 +121,7 @@
 
                             $slider='<div><dt>'.$name.'</dt>
                                     <div id="track1" class="track" style="width: 17em; margin: 15px 0 20px 1px;" >
-                                    <div id="handle1" class="handle" style="height: 15px;
-    left: 0;
-    top: -5px;
-    width: 0.5em;" ></div>
+                                    <div id="handle1" class="handle" style="height: 15px;left: 0;top: -5px;width: 0.5em;" ></div>
                                   </div>
                             <div style="float:left;margin-top: -15px;">400 sqft</div>
                             <div style="float: right;margin-top: -15px;">1600 sqft</div>
@@ -135,6 +142,13 @@
             </dl>
             <script type="text/javascript">
 
+                /*str replace */
+                /*String.prototype.str_replace = function(search, replace) {
+
+                    return this.split(search).join(replace);
+
+                }*/
+
                 var arraylink=<?php echo $result ?>;
                 var valores=<?php echo $valores ?>;
 
@@ -146,7 +160,18 @@
                           values: valores,
                           sliderValue: 0,
                           onChange: function(v){
-                          $('changed').innerHTML = arraylink[v].unescapeHTML();
+                           //   alert(document.URL);
+                              /*if(isNaN(v)){
+                                  $('changed').innerHTML = arraylink[v].unescapeHTML();
+                              }else{
+                                  $('changed').innerHTML = "Does not exist product associated to Cover Area";
+                              }*/
+                              var pr=arraylink[v].unescapeHTML();
+                              //var str = "Visit Microsoft!";
+                              var pr = pr.replace("&quot;",'');
+                              alert(pr);
+                              $('changed').innerHTML = arraylink[v].unescapeHTML();
+                              /*$('changed').innerHTML = arraylink[v].unescapeHTML();*/
                           }/*,
                           onSlide: function(v) {
                           $('sliding').innerHTML = 'Sliding Value: '+v;

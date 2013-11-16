@@ -53,25 +53,16 @@
                         $name=$this->__($_filter->getName());
                         if ( $name =="Coverage Area"){
 
-                         $htmlpuro=   $_filter->getHtml();
+                         $htmlpure=   $_filter->getHtml();
 
-//                            echo "<pre>";
-//                            print_r($htmlpuro);
-//                            echo "</pre>";
-
-                            //preg_match_all("'/<li>.*?<\/li>/',$htmlpuro,$matches);
-                            preg_match_all("/(<li>)(.*?)(<\/li>)/is", $htmlpuro, $output_array);
+                            //preg_match_all("'/<li>.*?<\/li>/',$htmlpure,$matches);
+                            preg_match_all("/(<li>)(.*?)(<\/li>)/is", $htmlpure, $output_array);
                             //preg_match_all("/(<li>)(.*?)(<\/li>)/is", $input_lines, $output_array);
 
                             $matches=$output_array[0];
-//                            echo "<pre>";
-//                          print_r($matches);
-//                            echo "</pre>";
-
-                         /*$fruits = ["Banana", "Orange", "Apple", "Mango"];*/
                             $result='';
                             $valores='';
-                      /*  if(count($matches)>0){*/
+
                             for ($i=0;$i<count($matches);$i++){
 
                             $order   = array("\r\n", "\n", "\r");
@@ -80,17 +71,10 @@
 
                             $v1 = str_replace("&amp;", '&', $v1);
 
-//                            $pieces = explode("&", $v1);
-//
-//                            $v1=$pieces[1];
-
                             $v2 = htmlspecialchars($v1, ENT_QUOTES);
 
-                            //$currentUrl = $this->helper('core/url')->getCurrentUrl();
                             $currentUrl = Mage::helper('core/url')->getCurrentUrl(); //http://domain.com/shoes.html
-                            // echo basename($currentUrl); //outputs shoes.html
-                            // echo $currentUrl; //outputs shoes.html
-                            //$www= array("http://", "http://www.");
+
                             $v3 = str_replace($currentUrl,basename($currentUrl), $v2);
 
 
@@ -109,9 +93,7 @@
                             }
 
                             }
-                        /*}else{
-                            $result='[]';
-                        }*/
+
 
                         $jscript='<script type="text/javascript">
                             var myCars='.$result.';
@@ -142,12 +124,12 @@
             </dl>
             <script type="text/javascript">
 
-                /*str replace */
-                /*String.prototype.str_replace = function(search, replace) {
+                function htmlDecode(input){
+                    var e = document.createElement('div');
+                    e.innerHTML = input;
+                    return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
+                }
 
-                    return this.split(search).join(replace);
-
-                }*/
 
                 var arraylink=<?php echo $result ?>;
                 var valores=<?php echo $valores ?>;
@@ -160,22 +142,9 @@
                           values: valores,
                           sliderValue: 0,
                           onChange: function(v){
-                           //   alert(document.URL);
-                              /*if(isNaN(v)){
-                                  $('changed').innerHTML = arraylink[v].unescapeHTML();
-                              }else{
-                                  $('changed').innerHTML = "Does not exist product associated to Cover Area";
-                              }*/
-                              var pr=arraylink[v].unescapeHTML();
-                              //var str = "Visit Microsoft!";
-                              var pr = pr.replace("&quot;",'');
-                              alert(pr);
-                              $('changed').innerHTML = arraylink[v].unescapeHTML();
-                              /*$('changed').innerHTML = arraylink[v].unescapeHTML();*/
-                          }/*,
-                          onSlide: function(v) {
-                          $('sliding').innerHTML = 'Sliding Value: '+v;
-                          }*/
+                              $('changed').innerHTML = htmlDecode(arraylink[v]);
+                          }
+
                           } );
 
                           }
@@ -186,9 +155,3 @@
     </div>
 </div>
 <?php endif; ?>
-
-<?php
-echo count($matches)."<pre>";
-                          print_r($result);
-                            echo "</pre>";
-?>

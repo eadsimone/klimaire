@@ -81,24 +81,27 @@ Default layout, loads most of the pages
 				
 		
 
-				<action method="addItem"><type>skin_js</type><name>js/jquery-1.js</name></action>
+				<!--<action method="addItem"><type>skin_js</type><name>js/jquery-1.js</name></action>-->
 				<action method="addItem"><type>skin_js</type><name>js/vscrollarea.js</name></action>
 				<action method="addItem"><type>skin_js</type><name>js/ie-hover-pack.js</name></action>
 				<action method="addItem"><type>skin_js</type><name>js/inputs.js</name></action>
 				<action method="addItem"><type>skin_js</type><name>js/png-fix.js</name></action>
 				<action method="addItem"><type>skin_js</type><name>js/tabs.js</name></action>
-				
-				
+
+                <action method="addItem"><type>skin_js</type><name>js/jquery-2.js</name></action>
+
 				<action method="addItem"><type>skin_js</type><name>js/faqPopup.js</name></action>
 				<action method="addItem"><type>skin_js</type><name>js/stepcarousel.js</name></action>
 				<action method="addItem"><type>skin_js</type><name>js/carousel-setup.js</name></action>
-				<action method="addItem"><type>skin_js</type><name>js/jquery-2.js</name></action>
+
 				<!--<action method="addItem"><type>skin_js</type><name>js/prototype.js</name></action>-->
 				<action method="addItem"><type>skin_js</type><name>js/scriptaculous.js</name></action>
 				<action method="addItem"><type>skin_js</type><name>js/controls.js</name></action>
 				<action method="addItem"><type>skin_js</type><name>js/dragdrop.js</name></action>
 				<action method="addItem"><type>skin_js</type><name>js/base.js</name></action>
 				<action method="addItem"><type>skin_js</type><name>js/home.js</name></action>
+
+
 
 
 				

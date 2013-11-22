@@ -358,7 +358,14 @@ var stepcarousel = {
 
     resetsettings: function ($, config) {
         config.$gallery.unbind()
-        config.$belt.stop()
+        if (typeof config=="undefined"){
+            //alert("There's an error with your set up of Carousel Viewer \""+galleryid+ "\"!")
+            //return
+        }else{
+            config.$belt.stop();
+        }
+
+
         config.$panels.remove()
         if (config.$leftnavbutton) {
             config.$leftnavbutton.remove()

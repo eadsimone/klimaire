@@ -86,7 +86,8 @@
 								margin: 15px 0 0 0;
 							}
 								.home_slide .slider .overflow .slides ul li h4 a em {
-									background: url(../images/icon_arrow_right_blue_slider.gif) no-repeat right -39px;
+									/*background: url(../images/icon_arrow_right_blue_slider.gif) no-repeat right -39px;*/
+                                    background: no-repeat right -39px;
 									/*padding: 0 14px 0 0;
 									margin: 0 0 0 14px;*/
 									padding: 0 !important;

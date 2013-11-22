@@ -33,6 +33,13 @@ Default layout, loads most of the pages
 -->
 
     <default>
+        <reference name="head">
+            <!--<action method="addCss"><stylesheet>css/local.css</stylesheet></action>-->
+            <!--<action method="removeItem"><type>skin_css</type><name>css/local.css</name></action>-->
+            <action method="removeItem"><type>skin_js</type><name>js/stepcarousel.js</name></action>
+            <action method="removeItem"><type>skin_js</type><name>js/carousel-setup.js</name></action>
+            <action method="removeItem"><type>skin_js</type><name>SpryAssets/SpryTabbedPanels.js</name></action>
+        </reference>
 
         <!-- Mage_Checkout -->
         <reference name="top.links">

@@ -56,34 +56,29 @@ class Mage_Sales_Model_Order_Pdf_Invoice extends Mage_Sales_Model_Order_Pdf_Abst
             'feed' => 35
         );
 
- 	$lines[0][] = array(
-            'text' => Mage::helper('sales')->__('Description'),
-            'feed' => 125,
-        );
-        
-	$lines[0][] = array(
+        $lines[0][] = array(
             'text'  => Mage::helper('sales')->__('SKU'),
-            'feed'  => 340,
-            'align' => 'left'
+            'feed'  => 290,
+            'align' => 'right'
         );
 
         $lines[0][] = array(
             'text'  => Mage::helper('sales')->__('Qty'),
-            'feed'  => 485,
-            'align' => 'left'
+            'feed'  => 435,
+            'align' => 'right'
         );
 
         $lines[0][] = array(
             'text'  => Mage::helper('sales')->__('Price'),
-            'feed'  => 425,
-            'align' => 'left'
+            'feed'  => 360,
+            'align' => 'right'
         );
 
-        /*$lines[0][] = array(
+        $lines[0][] = array(
             'text'  => Mage::helper('sales')->__('Tax'),
             'feed'  => 495,
             'align' => 'right'
-        );*/
+        );
 
         $lines[0][] = array(
             'text'  => Mage::helper('sales')->__('Subtotal'),

@@ -266,7 +266,7 @@ abstract class Mage_Sales_Model_Order_Pdf_Abstract extends Varien_Object
      * @param Mage_Sales_Model_Order $obj
      * @param bool $putOrderId
      */
-    protected function insertOrder(&$page, $obj, $putOrderId = true, $flag = 1)
+    protected function insertOrder(&$page, $obj, $putOrderId = true)
     {
         if ($obj instanceof Mage_Sales_Model_Order) {
             $shipment = null;
@@ -442,11 +442,8 @@ abstract class Mage_Sales_Model_Order_Pdf_Abstract extends Varien_Object
             }
 
             $yShipments = $this->y;
-			if($flag == 1)
-			{
-            	$totalShippingChargesText = "(" . Mage::helper('sales')->__('Total Shipping Charges') . " "
+            $totalShippingChargesText = "(" . Mage::helper('sales')->__('Total Shipping Charges') . " "
                 . $order->formatPriceTxt($order->getShippingAmount()) . ")";
-			}
 
             $page->drawText($totalShippingChargesText, 285, $yShipments - $topMargin, 'UTF-8');
             $yShipments -= $topMargin + 10;

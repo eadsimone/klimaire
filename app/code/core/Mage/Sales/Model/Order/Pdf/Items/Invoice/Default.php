@@ -43,11 +43,6 @@ class Mage_Sales_Model_Order_Pdf_Items_Invoice_Default extends Mage_Sales_Model_
         $pdf    = $this->getPdf();
         $page   = $this->getPage();
         $lines  = array();
-		
-	$Currenproduct = Mage::getModel('catalog/product')->loadByAttribute('sku',$this->getSku($item));
-	$attributeValue1 = ($Currenproduct->getAttributeText('qtytoship')*1)*($item->getQty()*1);
-	$attributeValue2 = ($Currenproduct->getAttributeText('qtyoship')*1)*($item->getQty()*1);
-	$attributeValue3 = ($Currenproduct->getAttributeText('qtyinstallship')*1)*($item->getQty()*1);
 
         // draw Product name
         $lines[0] = array(array(
@@ -55,113 +50,32 @@ class Mage_Sales_Model_Order_Pdf_Items_Invoice_Default extends Mage_Sales_Model_
             'feed' => 35,
         ));
 
-	// draw Description
-	$lines[0][] = array(
-            'text'  => Mage::helper('core/string')->str_split(strip_tags(trim($Currenproduct->getDescription())), 46,true,true),
-            'feed'  => 125,
-            'align' => 'justify'
-        );
         // draw SKU
         $lines[0][] = array(
             'text'  => Mage::helper('core/string')->str_split($this->getSku($item), 17),
-            'feed'  => 340,
-            'align' => 'left'
-        );
-		
-		
-		if($attributeValue2 > 1 || $attributeValue2 != '')
-		{			
-			$pos = strpos($item->getName(), '-I');
-			if($pos == false )
-			{
-				$prod_o = Mage::helper('core/string')->str_split($item->getName(), 35, true, true);
-			}
-			else
-			{
-				$option_o = str_replace('-I','-O',$item->getName());
-				$prod_o = Mage::helper('core/string')->str_split($option_o, 35, true, true);
-			}
-			
-		}
-		else
-		{
-			$prod_o = '';	
-		}
-		
-		$lines3[0]= array(array(
-		   'text' => $prod_o,
-		   'feed' => 35
-		));
-		//getting outdoor unit model name and product detail;				
-		$prd = Mage::getModel('catalog/product')->loadByAttribute('sku',$prod_o[0]);
-		if($prd){
-			$lines3[0][] = array(
-				'text'  => Mage::helper('core/string')->str_split(strip_tags(trim($prd->getDescription())), 46,true,true),
-				'feed'  => 125,
-				'align' => 'justify'
-			);
-			$lines3[0][] = array(
-				'text'  => Mage::helper('core/string')->str_split($prd->getSku(), 17),
-				'feed'  => 340,
-				'align' => 'left'
-			);
-		}
-		$lines3[0][] = array(
-			//'text'  => ($item->getQty()*1).' test',
-			'text'  => $attributeValue2,
-			'feed'  => 490,
-            		'align' => 'left'
-		);
-		
-		if($attributeValue3 > 1 || $attributeValue3 != '')
-		{			
-			$inst_kits = Mage::helper('core/string')->str_split('Installation Kits', 60, true, true);
-		}
-		else
-		{
-			$inst_kits = '';	
-		}
-		
-		$lines4[0]= array(array(
-			'text' => $inst_kits,
-			'feed' => 35
-		));
-		
-		$lines4[0][] = array(
-			//'text'  => ($item->getQty()*1).' test',
-			'text'  => $attributeValue3,
-			'feed'  => 490,
-            		'align' => 'left'
-		);
-
-		
-
-        // draw QTY
-		
-	$lines[0][] = array(
-            'text'  => $attributeValue1,
-            'feed'  => 495,
+            'feed'  => 290,
             'align' => 'right'
         );
-		
-        /*$lines[0][] = array(
+
+        // draw QTY
+        $lines[0][] = array(
             'text'  => $item->getQty() * 1,
             'feed'  => 435,
             'align' => 'right'
-        );*/
+        );
 
         // draw item Prices
         $i = 0;
         $prices = $this->getItemPricesForDisplay();
-        $feedPrice = 425;
-        $feedSubtotal = 565;
+        $feedPrice = 395;
+        $feedSubtotal = $feedPrice + 170;
         foreach ($prices as $priceData){
             if (isset($priceData['label'])) {
                 // draw Price label
                 $lines[$i][] = array(
                     'text'  => $priceData['label'],
                     'feed'  => $feedPrice,
-                    'align' => 'left'
+                    'align' => 'right'
                 );
                 // draw Subtotal label
                 $lines[$i][] = array(
@@ -176,7 +90,7 @@ class Mage_Sales_Model_Order_Pdf_Items_Invoice_Default extends Mage_Sales_Model_
                 'text'  => $priceData['price'],
                 'feed'  => $feedPrice,
                 'font'  => 'bold',
-                'align' => 'left'
+                'align' => 'right'
             );
             // draw Subtotal
             $lines[$i][] = array(
@@ -189,31 +103,19 @@ class Mage_Sales_Model_Order_Pdf_Items_Invoice_Default extends Mage_Sales_Model_
         }
 
         // draw Tax
-        /*$lines[0][] = array(
+        $lines[0][] = array(
             'text'  => $order->formatPriceTxt($item->getTaxAmount()),
             'feed'  => 495,
             'font'  => 'bold',
             'align' => 'right'
         );
-	*/
+
         // custom options
         $options = $this->getItemOptions();
         if ($options) {
             foreach ($options as $option) {
                 // draw options label
                 $lines[][] = array(
-                    'text' => Mage::helper('core/string')->str_split(strip_tags($option['label']), 40, true, true),
-                    'font' => 'italic',
-                    'feed' => 35
-                );
-				
-				$lines3[][] = array(
-                    'text' => Mage::helper('core/string')->str_split(strip_tags($option['label']), 40, true, true),
-                    'font' => 'italic',
-                    'feed' => 35
-                );
-				
-				$lines4[][] = array(
                     'text' => Mage::helper('core/string')->str_split(strip_tags($option['label']), 40, true, true),
                     'font' => 'italic',
                     'feed' => 35
@@ -231,14 +133,6 @@ class Mage_Sales_Model_Order_Pdf_Items_Invoice_Default extends Mage_Sales_Model_
                             'text' => Mage::helper('core/string')->str_split($value, 30, true, true),
                             'feed' => 40
                         );
-						$lines3[][] = array(
-                            'text' => Mage::helper('core/string')->str_split($value, 30, true, true),
-                            'feed' => 40
-                        );
-						$lines4[][] = array(
-                            'text' => Mage::helper('core/string')->str_split($value, 30, true, true),
-                            'feed' => 40
-                        );
                     }
                 }
             }
@@ -246,21 +140,10 @@ class Mage_Sales_Model_Order_Pdf_Items_Invoice_Default extends Mage_Sales_Model_
 
         $lineBlock = array(
             'lines'  => $lines,
-            'height' => 12
-        );
-	$lineBlock3 = array(
-            'lines'  => $lines3,
-            'height' => 12
-        );
-		
-	$lineBlock4 = array(
-            'lines'  => $lines4,
-            'height' => 12
+            'height' => 20
         );
 
         $page = $pdf->drawLineBlocks($page, array($lineBlock), array('table_header' => true));
-	$page = $pdf->drawLineBlocks($page, array($lineBlock3), array('table_header' => true));
-	$page = $pdf->drawLineBlocks($page, array($lineBlock4), array('table_header' => true));
         $this->setPage($page);
     }
 }

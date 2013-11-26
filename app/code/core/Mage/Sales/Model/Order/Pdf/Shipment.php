@@ -55,11 +55,6 @@ class Mage_Sales_Model_Order_Pdf_Shipment extends Mage_Sales_Model_Order_Pdf_Abs
             'text' => Mage::helper('sales')->__('Products'),
             'feed' => 100,
         );
-		
-		$lines[0][] = array(
-            'text' => Mage::helper('sales')->__('Description'),
-            'feed' => 225,
-        );
 
         $lines[0][] = array(
             'text'  => Mage::helper('sales')->__('Qty'),
@@ -68,7 +63,7 @@ class Mage_Sales_Model_Order_Pdf_Shipment extends Mage_Sales_Model_Order_Pdf_Abs
 
         $lines[0][] = array(
             'text'  => Mage::helper('sales')->__('SKU'),
-            'feed'  => 525,
+            'feed'  => 565,
             'align' => 'right'
         );
 
@@ -112,8 +107,7 @@ class Mage_Sales_Model_Order_Pdf_Shipment extends Mage_Sales_Model_Order_Pdf_Abs
             $this->insertOrder(
                 $page,
                 $shipment,
-                Mage::getStoreConfigFlag(self::XML_PATH_SALES_PDF_SHIPMENT_PUT_ORDER_ID, $order->getStoreId()),
-				0
+                Mage::getStoreConfigFlag(self::XML_PATH_SALES_PDF_SHIPMENT_PUT_ORDER_ID, $order->getStoreId())
             );
             /* Add document text and number */
             $this->insertDocumentNumber(

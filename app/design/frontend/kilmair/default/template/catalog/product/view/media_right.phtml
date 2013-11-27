@@ -33,45 +33,65 @@
     $_helper = $this->helper('catalog/output');
 ?>
 <script type="text/javascript">
-function asdsdsad(d,dd,c)
+function show_hide_div(d,dd,c)
 {
-    for(var i=0; i<<?php echo count($this->getGalleryImages()); ?>; i++)
+    for(var i=0; i<= <?php echo count($this->getGalleryImages()); ?>; i++)
     {
         //alert(i+'  '+c);
         if(c == i)
         {
-           document.getElementById('div'+i).style.display = 'inline-table'; 
+           document.getElementById('div'+i).style.display = 'inline-table';
         }
         else
         {
             document.getElementById('div'+i).style.display = 'none';
         }
     }
-        MojoZoom.makeZoomable(  
-        document.getElementById("myimage"+c),   
-        dd,  
-        document.getElementById("myimage"+c+"_zoom"),  
-        295, 315,  
-        false  
-        );    
+        MojoZoom.makeZoomable(
+        document.getElementById("myimage"+c),
+        dd,
+        document.getElementById("myimage"+c+"_zoom"),
+        295, 315,
+        false
+        );
 }
 </script>
-<?php if (count($this->getGalleryImages()) > 0):  ?>    
-    <?php $cnt=1; foreach ($this->getGalleryImages() as $_image): ?>
-      <?php if(!strstr($this->helper('catalog/image')->init($_product, 'thumbnail'),$_image->getFile())): ?>
-        <?php if($cnt == 1): echo '<ul>'; endif;?>
+
+<?php //----new
+$index_img = 0;
+$url_img= $_product->getMediaConfig()->getMediaUrl($_product->getData('image'));
+$not_initial_img=false;
+if (strpos($url_img,'no_selection') !== false) {
+$not_initial_img=true;
+}
+
+
+if (count($this->getGalleryImages()) > 0):
+    if($index_img == 0): echo '<ul>'; endif;
+    foreach ($this->getGalleryImages() as $_image):
+
+        if((!$not_initial_img)and($index_img!=0)):
+
+        if($index_img == 0): echo '<ul>';endif;?>
         <li>
-            <!--<a href="#" onclick="popWin('<?php //echo $this->getGalleryUrl($_image) ?>', 'gallery', 'width=300,height=300,left=0,top=0,location=no,status=yes,scrollbars=yes,resizable=yes'); return false;" title="<?php //echo $this->htmlEscape($_image->getLabel()) ?>">-->
-            
-            <img onclick="asdsdsad('<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile())->resize(294, 314); ?>','<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'image', $_image->getFile()); ?>','<?php echo $cnt; ?>');" style="cursor: pointer" src="<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile())->resize(55,65); ?>" width="55" height="65" alt="<?php echo $this->htmlEscape($_image->getLabel()) ?>" title="<?php echo $this->htmlEscape($_image->getLabel()) ?>" />
-            
-            <!--</a>-->
+            <img onclick="show_hide_div('<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile())->resize(294, 314); ?>','<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'image', $_image->getFile()); ?>','<?php echo $index_img; ?>');" style="cursor: pointer" src="<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile())->resize(55,65); ?>" width="55" height="65" alt="<?php echo $this->htmlEscape($_image->getLabel()) ?>" title="<?php echo $this->htmlEscape($_image->getLabel()) ?>" />
         </li>
-        <?php $cnt++; if($cnt == 1): echo '</ul>'; endif;?>
-    <?php endif; 
-            endforeach; 
-    if($cnt == 1): echo '<h4>Sorry, No Gallery images</h4>'; endif;
-    ?>    
-<?php else: echo 'Sorry No Gallery images'; ?>    
-<?php endif; ?>
+        <?php
+
+        else:
+            $index_img++;
+            $not_initial_img=false;
+            ?>
+        <li>
+            <img onclick="show_hide_div('<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile())->resize(294, 314); ?>','<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'image', $_image->getFile()); ?>','<?php echo $index_img; ?>');" style="cursor: pointer" src="<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile())->resize(55,65); ?>" width="55" height="65" alt="<?php echo $this->htmlEscape($_image->getLabel()) ?>" title="<?php echo $this->htmlEscape($_image->getLabel()) ?>" />
+        </li>
+        <?php
+        endif;
+        $index_img++;
+    endforeach;
+//    if($index_img == 0): echo '<h4>Sorry, No Gallery images</h4>'; endif;
+    echo '</ul>';
+    else: echo 'Sorry No Gallery images';
+endif;
+?>
 

@@ -8,7 +8,7 @@ $(function() {
             	$(".carousel.prev").hide(); //$(this.btnPrev).hide(); may work and is neater
             },
             afterEnd: function() {
-               	$(".carousel .next").hide();
+               	$(".carousel.next").hide();
             }
     });       
     

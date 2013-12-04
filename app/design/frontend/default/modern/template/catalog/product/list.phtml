@@ -35,7 +35,26 @@
     $_productCollection=$this->getLoadedProductCollection();
     $_helper = $this->helper('catalog/output');
     $status = Mage::getSingleton('customer/session')->isLoggedIn();
+
+//code for compare items checkbox
+    $_helper_compare = $this->helper('catalog/product_compare');
+    $_items_compare = $_helper_compare->getItemCount() > 0 ? $_helper_compare->getItemCollection() : null;
+
+    $_list_compare_name = null;
+    $_list_compare_link_remove = null;
+
+    if($_helper_compare->getItemCount() > 0):
+
+    foreach($_items_compare as $_index => $_item):
+
+        $_list_compare_name[]= $this->helper('catalog/output')->productAttribute($_item, $_item->getName(), 'name');
+        $_list_compare_link_remove[]= $_helper_compare->getRemoveUrl($_item);
+
+    endforeach;
+    endif;
+/*end of compare*/
 ?>
+
 <?php if(!$_productCollection->count()): ?>
 <p class="note-msg"><?php echo $this->__('There are no products matching the selection.') ?></p>
 <?php else: ?>
@@ -82,7 +101,7 @@
 <!--                        --><?php //endif; ?>
 
                         <?php if($_compareUrl=$this->getAddToCompareUrl($_product)): ?>
-                            <li><span class="separator">|</span> <a href="<?php echo $_compareUrl ?>" class="link-compare"><?php echo $this->__('Add to Compare') ?></a></li>
+                            <li><span class="separator">|</span> <a href="<?php echo $_compareUrl ?>" class="link-compare"><?php echo $this->__('AAAdd to Compare') ?></a></li>
                         <?php endif; ?>
                     </ul>
                 </div>
@@ -159,11 +178,57 @@
                         <li><?php echo $matches[0][5] ?></li>
                         <li><?php echo $matches[0][6] ?></li>
                         <li><?php echo $matches[0][7] ?></li>
-
-                        <?php if($_compareUrl=$this->getAddToCompareUrl($_product)): ?>
-                            <li><span class="separator">|</span> <a href="<?php echo $_compareUrl ?>" class="link-compare"><?php echo $this->__('Add to Compare') ?></a></li>
-                        <?php endif; ?>
+<!---->
+<!--                        --><?php //if($_compareUrl=$this->getAddToCompareUrl($_product)): ?>
+<!--                            <li><span class="separator">|</span> <a href="--><?php //echo $_compareUrl ?><!--" class="link-compare">--><?php //echo $this->__('Add to Compare') ?><!--</a></li>-->
+<!---->
+<!---->
+<!--                        --><?php //endif; ?>
                     </ul>
+
+                    <script type="text/javascript">
+
+                        function handleClick(element,checked,actionurl) {
+                            if(checked){
+                                var garso=confirm('<?php echo $this->__('Are you sure you would like to remove this item from the compare products?') ?>');
+                                if(garso){
+                                window.location = actionurl;
+                                }else{
+                                    element.checked=!element.checked;
+
+                                }
+                            }else{
+                                window.location = actionurl;
+
+                            }
+
+                        }
+                    </script>
+
+                    <?php
+                    $name_pro=$_helper->productAttribute($_product, $_product->getName(), 'name');
+
+                    $pre_name="/".$name_pro."/";
+                    //$key = xxxxxx('gr', $array); // $key = 2;
+                    $result_array_pos=preg_grep($pre_name, $_list_compare_name);
+
+                    $result_pos=key($result_array_pos);
+
+                    if($_compareUrl=$this->getAddToCompareUrl($_product)):
+
+                        if(($_list_compare_name!==null) and (in_array($name_pro,$_list_compare_name))):
+
+                        $url_remove=$_list_compare_link_remove[$result_pos]; ?>
+
+                        <p class="center"><a href="<?php echo $_compareUrl ?>" class="link-compare"><?php echo $this->__('Add to Compare') ?></a></p>
+                        <p class="center"><input  checked type="checkbox" id="checkbox<?php echo $i ?>" onclick='handleClick(this, true," <?php echo $url_remove ?> ");' class="regular-checkbox" /><label for="checkbox<?php echo $i ?>"></label>
+                        <?php else: ?>
+                        <p class="center"><a href="<?php echo $_compareUrl ?>" class="link-compare"><?php echo $this->__('Add to Compare') ?></a></p>
+                        <p class="center"><input type="checkbox" id="checkbox<?php echo $i ?>" onclick='handleClick(this,false,'<?php echo $_compareUrl ?>');' class="regular-checkbox" /><label for="checkbox<?php echo $i ?>"></label>
+
+                        <?php endif; ?>
+                    <?php endif; ?>
+
                 </div>
             </li>
         <?php if ($i%$_columnCount==0 || $i==$_collectionSize): ?>

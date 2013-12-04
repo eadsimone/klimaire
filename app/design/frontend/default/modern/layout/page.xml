@@ -67,6 +67,7 @@ Default layout, loads most of the pages
                 <action method="addCss"><stylesheet>css/print.css</stylesheet><params>media="print"</params></action>
 
                 <action method="addItem"><type>skin_css</type><name>css/base.css</name></action>
+                <action method="addItem"><type>skin_css</type><name>css/checkbox.css</name></action>
                 <!--<action method="addItem"><type>skin_css</type><name>css/carousel.css</name></action>-->
                 <!--<action method="addItem"><type>skin_css</type><name>css/faqPopup.css</name></action>-->
                 <action method="addItem"><type>skin_css</type><name>css/foot.css</name></action>

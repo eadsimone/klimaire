@@ -84,37 +84,75 @@ $status = Mage::getSingleton('customer/session')->isLoggedIn();
             <?php endforeach; ?>
             </tr>
         </tbody>
-        <tbody>
+        <?php /*
+        Description
+        Product type
+        Brand
+        Model #
+        Capacity
+        Efficiency
+        Voltage
+        Coverage Area
+        Energy Star
+        Air purification
+        Low Ambient Operation
+        Price (if logged in)
+ */
+        $prod_array=array(
+        'Description'=>'',
+        'Product type'=>'',
+        'Brand'=>'',
+        'Model' =>'',
+        'Capacity'=>'',
+        'Efficiency'=>'',
+        'Voltage'=>'',
+        'Coverage Area'=>'',
+        'Energy Star'=>'',
+        'Air Purification'=>'',
+        'Low Ambient Operation'=>'');
+
+         ?>
+
         <?php foreach ($this->getAttributes() as $_attribute): ?>
-            <tr>
                 <?php $_i=0 ?>
                 <?php foreach($this->getItems() as $_item): ?>
                 <?php if($_i++%10==0): ?>
-                <th><span class="nobr"><?php echo $_attribute->getStoreLabel() ?></span></th>
                 <?php endif; ?>
-                <td>
-                    <?php switch ($_attribute->getAttributeCode()) {
-                        case "price": ?>
-                            <?php echo $this->getPriceHtml($_item, true, '-compare-list-' . $_attribute->getCode()) ?>
-                            <?php break;
-                        case "small_image": ?>
-                            <img src="<?php echo $this->helper('catalog/image')->init($_item, 'small_image')->resize(125, 125); ?>" width="125" height="125" alt="<?php echo $this->htmlEscape($_item->getName()) ?>" title="<?php echo $this->htmlEscape($_item->getName()) ?>" />
-                            <?php break;
-                        case "date":
-                              echo substr($this->getProductAttributeValue($_item, $_attribute),0,10);
-                              break;
-//                        case "sku":
-//                            echo substr($this->getProductAttributeValue($_item, $_attribute),0,10);
-//                            break;
-                        default: ?>
-                            <?php echo $this->helper('catalog/output')->productAttribute($_item, $this->getProductAttributeValue($_item, $_attribute), $_attribute->getCode()) ?>
-                            <?php break;
-                    } ?>
-                </td>
+                    <?php
+                    $element=$_attribute->getStoreLabel();
+                    if (array_key_exists($element, $prod_array)) {
+                        $data_html=$this->helper('catalog/output')->productAttribute($_item, $this->getProductAttributeValue($_item, $_attribute), $_attribute->getCode());
+                        $prod_array[$element].="<td>".$data_html."</td>";
+                    }else{
+                        $data_html=$this->helper('catalog/output')->productAttribute($_item, $this->getProductAttributeValue($_item, $_attribute), $_attribute->getCode());
+                        $prod_array[$element].="<td>".$data_html."</td>";;
+
+                    }
+                    ?>
                 <?php endforeach; ?>
-            </tr>
         <?php endforeach; ?>
+
+
+        <tbody id="testing">
+
+        <?php
+        foreach ($prod_array as $key => $value) {
+            echo "<tr>";
+            echo "<th><span class=\"nobr\">".$key."</span></th>";
+            if($value==''){
+                for($j=0;$j<$_total;$j++)
+                echo "<td> </td>";
+            }else{
+                echo $value;
+            }
+
+
+            echo "</tr>";
+        }
+        ?>
         </tbody>
+
+
         <tbody>
                 <tr class="add-to-row">
                 <?php $_i=0 ?>

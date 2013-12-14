@@ -105,8 +105,8 @@
                                     <div id="track1" class="track" style="width: 17em; margin: 15px 0 20px 1px;" >
                                     <div id="handle1" class="handle" style="height: 15px;left: 0;top: -5px;width: 0.5em;" ></div>
                                   </div>
-                            <div style="float:left;margin-top: -15px;">400 sqft</div>
-                            <div style="float: right;margin-top: -15px;">1600 sqft</div>
+                            <div style="float:left;margin-top: -15px;">100 sqft</div>
+                            <div style="float: right;margin-top: -15px;">2800 sqft</div>
                             <!--p id="changed" ></p-->
                             <div id="changed"> </div>
                             ';
@@ -143,6 +143,11 @@
                           sliderValue: 0,
                           onChange: function(v){
                               $('changed').innerHTML = htmlDecode(arraylink[v]);
+                              var res = arraylink[v].split("&quot;");
+
+                              window.setTimeout(function(){window.location.href = res[1];},1000);
+                              /*window.location.href = res[1];
+                              /*window.location = "http://www.yoururl.com";*/
                           }
 
                           } );

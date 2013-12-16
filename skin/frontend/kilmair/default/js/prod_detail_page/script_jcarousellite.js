@@ -1,3 +1,4 @@
+$.noConflict();
 $(function() {
     $(".main .jCarouselLite").jCarouselLite({
         btnNext: ".main .next",

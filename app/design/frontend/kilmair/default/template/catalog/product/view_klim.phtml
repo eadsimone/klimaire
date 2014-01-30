@@ -38,16 +38,28 @@
 </script>
 
 <link href="<?php echo $this->getSkinUrl(); ?>css/klimaire_prod_detail.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript"> focname=0;focname2=0;</script>
 
 
-    <script type="text/javascript" src="<?php echo $this->getSkinUrl(); ?>inc/ui.core.min.js"></script>
-    <script type="text/javascript" src="<?php echo $this->getSkinUrl(); ?>inc/ui.sortable.min.js"></script>
-    <script type="text/javascript" src="<?php echo $this->getSkinUrl(); ?>inc/jquery.metadata.js"></script>
-    <script type="text/javascript" src="<?php echo $this->getSkinUrl(); ?>inc/mbTabset.js"></script>
+<script type="text/javascript" src="<?php echo $this->getSkinUrl(); ?>inc/ui.core.min.js"></script>
+<script type="text/javascript" src="<?php echo $this->getSkinUrl(); ?>inc/ui.sortable.min.js"></script>
+<script type="text/javascript" src="<?php echo $this->getSkinUrl(); ?>inc/jquery.metadata.js"></script>
+<script type="text/javascript" src="<?php echo $this->getSkinUrl(); ?>inc/mbTabset.js"></script>
 
-    <link rel="stylesheet" type="text/css" href="<?php echo $this->getSkinUrl(); ?>css/mbTabset.css" title="style"  media="screen"/>
-    <script type="text/javascript">
+<link rel="stylesheet" type="text/css" href="<?php echo $this->getSkinUrl(); ?>css/mbTabset.css" title="style"  media="screen"/>
+
+<link rel="stylesheet" type="text/css" href="<?php echo $this->getSkinUrl(); ?>js/prod_detail_page/style.css" media="screen">
+<script type="text/javascript" src="<?php echo $this->getSkinUrl(); ?>js/prod_detail_page/lib.min.js"></script>
+
+<script type="text/javascript" src="<?php echo $this->getSkinUrl(); ?>js/prod_detail_page/script.js"></script>
+<script type="text/javascript" src="<?php echo $this->getSkinUrl(); ?>js/prod_detail_page/jquery.jcarousellite.min.js"></script>
+<script type="text/javascript" src="<?php echo $this->getSkinUrl(); ?>js/prod_detail_page/script_jcarousellite.js"></script>
+
+<script type="text/javascript" src="<?php echo $this->getSkinUrl(); ?>js/mojozoom/mojozoom.js"></script>
+<link type="text/css" href="<?php echo $this->getSkinUrl(); ?>js/mojozoom/mojozoom.css" rel="stylesheet" />
+
+
+<script type="text/javascript">
+    var focname=0;focname2=0;
 
     var $j = jQuery.noConflict();
 
@@ -65,14 +77,9 @@
         });
     var ajaxUrl="content_2.html";
     var ajaxD="pippo=1&pluto=2";
-    </script>
-    <liNK rel="stylesheet" type="text/css" href="<?php echo $this->getSkinUrl(); ?>js/prod_detail_page/style.css" media="screen">
-    <SCRIPT type="text/javascript" src="<?php echo $this->getSkinUrl(); ?>js/prod_detail_page/lib.min.js"></SCRIPT>
+</script>
 
-<SCRIPT type="text/javascript" src="<?php echo $this->getSkinUrl(); ?>js/prod_detail_page/script.js"></SCRIPT>
-    <SCRIPT type="text/javascript" src="<?php echo $this->getSkinUrl(); ?>js/prod_detail_page/jquery.jcarousellite.min.js"></SCRIPT>
 
-<SCRIPT type="text/javascript" src="<?php echo $this->getSkinUrl(); ?>js/prod_detail_page/script_jcarousellite.js"></SCRIPT>
 
 
 <div id="product-body-part">
@@ -81,11 +88,6 @@
       <div class="product2-detail-left">
       <div class="product2-detail-img">
       <div class="product2-detail-img1">
-      <?php //echo $this->getChildHtml('media'); ?>
-
-
-    <script type="text/javascript" src="<?php echo $this->getSkinUrl(); ?>js/mojozoom/mojozoom.js"></script>
-    <link type="text/css" href="<?php echo $this->getSkinUrl(); ?>js/mojozoom/mojozoom.css" rel="stylesheet" />
 
     <?php
     $Product_view_media = new Mage_Catalog_Block_Product_View_Media();
@@ -95,24 +97,11 @@
     if (strpos($url_img,'no_selection') !== false) {
               $not_initial_img=true;
           }
-
     ?>
 
     <div id="div<?php echo $index_img; ?>"<?php echo $_displ_str; ?>>
     <img src="<?php echo $this->helper('catalog/image')->init($_product, 'thumbnail')->resize(294, 314); ?>" data-zoomsrc="<?php echo $this->helper('catalog/image')->init($_product, 'thumbnail')->resize(394, 414); ?>" id="myimage<?php echo $index_img; ?>" name="myimage<?php echo $index_img; ?>" />
     </div>
-
-
-
-    <script type="text/javascript">
-    MojoZoom.makeZoomable(
-        document.getElementById("myimage0"),
-        '<?php echo $this->helper('catalog/image')->init($_product, 'thumbnail')->resize(394, 414); ?>',
-        document.getElementById("myimage0_zoom"),
-        295, 315,
-        false
-        );
-    </script>
 
     <?php
     $_displ_str = '';
@@ -203,12 +192,25 @@ if($status==true): ?>
            <p class="availability out-of-stock"><span><?php echo $this->__('Out of stock') ?></span></p>
    <?php endif; ?>
 
+<!--here because give a conflict wirh jquery-->
+          <script type="text/javascript">
+              MojoZoom.makeZoomable(
+                  document.getElementById("myimage0"),
+                  '<?php echo $this->helper('catalog/image')->init($_product, 'thumbnail')->resize(394, 414); ?>',
+                  document.getElementById("myimage0_zoom"),
+                  295, 315,
+                  false
+              );
+          </script>
+
+
    <form action="<?php echo $this->getSubmitUrl($_product) ?>" method="post" id="product_addtocart_form"<?php if($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
    <div class="no-display">
             <input type="hidden" name="product" value="<?php echo $_product->getId() ?>" />
             <input type="hidden" name="related_product" id="related-products-field" value="" />
             <?php $_SESSION['curprod']=$_product->getSku(); ?>
         </div>
+       <?php echo $this->getChildHtml('product_type_data') ?>
 <div class="product2-detail-right">
 
 <?php if ($_product->isSaleable() && $this->hasOptions()):?>

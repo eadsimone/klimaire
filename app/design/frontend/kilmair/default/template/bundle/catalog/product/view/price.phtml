@@ -37,8 +37,14 @@ if ($_product->getPriceType() == 1) {
 }
 $isMAPTypeOnGesture = Mage::helper('catalog')->isShowPriceOnGesture($_product);
 $canApplyMAP  = Mage::helper('catalog')->canApplyMsrp($_product);
+
+
+
+Mage::getSingleton('core/session', array('name' => 'frontend'));
+$status = Mage::getSingleton('customer/session')->isLoggedIn();
 ?>
-<?php if ($_product->getCanShowPrice() !== false):?>
+
+<?php if ($_product->getCanShowPrice() !== false and ($status==true)):?>
 <div class="price-box">
     <p class="price-as-configured">
         <span class="price-label"><?php echo $this->helper('bundle')->__('Price as configured') ?>:</span>

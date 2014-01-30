@@ -52,10 +52,17 @@ if ($_product->getPriceType() == 1) {
         $_weeeTaxAttributes = Mage::helper('weee')->getProductWeeeAttributesForDisplay($_product);
     }
 }
+
+
+
+Mage::getSingleton('core/session', array('name' => 'frontend'));
+$status = Mage::getSingleton('customer/session')->isLoggedIn();
 ?>
 
+
+
 <div class="price-box">
-        <?php if ($_product->getPriceView()): ?>
+        <?php if ($_product->getPriceView() and ($status==true)): ?>
             <p class="minimal-price">
                 <span class="price-label"><?php echo $this->__('As low as') ?>:</span>
                 <?php if ($this->displayBothPrices()): ?>

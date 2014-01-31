@@ -648,6 +648,38 @@ foreach($all_child_categories as $newcategory)
         }
 }
 */
+
+$attributes = Mage::getResourceModel('catalog/product_attribute_collection')->getItems();
+
+foreach ($attributes as $attribute){
+    echo "atributecode".$attribute->getAttributecode();
+    echo '<br>';
+    echo "atributelabel:".$attribute->getFrontendLabel();
+    echo '<br>';
+    echo"-------------------";
+    echo '<br>';
+}
+
+/*$_item = $this->getProduct()->getId();
+$_resource = $this->getProduct()->getResource();
+$optionValue = $_resource->getAttributeRawValue($_item, 'producttype', Mage::app()->getStore());
+echo $optionValue;*/
+
+
+$attributeId = Mage::getResourceModel('eav/entity_attribute')->getIdByCode('catalog_product','producttype');
+$attribute = Mage::getModel('catalog/resource_eav_attribute')->load($attributeId);
+$attributeOptions = $attribute ->getSource()->getAllOptions();
+
+
+foreach($attributeOptions as $at):
+    echo $at['value'];
+    echo "--------";
+    echo $at['label'];
+    ?>
+    <option value="<?php echo $v; ?>"<?php if($_SESSION['warranty_reg_prod_data_reserve']['State'] == $v) {?> selected="selected"<?php }?>><?php echo $v; ?></option>
+<?php
+endforeach;
+
 ?>
 
 
@@ -741,9 +773,8 @@ foreach($all_child_categories as $newcategory)
     <li id="ss_new_innerli1"><label for="prodcode_0" class="required">Product Type:</label></li>
     <li id="ss_new_innerli2">
        
-        <select name="product_type_cat_0"  id="product_type_cat_0" style="width:156px" onchange="fillProductcode(0);" 
-        >
-            <option value="" selected="selected">-Select Category-</option>
+        <select name="product_type_cat_0"  id="product_type_cat_0" style="width:156px" onchange="fillProductcode(0);">
+           <!-- <option value="" selected="selected">-Select Category-</option>
             <option value="3">Ductless Split Systems</option>
             <option value="87">Package Terminal Systems (PTAC & PTHP)</option>
             <option value="94">Heat & Energy Recovery Units</option>
@@ -755,11 +786,23 @@ foreach($all_child_categories as $newcategory)
             <option value="115">Commercial Units & VRF Systems</option>
             <option value="16">Tankless Water Heaters</option>
             <option value="18">Boilers &amp; Heaters</option>
-            <option value="20">Air Curtains</option>
+            <option value="20">Air Curtains</option>-->
             <!-- blow code is for to get all category  dynamic , above code static 4-7-2012-->
             
-    <?php /*?> <?php
-    $categories = Mage::getModel('catalog/category')->getCollection()
+    <?php
+
+    $collection = Mage::getModel('catalog/product')->getCollection();
+    $collection->addAttributeToSelect('producttype');
+    //$collection->addAttributeToSelect('orig_price');
+
+    foreach ($collection as $product) {
+        //var_dump($product);
+        var_dump($product->getData());
+    }
+
+    //----------------------------------------------------
+
+    /*$categories = Mage::getModel('catalog/category')->getCollection()
              ->addAttributeToSelect('name','parent_id')
              ->setLoadProductCount(true)
              ->addAttributeToFilter('is_active',array('eq'=>true))
@@ -787,8 +830,8 @@ foreach($all_child_categories as $newcategory)
             }
              
          }
-     }
-	?><?php */?>
+     }*/
+	?>
         </select>
         
     </li> 

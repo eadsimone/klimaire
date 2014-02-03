@@ -284,6 +284,8 @@ function checkSerialNo(elementNo)
 /* ****** 2. Product Information :: Add/Remove elements Dynamically... ***** */
 
 var Global_prodCode_arr = new Array();
+var Global_prodCode_arr_indoor = new Array();
+var Global_prodCode_arr_outdoor = new Array();
 var Global_prodName_arr = new Array();
 var Global_categoryId_arr = new Array();
 var Global_categoryName_arr = new Array();
@@ -296,6 +298,30 @@ $attributeId = Mage::getResourceModel('eav/entity_attribute')->getIdByCode('cata
 $attribute = Mage::getModel('catalog/resource_eav_attribute')->load($attributeId);
 $attributeOptions = $attribute ->getSource()->getAllOptions();
 
+/*all prodcut to obtain the name indoor and outdoor*/
+$collection = Mage::getModel('catalog/product')->getCollection();
+$collection->addAttributeToSelect('name');
+//$collection->addAttributeToSelect('orig_price');
+
+foreach ($collection as $product) {
+    //var_dump($product);
+    //var_dump($product->getData());
+    //echo "<pre>";
+    //echo $product->getAttributeName();
+    $tt=$product->getData();
+   // echo $tt['name'];
+    if ((strpos($tt['name'],'-I') !== false) OR (strpos($tt['name'],'Indoor')!== false )) {
+        $Indoor[]=$tt['name'];
+    }
+    elseif ((strpos($tt['name'],'-O') !== false) OR (strpos($tt['name'],'Outoor')!== false )) {
+    $Outdoor[]=$tt['name'];
+}
+
+    //print_r($product->getData());
+    //echo "</pre>";
+
+}
+
 foreach($attributeOptions as $at):
 /* echo $at['value'];
  echo "--------";
@@ -306,6 +332,20 @@ Global_categoryName_arr.push('<?php echo $at['label'] ?>');
 <?php
 endforeach;
 ?>
+
+<?php
+foreach($Outdoor as $opro):?>
+Global_prodCode_arr_outdoor.push('<?php echo $opro ?>');
+<?php
+ endforeach;
+ ?>
+
+<?php
+foreach($Indoor as $inp):?>
+Global_prodCode_arr_indoor.push('<?php echo $inp ?>');
+<?php
+ endforeach;
+ ?>
 
 /*Global_categoryId_arr.push('3');
 Global_categoryName_arr.push('Ductless Split Systems');
@@ -489,11 +529,11 @@ function addField(area,field,limit) {
         option.value = '';
         option.appendChild(document.createTextNode('- Select Product Code -'));
         input.appendChild(option);
-        for(var i=0; i<Global_prodCode_arr.length; i++)
+        for(var i=0; i<Global_prodCode_arr_outdoor.length; i++)
         {
             var option = document.createElement('option');
-            option.value = Global_prodCode_arr[i];
-            option.appendChild(document.createTextNode(Global_prodName_arr[i]));
+            option.value = Global_prodCode_arr_outdoor[i];
+            option.appendChild(document.createTextNode(Global_prodCode_arr_outdoor[i]));
             input.appendChild(option);
         }
         //option.appendChild(document.createTextNode(Global_prodCode_arr[i]));
@@ -539,14 +579,14 @@ function addField(area,field,limit) {
         option.value = '';
         option.appendChild(document.createTextNode('-Select Model-'));
         input.appendChild(option);
-        for(var i=0; i<Global_prodCode_arr.length; i++)
+        for(var i=0; i<Global_prodCode_arr_indoor.length; i++)
         {
             var option = document.createElement('option');
-            option.value = Global_prodCode_arr[i];
-            option.appendChild(document.createTextNode(Global_prodCode_arr[i]));
+            option.value = Global_prodCode_arr_indoor[i];
+            option.appendChild(document.createTextNode(Global_prodCode_arr_indoor[i]));
             input.appendChild(option);
         }
-        //option.appendChild(document.createTextNode(Global_prodCode_arr[i]));
+        //option.appendChild(document.createTextNode(Global_prodCode_arr_indoor[i]));
         li.appendChild(input);
 		var span = document.createElement("span");
         span.id = 'msg1_'+count;
@@ -670,28 +710,9 @@ foreach($all_child_categories as $newcategory)
 */
 
 
-$collection = Mage::getModel('catalog/product')->getCollection();
-$collection->addAttributeToSelect('name');
-//$collection->addAttributeToSelect('orig_price');
 
-foreach ($collection as $product) {
-    //var_dump($product);
-    //var_dump($product->getData());
-    echo "<pre>";
-    //echo $product->getAttributeName();
-    $tt=$product->getData();
-    echo $tt['name'];
-    if ((strpos($tt['name'],'-I') !== false) OR (strpos($tt['name'],'Indoor')!== false )) {
-        $Indoor[]=$tt['name'];
-    }
-    elseif ((strpos($tt['name'],'-O') !== false) OR (strpos($tt['name'],'Outoor')!== false )) {
-    $Outdoor[]=$tt['name'];
-}
 
-    //print_r($product->getData());
-    echo "</pre>";
-
-}
+//print_r($Indoor);
 
 /*obtain all prodcut type dynamically*/
 /*$attributes = Mage::getResourceModel('catalog/product_attribute_collection')->getItems();
@@ -883,6 +904,16 @@ endforeach;
     <li id="ss_new_innerli2">
     <select name="prodcode_0" class="input-text validate-select" id="prodcode_0" style="width:156px" onchange="fillMatchngUnitModelNumber(0);" >
         <option value="" selected>-Select Model-</option>
+        <?php
+        foreach($Outdoor as $outprod):
+        /* echo $at['value'];
+        echo "--------";
+        echo $at['label'];*/
+
+        echo "<option value=".$outprod.">".$outprod."</option>";
+        endforeach;
+        ?>
+
     </select><span id="msg_0"></span>
     </li>    
     <li id="ss_new_innerli3">&nbsp;</li>  
@@ -901,6 +932,15 @@ endforeach;
       
         <select name="indoor_prodcode_0" class="input-text validate-select" id="indoor_prodcode_0" style="width:156px" onchange="fillIndoorUnitModelNumber(0);" >
     <option value="" selected>-Select Model-</option>
+            <?php
+            foreach($Indoor as $indprod):
+                /* echo $at['value'];
+                echo "--------";
+                echo $at['label'];*/
+
+                echo "<option value=".$indprod.">".$indprod."</option>";
+            endforeach;
+            ?>
     
     </select><span id="msg1_0"></span>
     

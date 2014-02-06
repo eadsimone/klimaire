@@ -1,12 +1,4 @@
 /*$.noConflict(); Con esto comentado anda el price checkout but not slider*/
-
-
-
-jQuery.noConflict();
-(function( $ ) {
-
-
-
 $(function() {
     $(".main .jCarouselLite").jCarouselLite({
         btnNext: ".main .next",
@@ -51,5 +43,3 @@ $(function() {
 
     });
 });
-
-})(jQuery)

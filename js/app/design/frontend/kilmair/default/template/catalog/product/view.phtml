@@ -99,7 +99,7 @@
         document.getElementById("myimage0"),   
         '<?php echo $this->helper('catalog/image')->init($_product, 'thumbnail')->resize(394, 414); ?>',  
         document.getElementById("myimage0_zoom"),  
-        295, 315,  
+        256, 256,  
         false  
         );
     </script>    
@@ -138,16 +138,9 @@
       <div class="product2-detail-img_b">
       <div class="product2-detail-img_b1"><a href="#" onclick="popWin('<?php echo $this->helper('catalog/image')->init($_product, 'thumbnail')->resize(294, 314); ?>', 'gallery', 'width=300,height=300,left=0,top=0,location=no,status=yes,scrollbars=yes,resizable=yes'); return false;">interactive experience</a></div>
         <div class="product2-detail-img_b2"><a href="#">Zoom<br/>
-        Image</a>
-        </div>
+        Image</a></div>
         <div class="product2-detail-img_b3">
-        <?php /* ?><a href="#" onclick="popWin('<?php echo $this->helper('catalog/image')->init($_product, 'thumbnail')->resize(294, 314); ?>', 'gallery', 'width=300,height=300,left=0,top=0,location=no,status=yes,scrollbars=yes,resizable=yes'); return false;">360<br />View</a></div> 
-		<?php */ 
-			$xml_path = Mage::getResourceModel('catalog/product')->getAttributeRawValue($_product->getID(), 'webrotate_path', Mage::app()->getStore()->getId());
-			//echo urlencode($xml_path) . "<br>";
-			//echo urldecode(urlencode($xml_path));
-		?>
-        <a href="#" onclick="popWin('http://www.klimaire.com/360degree.php?pid=<?php echo $_product->getID(); ?>&xmlpath=<?php echo urlencode($xml_path); ?>', 'gallery', 'width=500,height=420,left=0,top=0,location=no,status=yes,scrollbars=yes,resizable=yes'); return false;">360<br />View</a></div> 
+        <a href="#" onclick="popWin('<?php echo $this->helper('catalog/image')->init($_product, 'thumbnail')->resize(294, 314); ?>', 'gallery', 'width=300,height=300,left=0,top=0,location=no,status=yes,scrollbars=yes,resizable=yes'); return false;">360<br />View</a></div>
       </div>
       </div>
       <div class="imag_slide">
@@ -168,10 +161,13 @@
       </div>
       </div>
       <div class="product2-detail-right">
-        <h4>Features<!--<span class="red">...</span>--></h4>
+        <h4>Product Description<!--<span class="red">...</span>--></h4>
         <div class="teb-normal-text1">
-        <?php echo $_product->getResource()->getAttribute('klimaire_features')->getFrontend()->getValue($_product); ?>
-       
+        <?php if ($_product->getShortDescription()):?>
+        <?php echo $_helper->productAttribute($_product, nl2br($_product->getShortDescription()), 'short_description') ?>
+        <?php endif; ?>
+        <br />
+          <br />
         </div>
       </div>
           <!-- 16-2-2012 -->
@@ -186,7 +182,6 @@ if($status==true): ?>
      <?php else: ?>
            <p class="availability out-of-stock"><span><?php echo $this->__('Out of stock') ?></span></p>
    <?php endif; ?>
-   
    <form action="<?php echo $this->getSubmitUrl($_product) ?>" method="post" id="product_addtocart_form"<?php if($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
    <div class="no-display">
             <input type="hidden" name="product" value="<?php echo $_product->getId() ?>" />
@@ -256,7 +251,7 @@ if($status==true): ?>
       <div class="product2-left_main">
       <div class="">
     <div class="" id="tabset1">
-    <a id="a" class="tab sel {content:'cont_1'}">Product Description</a>
+    <a id="a" class="tab sel {content:'cont_1'}">FEATURES</a>
     <a id="c" class="tab {content:'cont_2'}">SPECIFICATIONS</a>
     <a id="d" class="tab {content:'cont_3'}">WARRANTY</a>
     <a id="f" class="tab {content:'cont_4'}" >INFO & GUIDES</a>
@@ -284,33 +279,7 @@ if($status==true): ?>
     <div id="cont_4">
         <div class="teb-normal-text_head">Details</div>
         <div class="teb-normal-text2">
-        <?php //echo $_product->getResource()->getAttribute('klimaire_infoguide')->getFrontend()->getValue($_product); ?>
-        <?php
-   
-   $pdfupload_collection = Mage::getModel('pdfupload/pdfupload')->getCollection()
-                    ->setOrder('created_time', 'desc')
-					->addFieldToFilter('tab_id',Array('in'=>array(1,2)))
-                    ->addFieldToFilter('status',Array('eq'=>1));
-  $pdfupload_data = $pdfupload_collection->getData();
-   
-  if(is_array($pdfupload_data) && count($pdfupload_data) > 0)
-  {
-      foreach($pdfupload_data as $_pdf)
-      {
-		 $pdfarray =explode(",",$_pdf['product_id']);
-		 
-		 if(in_array($_product->getId(),$pdfarray))
-		 {
-          ?>
-          <div class="teb-pdf">
-          <div class="pdf-link"><a href="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA),'klimaire_product_pdfs/',urlencode($_pdf['filename']); ?>" target="_blank"><?php echo strtoupper($_pdf['title']); ?></a></div>          
-          </div>
-          <?php
-		  
-		   }
-       }
-   
-  } ?>
+        <?php echo $_product->getResource()->getAttribute('klimaire_infoguide')->getFrontend()->getValue($_product); ?>
         </div>
 <div class="clear"></div>
     </div>
@@ -323,45 +292,51 @@ if($status==true): ?>
     </div>
     <div id="cont_2">
         <div class="teb-normal-text_head">Details</div>
+        <div class="teb-normal-text2">
+        <?php echo $_product->getResource()->getAttribute('klimaire_specs')->getFrontend()->getValue($_product); ?>
+        </div>
+<div class="clear"></div>
 <?php
    
    $pdfupload_collection = Mage::getModel('pdfupload/pdfupload')->getCollection()
+                    ->addFieldToFilter('product_id',Array('eq'=>$_product->getId()))
                     ->setOrder('created_time', 'desc')
-					->addFieldToFilter('tab_id',Array('in'=>array(0,2)))
                     ->addFieldToFilter('status',Array('eq'=>1));
-	
+  
   $pdfupload_data = $pdfupload_collection->getData();
-   
   if(is_array($pdfupload_data) && count($pdfupload_data) > 0)
   {
+      
       foreach($pdfupload_data as $_pdf)
       {
-		 $pdfarray =explode(",",$_pdf['product_id']);
-		 
-		 if(in_array($_product->getId(),$pdfarray))
-		 {
           ?>
           <div class="teb-pdf">
           <div class="images"><img alt="" src="<?php echo $this->getSkinUrl('images'); ?>/pdf-icon.jpg"></div>
           <div class="pdf-link"><a href="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA),'klimaire_product_pdfs/',urlencode($_pdf['filename']); ?>" target="_blank"><?php echo $_pdf['title']; ?></a></div>          
           </div>
           <?php
-		  
-		   }
-       }
-  } ?>
-   <div class="teb-normal-text2">
-        <?php echo $_product->getResource()->getAttribute('klimaire_specs')->getFrontend()->getValue($_product); ?>
-        </div>
+      }
+   
+  }
+            /*$resource = Mage::getSingleton('core/resource');
+            $read= $resource->getConnection('core_read');
+            $pdfuploadTable = $resource->getTableName('pdfupload');
+            
+            $select = $read->select()
+               ->from($pdfuploadTable,array('pdfupload_id','title','content','status'))
+               ->where('status',1)
+               ->where('product_id',$_product->getId())               
+               ->order('created_time DESC') ;
+               
+            $pdfupload = $read->fetchRow($select);*/
+        
+?>
 <div class="clear"></div>
     </div>
     <div id="cont_1">
         <div class="teb-normal-text_head">Details</div>
         <div class="teb-normal-text2">
-        <?php if ($_product->getShortDescription()):?>
-        <?php echo $_helper->productAttribute($_product, nl2br($_product->getShortDescription()), 'short_description') ?>
-        <?php endif; ?>
-        
+        <?php echo $_product->getResource()->getAttribute('klimaire_features')->getFrontend()->getValue($_product); ?>
         </div>
 <div class="clear"></div>
 <!--content of tabset "tabset2"-->
@@ -412,8 +387,52 @@ if($status==true): ?>
 <?php 
 //**** As per custom Requirement ::: RelatedProducts As Accessories ****//
            echo $this->getChildHtml('upsell_products');
+
+		 /* 
+		  
+		  
+        $currentCatIds = $_product->getCategoryIds();
+        $categoryCollection = Mage::getResourceModel('catalog/category_collection')
+                     ->addAttributeToSelect('name')
+                     ->addAttributeToSelect('url')
+                     ->addAttributeToFilter('entity_id', $currentCatIds)
+                     ->addIsActiveFilter();
+                     
+$resultant_product_arr = array();
+foreach($categoryCollection as $cat)
+{    
+    $category = new Mage_Catalog_Model_Category();
+    $category->load($cat->getId());
+    $collection = $category->getProductCollection();
+    foreach ($collection as $prod) 
+    {
+        $resultant_product_arr[] = $prod->getId();  
+    } 
+}
+
+$resultant_product_arr = array_unique($resultant_product_arr);
+
+$i=0; 
+foreach ($resultant_product_arr as $_product_id)
+{ 
+    $i++;
+    $_product_related = new Mage_Catalog_Model_Product();
+    $_product_related->load($_product_id);
+    //do something with the product here 
+    ?>
+    <div class="ass_img"><img src="<?php echo $_product_related->getImageUrl() ?>" width="86" height="81" style="border:1px solid #C6C7C2" /></div>
+    <div class="ass_text"><a href="<?php echo $_product_related->getUrl(); ?>"><?php echo $_product_related->getName(); ?></a><br />
+    <?php echo substr(strip_tags($_product_related->getShortDescription()),0,30),'...'; ?>
+    </div>
+    <div class="clear"></div><br />    
+    <?php   
+}           
+*/
 //**** As per custom Requirement ::: RelatedProducts As Accessories ****//
 ?>    
+        
+
+        
     </div>
     <div id="cont_1_2">
         <!--<div class="teb-normal-text_head">Details</div>
@@ -421,49 +440,52 @@ if($status==true): ?>
         
 <?php 
 ///******** Custom Related Items [Products having same category] ********////        
-			if($_crossSellProducts = $_product->getCrossSellProducts()): 
-				foreach ($_crossSellProducts as $_item):
-					$_item = Mage::getModel('catalog/product')->load($_item->getId()); 
-					$pname= $this->htmlEscape($_item->getName());
-					if(!strstr($pname,"-O"))
-					{
+/* $resource = Mage::getSingleton('core/resource');
+            $read= $resource->getConnection('core_read');
+            $catalog_product_linkTable = $resource->getTableName('catalog_product_link');
+            
+            $select = $read->select()
+               ->from($catalog_product_linkTable,array('linked_product_id'))
+               ->where('link_type_id',1)
+               ->where('product_id',$_product->getId());               
+               
+            $catalog_product_Related_Accessories = $read->fetchAll($select);
+			$cnt=0;
+			*/
+			$link = Mage::getSingleton('catalog/product_link')
+        	->useCrossSellLinks();           
+    		$collection = $link->getProductCollection()
+        	->addProductFilter($_product->getId())        
+        	->addAttributeToSelect(array('name', 'url_key', 'url_path','short_description'));  
+			
+			$_crossSellsCollection = $collection;
+			if ($_crossSellsCollection->count()):
+				foreach ($_crossSellsCollection as $_product1):
+					//print_r($_product1);
 					?>
-                    
-                    <div class="ass_img">
-                    <a class="product-image" href="<?php echo $_item->getProductUrl() ?>" title="<?php echo $this->htmlEscape($_item->getName()) ?>">
-                    <img src="<?php echo $this->helper('catalog/image')->init($_item, 'thumbnail')->resize(81); ?>" width="86" height="81" style="border:1px solid #C6C7C2" alt="<?php echo $this->htmlEscape($_item->getName()) ?>" />
-                </a>
-                    </div>
-            <div class="ass_text"><a href="<?php echo $_item->getProductUrl(); ?>"><?php 
-			$lasttwo= substr($_item->getName(),-2);
-//echo $lasttwo;
-if($lasttwo=="-I")
-{
-$pizza  = $_item->getName();
-$pieces = explode("-I", $pizza);
-echo $pieces[0]; 
-
-}
-elseif($lasttwo=="-O")
-{
-$pizza  = $_item->getName();
-$pieces = explode("-O", $pizza);
-echo $pieces[0]; 
-
-}
-else{
-
-echo $_item->getName(); 
- }  ?></a>
+					 <div class="ass_img"><img src="<?php echo $_product1->getImageUrl(); ?>" width="86" height="81" style="border:1px solid #C6C7C2" /></div>
+            <div class="ass_text"><a href="<?php echo $_product1->getProductUrl(); ?>"><?php echo $_product1->getName(); ?></a>
             <br />
-         
-            <?php echo substr(strip_tags($_item->getShortDescription()),0,30),'...';  ?>
+            <?php echo substr(strip_tags($_product1->getShortDescription()),0,30),'...';  ?>
             </div>
             <div class="clear"></div><br />
-                <?php
-					}//end if
-				endforeach;
-			endif;
+			<?php	endforeach;
+            endif;
+    		//print_r($collection);
+			/*
+            foreach($catalog_product_Related_Accessories as $access_val)
+            {
+                $tmp_prod_var = Mage::getModel('catalog/product')->load($access_val['linked_product_id']);
+			?>
+            <div class="ass_img"><img src="<?php echo $tmp_prod_var->getImageUrl(); ?>" width="86" height="81" style="border:1px solid #C6C7C2" /></div>
+            <div class="ass_text"><a href="<?php echo $tmp_prod_var->getUrl(); ?>"><?php echo $tmp_prod_var->getName(); ?></a>
+            <br />
+            <?php echo substr(strip_tags($tmp_prod_var->getShortDescription()),0,30),'...';  ?>
+            </div>
+            <div class="clear"></div><br />
+            <?php    
+            }
+              */
 ///******** Custom Related Items [Products having same category] ********////        
 ?>
 <!--</div>-->

@@ -65,6 +65,19 @@ function onlywallmounttype(prod) {
     }
 }*/
 
+function getselect(prod) {
+var selects = document.getElementsByTagName('select');
+var sel;
+var relevantSelects = [];
+for(var z=0; z<selects.length; z++){
+    sel = selects[z];
+    if(sel.name.indexOf('salut-') === 0){
+        relevantSelects.push(sel);
+    }
+}
+console.log(relevantSelects);
+}
+
 function validationzone3(prod) {
     var onlywallmounttype,onecontain18,onecomercialtype12,qtyof9,qtyof12,qtyof18 = 0;
 
@@ -96,7 +109,7 @@ function validationzone3(prod) {
         }
     }
 
-
+l
     if(qtyof9==3){
         return true;
     }else if((qtyof9==2)&&(qtyof12==1)){

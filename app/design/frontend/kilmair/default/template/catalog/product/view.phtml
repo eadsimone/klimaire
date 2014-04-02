@@ -1,0 +1,519 @@
+<?php
+/**
+* Magento
+*
+* NOTICE OF LICENSE
+*
+* This source file is subject to the Academic Free License (AFL 3.0)
+* that is bundled with this package in the file LICENSE_AFL.txt.
+* It is also available through the world-wide-web at this URL:
+* http://opensource.org/licenses/afl-3.0.php
+* If you did not receive a copy of the license and are unable to
+* obtain it through the world-wide-web, please send an email
+* to license@magentocommerce.com so we can send you a copy immediately.
+*
+* DISCLAIMER
+*
+* Do not edit or add to this file if you wish to upgrade Magento to newer
+* versions in the future. If you wish to customize Magento for your
+* needs please refer to http://www.magentocommerce.com for more information.
+*
+* @category    design
+* @package     base_default
+* @copyright   Copyright (c) 2010 Magento Inc. (http://www.magentocommerce.com)
+* @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+*/
+
+/**
+* Product view template
+*
+* @see Mage_Catalog_Block_Product_View
+* @see Mage_Review_Block_Product_View
+*/
+?>
+<?php $_helper = $this->helper('catalog/output'); ?>
+<?php $_product = $this->getProduct(); ?>
+<script type="text/javascript">
+var optionsPrice = new Product.OptionsPrice(<?php echo $this->getJsonConfig() ?>);
+</script>
+
+<link href="<?php echo $this->getSkinUrl(); ?>css/klimaire_prod_detail.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript"> focname=0;focname2=0;</script>
+
+
+<script type="text/javascript" src="<?php echo $this->getSkinUrl(); ?>inc/ui.core.min.js"></script>
+<script type="text/javascript" src="<?php echo $this->getSkinUrl(); ?>inc/ui.sortable.min.js"></script>
+<script type="text/javascript" src="<?php echo $this->getSkinUrl(); ?>inc/jquery.metadata.js"></script>
+<script type="text/javascript" src="<?php echo $this->getSkinUrl(); ?>inc/mbTabset.js"></script>
+
+<link rel="stylesheet" type="text/css" href="<?php echo $this->getSkinUrl(); ?>css/mbTabset.css" title="style"  media="screen"/>
+<script type="text/javascript">
+
+var $j = jQuery.noConflict();
+
+$j(function(){
+    $j("#tabset1").buildMbTabset({
+        stop:function(){if ($j("#array").is(":checked")) alert($j.mbTabset.mbTabsetArray)},
+        sortable:true
+    });
+    $j("#tabset2").buildMbTabset({
+        stop:function(){if ($j("#array").is(":checked")) alert($j.mbTabset.mbTabsetArray)},
+        sortable:true,
+        position:"left"
+    });
+    //$("#b").selectMbTab();
+});
+var ajaxUrl="content_2.html";
+var ajaxD="pippo=1&pluto=2";
+</script>
+<liNK rel="stylesheet" type="text/css" href="<?php echo $this->getSkinUrl(); ?>js/prod_detail_page/style.css" media="screen">
+<SCRIPT type="text/javascript" src="<?php echo $this->getSkinUrl(); ?>js/prod_detail_page/lib.min.js"></SCRIPT>
+
+<SCRIPT type="text/javascript" src="<?php echo $this->getSkinUrl(); ?>js/prod_detail_page/script.js"></SCRIPT>
+<SCRIPT type="text/javascript" src="<?php echo $this->getSkinUrl(); ?>js/prod_detail_page/jquery.jcarousellite.min.js"></SCRIPT>
+
+<SCRIPT type="text/javascript" src="<?php echo $this->getSkinUrl(); ?>js/prod_detail_page/script_jcarousellite.js"></SCRIPT>
+
+
+<div id="product-body-part">
+<div class="product2-left_main">
+<div class="product2-detail">
+<div class="product2-detail-left">
+    <div class="product2-detail-img">
+        <div class="product2-detail-img1">
+            <?php //echo $this->getChildHtml('media'); ?>
+
+
+            <script type="text/javascript" src="<?php echo $this->getSkinUrl(); ?>js/mojozoom/mojozoom.js"></script>
+            <link type="text/css" href="<?php echo $this->getSkinUrl(); ?>js/mojozoom/mojozoom.css" rel="stylesheet" />
+
+            <?php
+            $Product_view_media = new Mage_Catalog_Block_Product_View_Media();
+            $index_img = 0;
+            $url_img= $_product->getMediaConfig()->getMediaUrl($_product->getData('image'));
+            $not_initial_img=false;
+            if (strpos($url_img,'no_selection') !== false) {
+                $not_initial_img=true;
+            }
+
+            ?>
+
+            <div id="div<?php echo $index_img; ?>"<?php echo $_displ_str; ?>>
+                <img src="<?php echo $this->helper('catalog/image')->init($_product, 'thumbnail')->resize(294, 314); ?>" data-zoomsrc="<?php echo $this->helper('catalog/image')->init($_product, 'thumbnail')->resize(394, 414); ?>" id="myimage<?php echo $index_img; ?>" name="myimage<?php echo $index_img; ?>" />
+            </div>
+
+
+
+            <script type="text/javascript">
+                MojoZoom.makeZoomable(
+                    document.getElementById("myimage0"),
+                    '<?php echo $this->helper('catalog/image')->init($_product, 'thumbnail')->resize(394, 414); ?>',
+                    document.getElementById("myimage0_zoom"),
+                    295, 315,
+                    false
+                );
+            </script>
+
+            <?php
+            $_displ_str = '';
+            //    if($not_initial_img):
+            //       $index_img++;
+            //    endif;
+            // $index_img++;
+            foreach($Product_view_media->getGalleryImages() as $_image)
+            {
+                //if(!strstr($this->helper('catalog/image')->init($_product, 'thumbnail'),$_image->getFile())):
+                if((!$not_initial_img)and($index_img!=0)):
+
+                    $_displ_str = ' style="display: none;"';
+                    $not_initial_img=false;
+                    ?>
+                    <div id="div<?php echo $index_img; ?>"<?php echo $_displ_str; ?>>
+                        <img src="<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile())->resize(294,314); ?>" data-zoomsrc="<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile())->resize(394,414); ?>" id="myimage<?php echo $index_img; ?>" name="myimage<?php echo $index_img; ?>"  />
+                    </div>
+                <?php
+                else:
+                    if($index_img==0):
+                        $_displ_str = ' style="display: none;"';
+                        $index_img++;endif;?>
+                    <div class="peche" id="div<?php echo $index_img; ?>"<?php echo $_displ_str; ?>>
+                        <img src="<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile())->resize(294,314); ?>" data-zoomsrc="<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile())->resize(394,414); ?>" id="myimage<?php echo $index_img; ?>" name="myimage<?php echo $index_img; ?>"  />
+                    </div>
+                    <?php
+                    $_displ_str = '';
+                    $not_initial_img=false;
+
+                endif;
+
+                $index_img++;
+            }
+            ?>
+
+
+        </div>
+        <div class="product2-detail-img_b">
+            <div class="product2-detail-img_b1"><a href="#" onclick="popWin('<?php echo $this->helper('catalog/image')->init($_product, 'thumbnail')->resize(294, 314); ?>', 'gallery', 'width=300,height=300,left=0,top=0,location=no,status=yes,scrollbars=yes,resizable=yes'); return false;">interactive experience</a></div>
+            <div class="product2-detail-img_b2"><a href="#">Zoom<br/>
+                    Image</a>
+            </div>
+            <div class="product2-detail-img_b3">
+                <?php /* ?><a href="#" onclick="popWin('<?php echo $this->helper('catalog/image')->init($_product, 'thumbnail')->resize(294, 314); ?>', 'gallery', 'width=300,height=300,left=0,top=0,location=no,status=yes,scrollbars=yes,resizable=yes'); return false;">360<br />View</a></div>
+    <?php */
+                $xml_path = Mage::getResourceModel('catalog/product')->getAttributeRawValue($_product->getID(), 'webrotate_path', Mage::app()->getStore()->getId());
+                //echo urlencode($xml_path) . "<br>";
+                //echo urldecode(urlencode($xml_path));
+                ?>
+                <a href="#" onclick="popWin('http://www.klimaire.com/360degree.php?pid=<?php echo $_product->getID(); ?>&xmlpath=<?php echo urlencode($xml_path); ?>', 'gallery', 'width=500,height=420,left=0,top=0,location=no,status=yes,scrollbars=yes,resizable=yes'); return false;">360<br />View</a></div>
+        </div>
+    </div>
+    <div class="imag_slide">
+        <div id="content_prod_detail_page">
+            <div id="contentInner" class="twoColumn">
+                <div id="jCarouselLiteDemo" class="cEnd">
+                    <div class="primaryContent">
+                        <div id="what" class="tabs-container">
+                            <div class="carousel"><A class="prev" href="javascript:void(0)"><img src="<?php echo $this->getSkinUrl(); ?>images/slide_image_left.jpg" /></A>
+                                <div class="jCarouselLite">
+                                    <?php echo $this->getChildHtml('media_right'); ?>
+
+                                </div><A class="next" href="javascript:void(0)"><img src="<?php echo $this->getSkinUrl(); ?>images/slide_image_right.jpg" /></A>
+                                <div class="clear"></div></div>
+                        </div></div></div></div>
+        </div>
+
+    </div>
+</div>
+<div class="product2-detail-right">
+    <h4>Features<!--<span class="red">...</span>--></h4>
+    <div class="teb-normal-text1">
+        <?php echo $_product->getResource()->getAttribute('klimaire_features')->getFrontend()->getValue($_product); ?>
+
+    </div>
+</div>
+<!-- 16-2-2012 -->
+
+<?php if($_product->isSaleable()):
+    Mage::getSingleton('core/session', array('name' => 'frontend'));
+    $status = Mage::getSingleton('customer/session')->isLoggedIn();
+    /*
+    if($status==true): ?>
+            <button type="button" title="<?php echo $this->__('Buy Now') ?>" class="button-buynow-detail" onclick="setLocation('<?php echo $this->getAddToCartUrl($_product) ?>')"><span><span><?php echo $this->__('Buy Now') ?></span></span></button>
+            <?php endif; */?>
+<?php else: ?>
+    <p class="availability out-of-stock"><span><?php echo $this->__('Out of stock') ?></span></p>
+<?php endif; ?>
+
+<form action="<?php echo $this->getSubmitUrl($_product) ?>" method="post" id="product_addtocart_form"<?php if($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
+    <div class="no-display">
+        <input type="hidden" name="product" value="<?php echo $_product->getId() ?>" />
+        <input type="hidden" name="related_product" id="related-products-field" value="" />
+        <?php $_SESSION['curprod']=$_product->getSku(); ?>
+        <!--fixed error with bundle-->
+        <div style="display: none">
+            <?php echo $this->getChildHtml('product_type_data') ?>
+        </div>
+
+
+
+    </div>
+    <div class="product2-detail-right">
+
+
+        <?php if ($_product->isSaleable() && $this->hasOptions()):?>
+            <?php echo $this->getChildChildHtml('container1', '', true, true) ?>
+        <?php endif;?>
+        <?php //if ($_product->isSaleable() && $this->hasOptions()):?>
+        <?php if ($_product->isSaleable()):?>
+            <?php echo $this->getChildChildHtml('container2', '', true, true) ?>
+        <?php endif;?>
+
+    </div>
+</form>
+<script type="text/javascript">
+    //<![CDATA[
+    var productAddToCartForm = new VarienForm('product_addtocart_form');
+    productAddToCartForm.submit = function(button, url) {
+        if (this.validator.validate()) {
+            var form = this.form;
+            var oldUrl = form.action;
+
+            if (url) {
+                form.action = url;
+            }
+            var e = null;
+            try {
+                this.form.submit();
+            } catch (e) {
+            }
+            this.form.action = oldUrl;
+            if (e) {
+                throw e;
+            }
+
+            if (button && button != 'undefined') {
+                button.disabled = true;
+            }
+        }
+    }.bind(productAddToCartForm);
+
+    productAddToCartForm.submitLight = function(button, url){
+        if(this.validator) {
+            var nv = Validation.methods;
+            delete Validation.methods['required-entry'];
+            delete Validation.methods['validate-one-required'];
+            delete Validation.methods['validate-one-required-by-name'];
+            if (this.validator.validate()) {
+                if (url) {
+                    this.form.action = url;
+                }
+                this.form.submit();
+            }
+            Object.extend(Validation.methods, nv);
+        }
+    }.bind(productAddToCartForm);
+    //]]>
+</script>
+<div class="clearer"></div>
+<!-- 16-2-2012 -->
+
+</div>
+<div class="product2-left_main">
+<div class="">
+<div class="" id="tabset1">
+    <a id="a" class="tab sel {content:'cont_1'}">DESCRIPTION</a>
+    <a id="c" class="tab {content:'cont_2'}">SPECS</a>
+    <a id="d" class="tab {content:'cont_3'}">WARRANTY</a>
+    <a id="f" class="tab {content:'cont_4'}" >INFO & GUIDES</a>
+    <a id="g" class="tab {content:'cont_5'}" >FAQ'S</a>
+    <a id="h" class="tab {content:'cont_6'}" >VIDEOS</a>
+    <a id="i" class="tab {content:'cont_7'}" >Indoor Units</a>
+    <a id="j" class="tab {content:'cont_8'}" >CAPACITY</a>
+
+</div>
+
+<!--content of tabset "tabset1"-->
+<!--content of tabset "tabset1"-->
+    <div id="cont_8">
+        <div class="teb-normal-text_head">Details</div>
+        <div class="teb-normal-text2">
+            <?php echo $_product->getResource()->getAttribute('klimaire_videos')->getFrontend()->getValue($_product); ?>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="clear"></div>
+    <div id="cont_7">
+        <div class="teb-normal-text_head">Details</div>
+        <div class="teb-normal-text2">
+            <?php echo $_product->getResource()->getAttribute('klimaire_videos')->getFrontend()->getValue($_product); ?>
+        </div>
+        <div class="clear"></div>
+    </div>
+        <div class="clear"></div>
+        <div id="cont_6">
+            <div class="teb-normal-text_head">Details</div>
+            <div class="teb-normal-text2">
+                <?php echo $_product->getResource()->getAttribute('klimaire_videos')->getFrontend()->getValue($_product); ?>
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div id="cont_5">
+            <div class="teb-normal-text_head">Details</div>
+            <div class="teb-normal-text2">
+                <?php echo $_product->getResource()->getAttribute('klimaire_faq')->getFrontend()->getValue($_product); ?>
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div id="cont_4">
+            <div class="teb-normal-text_head">Details</div>
+            <div class="teb-normal-text2">
+                <?php //echo $_product->getResource()->getAttribute('klimaire_infoguide')->getFrontend()->getValue($_product); ?>
+                <?php
+
+                $pdfupload_collection = Mage::getModel('pdfupload/pdfupload')->getCollection()
+                    ->setOrder('created_time', 'desc')
+                    ->addFieldToFilter('tab_id',Array('in'=>array(1,2)))
+                    ->addFieldToFilter('status',Array('eq'=>1));
+                $pdfupload_data = $pdfupload_collection->getData();
+
+                if(is_array($pdfupload_data) && count($pdfupload_data) > 0)
+                {
+                    foreach($pdfupload_data as $_pdf)
+                    {
+                        $pdfarray =explode(",",$_pdf['product_id']);
+
+                        if(in_array($_product->getId(),$pdfarray))
+                        {
+                            ?>
+                            <div class="teb-pdf">
+                                <div class="pdf-link"><a href="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA),'klimaire_product_pdfs/',urlencode($_pdf['filename']); ?>" target="_blank"><?php echo strtoupper($_pdf['title']); ?></a></div>
+                            </div>
+                        <?php
+
+                        }
+                    }
+
+                } ?>
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div id="cont_3">
+            <div class="teb-normal-text_head">Details</div>
+            <div class="teb-normal-text2">
+                <?php echo $_product->getResource()->getAttribute('klimaire_warranties')->getFrontend()->getValue($_product); ?>
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div id="cont_2">
+            <div class="teb-normal-text_head">Details</div>
+            <?php
+
+            $pdfupload_collection = Mage::getModel('pdfupload/pdfupload')->getCollection()
+                ->setOrder('created_time', 'desc')
+                ->addFieldToFilter('tab_id',Array('in'=>array(0,2)))
+                ->addFieldToFilter('status',Array('eq'=>1));
+
+            $pdfupload_data = $pdfupload_collection->getData();
+
+            if(is_array($pdfupload_data) && count($pdfupload_data) > 0)
+            {
+                foreach($pdfupload_data as $_pdf)
+                {
+                    $pdfarray =explode(",",$_pdf['product_id']);
+
+                    if(in_array($_product->getId(),$pdfarray))
+                    {
+                        ?>
+                        <div class="teb-pdf">
+                            <div class="images"><img alt="" src="<?php echo $this->getSkinUrl('images'); ?>/pdf-icon.jpg"></div>
+                            <div class="pdf-link"><a href="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA),'klimaire_product_pdfs/',urlencode($_pdf['filename']); ?>" target="_blank"><?php echo $_pdf['title']; ?></a></div>
+                        </div>
+                    <?php
+
+                    }
+                }
+            } ?>
+            <div class="teb-normal-text2">
+                <?php echo $_product->getResource()->getAttribute('klimaire_specs')->getFrontend()->getValue($_product); ?>
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div id="cont_1">
+            <div class="teb-normal-text_head">Details</div>
+            <div class="teb-normal-text2">
+                <?php if ($_product->getShortDescription()):?>
+                    <?php echo $_helper->productAttribute($_product, nl2br($_product->getShortDescription()), 'short_description') ?>
+                <?php endif; ?>
+
+            </div>
+            <div class="clear"></div>
+            <!--content of tabset "tabset2"-->
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+</div>
+
+<div class="product-right-body">
+<h4>quick links<span class="red">...</span></h4>
+<div class="quick">
+    <div class="images"><img src="<?php echo $this->getSkinUrl(); ?>images/quick-top-corn.jpg" alt="" /></div>
+    <div class="quick-grad">
+        <!--
+            <div class="quick-1">
+                 <div class="ss_images_icon"><img src="<?php echo $this->getSkinUrl(); ?>images/r-icons.jpg" alt="" /></div>
+                    <div class="quick-1-link"><a href="#">Register My Product</a></div>
+            </div>
+-->
+        <div class="quick-1">
+            <div class="images"><img src="<?php echo $this->getSkinUrl(); ?>images/f-icons.jpg" alt="" /></div>
+            <!--                        <div class="quick-1-link"><a href="--><?php //echo Mage::getBaseUrl(); ?><!--search-dealer">Find a Dealer</a></div> <!--warranty-lookup-->
+        </div>
+        <!--
+            <div class="quick-1">
+                 <div class="images"><img src="<?php echo $this->getSkinUrl(); ?>images/f1-icons.jpg" alt="" /></div>
+                    <div class="quick-1-link"><a href="#">Federal tax Credit</a></div>
+            </div>
+
+            <div class="quick-1">
+                 <div class="images"><img src="<?php echo $this->getSkinUrl(); ?>images/h-icons.jpg" alt="" /></div>
+                    <div class="quick-1-link"><a href="#">Homeowner center<br />
+                    </a></div>
+-->                </div>
+</div>
+<div class="images"><img src="<?php echo $this->getSkinUrl(); ?>images/quick-bot-corn.jpg" alt="" /></div>
+</div>
+<div class="product-ga1">
+<div class="">
+    <div class="" id="tabset2" >
+        &nbsp;<a id="a1" class="tab sel {content:'cont_1_1'}"  >Accessories</a>
+        <a id="a2" class="tab  {content:'cont_1_2'}" >Matching Products</a>
+    </div>
+
+    <!--content of tabset "tabset1"-->
+    <div id="cont_1_1">
+        <?php
+        //**** As per custom Requirement ::: RelatedProducts As Accessories ****//
+        echo $this->getChildHtml('upsell_products');
+        //**** As per custom Requirement ::: RelatedProducts As Accessories ****//
+        ?>
+    </div>
+    <div id="cont_1_2">
+        <!--<div class="teb-normal-text_head">Details</div>
+        <div class="teb-normal-text2">-->
+
+        <?php
+        ///******** Custom Related Items [Products having same category] ********////
+        if($_crossSellProducts = $_product->getCrossSellProducts()):
+            foreach ($_crossSellProducts as $_item):
+                $_item = Mage::getModel('catalog/product')->load($_item->getId());
+                $pname= $this->htmlEscape($_item->getName());
+                if(!strstr($pname,"-O"))
+                {
+                    ?>
+
+                    <div class="ass_img">
+                        <a class="product-image" href="<?php echo $_item->getProductUrl() ?>" title="<?php echo $this->htmlEscape($_item->getName()) ?>">
+                            <img src="<?php echo $this->helper('catalog/image')->init($_item, 'thumbnail')->resize(81); ?>" width="86" height="81" style="border:1px solid #C6C7C2" alt="<?php echo $this->htmlEscape($_item->getName()) ?>" />
+                        </a>
+                    </div>
+                    <div class="ass_text"><a href="<?php echo $_item->getProductUrl(); ?>"><?php
+                            $lasttwo= substr($_item->getName(),-2);
+                            //echo $lasttwo;
+                            if($lasttwo=="-I")
+                            {
+                                $pizza  = $_item->getName();
+                                $pieces = explode("-I", $pizza);
+                                echo $pieces[0];
+
+                            }
+                            elseif($lasttwo=="-O")
+                            {
+                                $pizza  = $_item->getName();
+                                $pieces = explode("-O", $pizza);
+                                echo $pieces[0];
+
+                            }
+                            else{
+
+                                echo $_item->getName();
+                            }  ?></a>
+                        <br />
+
+                        <?php echo substr(strip_tags($_item->getShortDescription()),0,30),'...';  ?>
+                    </div>
+                    <div class="clear"></div><br />
+                <?php
+                }//end if
+            endforeach;
+        endif;
+        ///******** Custom Related Items [Products having same category] ********////
+        ?>
+        <!--</div>-->
+        <div class="clear"></div>
+        <!--content of tabset "tabset2"-->
+    </div>
+    <div class="clear"></div>
+</div>
+</div>
+</div>
+</div>

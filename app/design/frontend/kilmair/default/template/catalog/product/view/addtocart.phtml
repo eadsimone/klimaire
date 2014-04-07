@@ -35,8 +35,11 @@ $status = Mage::getSingleton('customer/session')->isLoggedIn();
         <input type="hidden" name="qty" id="qty" maxlength="12" value="<?php echo $this->getProductDefaultQty() * 1 ?>" title="<?php echo $this->__('Qty') ?>" class="input-text qty" />
         <?php endif; ?>
         <?php if($status==true): ?>
-        <button type="submit" title="<?php echo $buttonTitle ?>" class="button-buynow-detail" style="background: none repeat scroll 0 0 #0D7F02;
-border: 1px solid #076300;color: #FFFFFF;cursor: pointer;height: 25px;margin: 0px 10px 0px 155px;width: 84px;" onclick="productAddToCartForm.submit(this)"><span><span><?php echo $buttonTitle ?></span></span></button>
+<!--        <button type="submit" title="<?php /*echo $buttonTitle */?>" class="button-buynow-detail" style="background: none repeat scroll 0 0 #0D7F02;
+border: 1px solid #076300;color: #FFFFFF;cursor: pointer;height: 25px;margin: 0px 10px 0px 155px;width: 84px;" onclick="productAddToCartForm.submit(this)"><span><span><?php /*echo $buttonTitle */?></span></span></button>-->
+
+            <button type="submit" title="<?php echo $buttonTitle ?>" class="button-buynow-detail" style="background: none repeat scroll 0 0 #0D7F02;
+border: 1px solid #076300;color: #FFFFFF;cursor: pointer;height: 25px;margin: 0px 10px 0px 155px;width: 84px;" ><span><span><?php echo $buttonTitle ?></span></span></button>
         <?php endif; ?>
         <?php //echo $this->getChildHtml('', true, true) ?>
     </div>

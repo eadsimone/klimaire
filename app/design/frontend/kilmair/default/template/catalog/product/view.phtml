@@ -116,13 +116,8 @@ var ajaxD="pippo=1&pluto=2";
 
             <?php
             $_displ_str = '';
-            //    if($not_initial_img):
-            //       $index_img++;
-            //    endif;
-            // $index_img++;
             foreach($Product_view_media->getGalleryImages() as $_image)
             {
-                //if(!strstr($this->helper('catalog/image')->init($_product, 'thumbnail'),$_image->getFile())):
                 if((!$not_initial_img)and($index_img!=0)):
 
                     $_displ_str = ' style="display: none;"';
@@ -203,7 +198,7 @@ var ajaxD="pippo=1&pluto=2";
     <p class="availability out-of-stock"><span><?php echo $this->__('Out of stock') ?></span></p>
 <?php endif; ?>
 
-<form action="<?php echo $this->getSubmitUrl($_product) ?>" method="post" id="product_addtocart_form"<?php if($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
+<form action="<?php echo $this->getSubmitUrl($_product) ?>" method="post" onsubmit="return getselect(this)" id="product_addtocart_form"<?php if($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
     <div class="no-display">
         <input type="hidden" name="product" value="<?php echo $_product->getId() ?>" />
         <input type="hidden" name="related_product" id="related-products-field" value="" />
@@ -273,6 +268,9 @@ var ajaxD="pippo=1&pluto=2";
     }.bind(productAddToCartForm);
     //]]>
 </script>
+
+<script type="text/javascript" src="<?php echo $this->getSkinUrl(); ?>js/prod_detail_page/validatormulti.js"></script>
+
 <div class="clearer"></div>
 <!-- 16-2-2012 -->
 
@@ -296,7 +294,7 @@ var ajaxD="pippo=1&pluto=2";
     <div id="cont_8">
         <div class="teb-normal-text_head">Details</div>
         <div class="teb-normal-text2">
-            <?php echo $_product->getResource()->getAttribute('klimaire_videos')->getFrontend()->getValue($_product); ?>
+            <?php echo $_product->getResource()->getAttribute('klimaire_capacity')->getFrontend()->getValue($_product); ?>
         </div>
         <div class="clear"></div>
     </div>
@@ -304,7 +302,7 @@ var ajaxD="pippo=1&pluto=2";
     <div id="cont_7">
         <div class="teb-normal-text_head">Details</div>
         <div class="teb-normal-text2">
-            <?php echo $_product->getResource()->getAttribute('klimaire_videos')->getFrontend()->getValue($_product); ?>
+            <?php echo $_product->getResource()->getAttribute('klimaire_indoorunits')->getFrontend()->getValue($_product); ?>
         </div>
         <div class="clear"></div>
     </div>

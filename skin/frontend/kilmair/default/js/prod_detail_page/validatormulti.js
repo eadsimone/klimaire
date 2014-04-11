@@ -6,13 +6,25 @@ var invalidrule = new Array();
 
 function getselect(prod) {
 
-    var multizone3='ksim30912-h216-custom',multizone4='ksim40912-h216-custom';
+    var  multizone2= 'ksim20912-h216-custom',multizone3='ksim30912-h216-custom',multizone4='ksim40912-h216-custom';
     var url= document.URL;
 
     invalidrule=loadarray();
 
     /*if not found, it will return -1:*/
-    if (url.indexOf(multizone3) != -1){
+    if (url.indexOf(multizone2) != -1){
+        var res=validationzone2(invalidrule);
+
+        if(res){
+            productAddToCartForm.submit(this)
+        }else{
+//            var productAddToCartForm = new VarienForm('product_addtocart_form');
+//            productAddToCartForm.submit =false;
+            alert("Combinations are wrong, please check the possible combination on capacity's tab");
+            return false;
+        }
+
+    }else if (url.indexOf(multizone3) != -1){
         var res=validationzone3(invalidrule);
 
         if(res){
@@ -64,6 +76,39 @@ function loadarray() {
     return arrayofselect;
 }
 
+function validationzone2(prod) {
+    
+    var onlywallmounttype9 = qtyof9 = qtyof12 = 0;
+
+    var total=prod.length;
+
+    for (var i = 0; i < total ; i++) {
+
+        if ((prod[i] == 'KWIM09-H2') || (prod[i] == 'KWIL09-H2'))
+        {
+            onlywallmounttype9++;/*for rule E. Use only wall mount type when an 18000 Btu/h fan coil unit is required.*/
+        }
+        if((prod[i] == 'KWIM09-H2') || (prod[i] == 'KWIL09-H2'))
+        {
+            qtyof9++;
+        }
+        if((prod[i] == 'KWIL12-H2') || (prod[i] == 'KWIM12-H2') || (prod[i] == 'KDIM012-H2') || (prod[i] == 'KFIM012-H2') || (prod[i] == 'KTIM012-H2') || (prod[i] == 'KUIM012-H2'))
+        {
+            qtyof12++;
+        }
+    }
+
+
+    if(qtyof9==2){
+        return true;
+    }else if((qtyof9==1)&&(qtyof12==1)&&(onlywallmounttype9==1)){
+        return true;
+    }else if((qtyof9==2)&&(qtyof12==1)&&(onecomercialtype12<=1)){
+        return true;
+    }else
+    {return false;}
+
+}
 
 function validationzone3(prod) {
     var onlywallmounttype = onecontain18 = onecomercialtype12 = qtyof9 = qtyof12 = qtyof18 = 0;

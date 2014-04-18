@@ -223,6 +223,27 @@ function validationzone4(prod) {
 
     if(qtyof9==4){
         return true;
+    }/*is not onte table*/
+    else if((qtyof12==1)&&(qtyof18==1)){
+        return true;
+    }
+    else if((qtyof18==2)){
+        return true;
+    }
+    else if(qtyof9==3){
+        return true;
+    }
+    else if((qtyof9==2)&&(qtyof12==1)){
+        return true;
+    }
+    else if((qtyof9==2)&&(qtyof18==1)){
+        return true;
+    }
+    else if((qtyof9==1)&&(qtyof12==2)){
+        return true;
+    }
+    else if((qtyof9==2)&&(qtyof12==1)){
+        return true;
     }
     else if((qtyof9==3)&&(qtyof12==1)){
         return true;

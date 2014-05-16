@@ -27,7 +27,7 @@
 Mage::getSingleton('core/session', array('name' => 'frontend'));
 $status = Mage::getSingleton('customer/session')->isLoggedIn(); 
 ?>
-<?php if($status==true){ ?>
+
 <div class="product-options" id="product-options-wrapper">
     <?php echo $this->getChildHtml('', true, true);?>
     <?php if ($this->hasRequiredOptions()):?>
@@ -35,10 +35,8 @@ $status = Mage::getSingleton('customer/session')->isLoggedIn();
     <?php endif;?>
 </div>
 <script type="text/javascript">decorateGeneric($$('#product-options-wrapper dl'), ['last']);</script>
-<?php 
-} 
-else
+<?php if($status!=true)
 {
-	echo "<div style='margin: 10px 0; padding: 5px;'><strong>Please login to view the price and buy the product</strong></div>";	
+	echo "<div style='text-align:center;position: absolute;padding: 5px;background-color: #FFFADA;'><strong>Please login to buy the product</strong></div>";
 }
 ?>

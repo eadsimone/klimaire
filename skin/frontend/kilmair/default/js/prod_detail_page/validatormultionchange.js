@@ -23,7 +23,7 @@ obj.row2.key2 == 'input4';
 
 var arrayofobj = new Array();
 
-var ArraySelect= {};
+var ArrayOfSelect= {};
 
 function getname(name) {
 var res = name.split("&nbsp;");
@@ -37,6 +37,8 @@ jQuery.noConflict();
 
 jQuery(document).ready(function( $ ) {
     // Your jQuery code here, using $ to refer to jQuery.
+
+    loadarray();
 
     // Named function expression.
         $( "#bundle-option-177" ).change(function() {
@@ -62,11 +64,11 @@ jQuery(document).ready(function( $ ) {
             MyArray["dos"] = 2;
 
 
-            /*
-            for(var key in MyArray)
+
+            for(var key in ArrayOfSelect)
             {
-                alert("key " + key + " has value " + MyArray[key]);
-            }*/
+                alert("key " + key + " has value " + ArrayOfSelect[key]);
+            }
 
            // $( "#myselect option:selected" ).text();
 
@@ -185,7 +187,7 @@ function getselect(prod) {
 
 function loadarray() {
 
-    var arrayofselect = new Array();
+
     var selects = document.getElementsByTagName('select');
     var sel;
     var relevantSelects = [];
@@ -193,18 +195,8 @@ function loadarray() {
         sel = selects[z];
 
         selid=sel.id;
-        var keyselection = document.getElementById(selid);
-        var keyvalue = keyselection.options[keyselection.selectedIndex];
-
-        var name=keyvalue.innerHTML;
-        /*take out price*/
-        var res = name.split("&nbsp;");
-
-        var name=  res[0].replace(/^\s+|\s+$/g,'');//trim prototype
-        arrayofselect.push(name);
-
+        ArrayOfSelect[selid] = '';
     }
-    return arrayofselect;
 }
 
 function validationzone2(prod) {

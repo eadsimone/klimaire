@@ -26,7 +26,8 @@ var arrayofobj = new Array();
 var ArrayOfSelect= {};
 
 function getname(name) {
-var res = name.split("&nbsp;");
+//var res = name.split("&nbsp;");
+    var res = name.split("+");
 
 var name=  res[0].replace(/^\s+|\s+$/g,'');//trim prototype
 
@@ -68,9 +69,9 @@ jQuery(document).ready(function( $ ) {
             for(var key in ArrayOfSelect)
             {
                 alert("key " + key + " has value " + ArrayOfSelect[key]);
-            }
+            /*}*/
 
-           // $( "#myselect option:selected" ).text();
+           // $( "#myselect option:selected" ).text(); for option selected
 
             var idselect= "#"+this.id;
             var idselected= idselect+" option:selected";
@@ -86,12 +87,13 @@ jQuery(document).ready(function( $ ) {
 
             /*arrayofobj.push(product);*/
 
-            ArraySelect[idselect]=product;
+            ArrayOfSelect[key]=product;
 
             /*validate*/
+            /*
             for(var key in ArraySelect)
-            {
-                alert("key " + key + " has value " + ArraySelect[key].name);
+            {*/
+                alert("key " + key + " has value " + ArrayOfSelect[key].name);
             }
 
             console.log ( '#someButton was clicked' );

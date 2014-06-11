@@ -34,10 +34,74 @@ var name=  res[0].replace(/^\s+|\s+$/g,'');//trim prototype
     return name;
 }
 
+
+
 jQuery.noConflict();
+
+/*notes
+var MyArray = {id1: 100, id2: 200, "tag with spaces": 300};
+/* MyArray.id3 = 400;
+ MyArray["id4"] = 500;
+ */
+/*
+var MyArray = {};
+
+var caca = {id1: 100, id2: 200, "tag with spaces": 300};
+
+MyArray["uno"] = caca;
+MyArray["tres"] = 3;
+MyArray["dos"] = 2;
+
+*/
 
 jQuery(document).ready(function( $ ) {
     // Your jQuery code here, using $ to refer to jQuery.
+    var emptyselect = {};
+    var selected = {};
+
+    function setproduct(current) {
+
+        for(var key in ArrayOfSelect)
+        {
+
+            // $( "#myselect option:selected" ).text(); for option selected
+            /*selected the current element*/
+            var idselect= "#"+current.id;
+            var idselected= idselect+" option:selected";
+            var valselected=$(idselected).val();
+            var textselected=$(idselected).text();
+            var nameselected =getname(textselected);
+
+            var product = {
+                valor:valselected,
+                texto :textselected,
+                name: nameselected
+            };
+            /*end selected currrent element*/
+
+            /*arrayofobj.push(product);*/
+
+            if(key==current.id){
+                ArrayOfSelect[key]=product;
+                selected.push(current.id);
+            }
+            else if(ArrayOfSelect[key]==''){
+                emptyselect.push(key);
+            }else{
+                /*varificar*/
+                selected[key]=nameselected;
+            }
+
+            validationzone4(selected);
+
+
+
+
+
+        }
+
+
+    }
 
     loadarray();
 
@@ -50,53 +114,7 @@ jQuery(document).ready(function( $ ) {
 
              */
 
-
-            var MyArray = {id1: 100, id2: 200, "tag with spaces": 300};
-           /* MyArray.id3 = 400;
-            MyArray["id4"] = 500;
-            */
-
-            var MyArray = {};
-
-            var caca = {id1: 100, id2: 200, "tag with spaces": 300};
-
-            MyArray["uno"] = caca;
-            MyArray["tres"] = 3;
-            MyArray["dos"] = 2;
-
-
-
-            for(var key in ArrayOfSelect)
-            {
-                alert("key " + key + " has value " + ArrayOfSelect[key]);
-            /*}*/
-
-           // $( "#myselect option:selected" ).text(); for option selected
-
-            var idselect= "#"+this.id;
-            var idselected= idselect+" option:selected";
-            var valselected=$(idselected).val();
-            var textselected=$(idselected).text();
-            var nameselected =getname(textselected);
-
-            var product = {
-                valor:valselected,
-                texto :textselected,
-                name: nameselected
-            };
-
-            /*arrayofobj.push(product);*/
-
-            ArrayOfSelect[key]=product;
-
-            /*validate*/
-            /*
-            for(var key in ArraySelect)
-            {*/
-                alert("key " + key + " has value " + ArrayOfSelect[key].name);
-            }
-
-            console.log ( '#someButton was clicked' );
+            setproduct(this);
 
 
 
@@ -125,7 +143,11 @@ jQuery(document).ready(function( $ ) {
 
         console.log ( '#someButton was clicked' );
 
+        $("#option1").remove();
+
     });
+
+
 
 
 });
@@ -197,7 +219,7 @@ function loadarray() {
         sel = selects[z];
 
         selid=sel.id;
-        ArrayOfSelect[selid] = '';
+        ArrayOfSelect[selid] ='';
     }
 }
 

@@ -25,6 +25,9 @@ var arrayofobj = new Array();
 
 var ArrayOfSelect= {};
 
+var comercialtype12 = qtyof9 = qtyof12 = qtyof18 = 0;
+var totalofwallmounttype9 = totalofwallmounttype12 = totalofwallmounttype18 = contain18= 0;
+
 function getname(name) {
 //var res = name.split("&nbsp;");
     var res = name.split("+");
@@ -34,7 +37,18 @@ var name=  res[0].replace(/^\s+|\s+$/g,'');//trim prototype
     return name;
 }
 
+function sizeofobject(a){
 
+    var count = 0;
+    var i;
+
+    for (i in a) {
+        if (a.hasOwnProperty(i)) {
+            count++;
+        }
+    }
+    return count;
+}
 
 jQuery.noConflict();
 
@@ -59,10 +73,12 @@ jQuery(document).ready(function( $ ) {
     var emptyselect = {};
     var selected = {};
 
+
+
     function setproduct(current) {
 
-        for(var key in ArrayOfSelect)
-        {
+       /* for(var key in ArrayOfSelect)
+        {*/
 
             // $( "#myselect option:selected" ).text(); for option selected
             /*selected the current element*/
@@ -77,28 +93,29 @@ jQuery(document).ready(function( $ ) {
                 texto :textselected,
                 name: nameselected
             };
-            /*end selected currrent element*/
+
+            ArrayOfSelect[current.id]=product;
+
+
+        var comercialtype12 = qtyof9 = qtyof12 = qtyof18 = totalofwallmounttype12 = totalofwallmounttype18 = contain18= 0;
+            validationzone4(ArrayOfSelect);
+
+        /*end selected currrent element*/
 
             /*arrayofobj.push(product);*/
 
-            if(key==current.id){
+           /* if(key==current.id){
                 ArrayOfSelect[key]=product;
                 selected.push(current.id);
             }
             else if(ArrayOfSelect[key]==''){
                 emptyselect.push(key);
             }else{
-                /*varificar*/
+                *//*varificar*//*
                 selected[key]=nameselected;
             }
 
-            validationzone4(selected);
-
-
-
-
-
-        }
+        }*/
 
 
     }
@@ -117,6 +134,10 @@ jQuery(document).ready(function( $ ) {
             setproduct(this);
 
 
+            for(var key in ArrayOfSelect){
+                alert("el selelcionador:"+key+" tiene el valor "+ArrayOfSelect[key]);
+            }
+
 
         });
 
@@ -124,7 +145,20 @@ jQuery(document).ready(function( $ ) {
 
 
     $( "#bundle-option-178" ).change(function() {
-        alert( "Handler for .change() called." );
+
+
+        setproduct(this);
+        return;
+
+        $("#option1").remove();
+
+    });
+
+    $( "#bundle-option-179" ).change(function() {
+
+
+        setproduct(this);
+        return;
 
         var idselect= "#"+this.id;
         var valselected=$(idselect).val();
@@ -147,17 +181,76 @@ jQuery(document).ready(function( $ ) {
 
     });
 
+    $( "#bundle-option-180" ).change(function() {
 
+
+        setproduct(this);
+        return;
+
+        var idselect= "#"+this.id;
+        var valselected=$(idselect).val();
+        var textselected=$(idselect).text();
+
+        alert (a);
+
+
+        var product = {
+            valor:valselected,
+            name :textselected
+        };
+
+        arrayofobj.push(product);
+
+
+        console.log ( '#someButton was clicked' );
+
+        $("#option1").remove();
+
+    });
+
+    var removeselect = function(id) {
+
+        var idselect= "#"+id;
+        var valselected=$(idselect).val();
+        var textselected=$(idselect).text();
+
+        alert("nada");
+    };
 
 
 });
 
 
 
+function removeselect(number) {
 
-var jqpeche = function() {
-    alert('hello world');
-};
+    for(var key in ArrayOfSelect){
+
+        var name=ArrayOfSelect[key].name;
+
+        if((name != 'KWIL18-H2') || (name != 'KWIM18-H2')|| (name != 'KWIO18-H2') || (name != 'KDIM018-H2') || (name != 'KTIM018-H2')|| (name != 'KUIM018-H2'))/*falta KFIM*/
+        {
+            removeselect(key);
+
+        }
+    }
+
+}
+
+function quitar(number) {
+
+    for(var key in ArrayOfSelect){
+
+        var name=ArrayOfSelect[key].name;
+
+        if((name != 'KWIL18-H2') || (name != 'KWIM18-H2')|| (name != 'KWIO18-H2') || (name != 'KDIM018-H2') || (name != 'KTIM018-H2')|| (name != 'KUIM018-H2'))/*falta KFIM*/
+        {
+            removeselect(key);
+
+        }
+    }
+
+}
 
 
 
@@ -310,6 +403,8 @@ function validationzone3(prod) {
     {return false;}
 
 }
+
+
 function validationzone4(prod) {
     /*NOTE:
      Wall mount unit= KWIL,KWIM,KWIO
@@ -320,50 +415,55 @@ function validationzone4(prod) {
      -->Floor/ceiling free match =KUIM
      */
 
-    var comercialtype12 = qtyof9 = qtyof12 = qtyof18 = 0;
-    var totalofwallmounttype9 = totalofwallmounttype12 = totalofwallmounttype18 = contain18= 0;
 
-    var total=prod.length;
 
-    for (var i = 0; i < total ; i++) {
+    var total=sizeofobject(prod);
 
-        if ((prod[i] == 'KWIL09-H2') || (prod[i] == 'KWIM09-H2')|| (prod[i] == 'KWIO09-H2'))
+
+    for (key in prod) {
+
+    //for (var i = 0; i < total ; i++) {
+        var name=prod[key].name;
+        if ((name == 'KWIL09-H2') || (name == 'KWIM09-H2')|| (name == 'KWIO09-H2'))
         {
             totalofwallmounttype9++;
         }
-        if ((prod[i] == 'KWIL12-H2') || (prod[i] == 'KWIM12-H2')|| (prod[i] == 'KWIO12-H2'))
+        if ((name == 'KWIL12-H2') || (name == 'KWIM12-H2')|| (name == 'KWIO12-H2'))
         {
             totalofwallmounttype12++;
         }
 
-        if ((prod[i] == 'KWIL18-H2') || (prod[i] == 'KWIM18-H2')|| (prod[i] == 'KWIO18-H2'))
+        if ((name == 'KWIL18-H2') || (name == 'KWIM18-H2')|| (name == 'KWIO18-H2'))
         {
             totalofwallmounttype18++;
+
+
         }
         /*
-         if ((prod[i] == 'KWIL18-H2') || (prod[i] == 'KWIM18-H2')|| (prod[i] == 'KWIO18-H2') || (prod[i] == 'KDIM018-H2') || (prod[i] == 'KTIM018-H2')|| (prod[i] == 'KUIM018-H2'))/*falta KFIM*/
+         if ((name == 'KWIL18-H2') || (name == 'KWIM18-H2')|| (name == 'KWIO18-H2') || (name == 'KDIM018-H2') || (name == 'KTIM018-H2')|| (name == 'KUIM018-H2'))/*falta KFIM*/
         /*{
          contain18++;
          }*/
 
-        if( (prod[i] == 'KDIM012-H2') || (prod[i] == 'KFIM012-H2')|| (prod[i] == 'KTIM012-H2') ||(prod[i] == 'KUIM012-H2'))
+        if( (name == 'KDIM012-H2') || (name == 'KFIM012-H2')|| (name == 'KTIM012-H2') ||(name == 'KUIM012-H2'))
         {
             comercialtype12++;
         }
 
-        if((prod[i] == 'KWIL09-H2') || (prod[i] == 'KWIM09-H2') || (prod[i] == 'KWIO09-H2'))
+        if((name == 'KWIL09-H2') || (name == 'KWIM09-H2') || (name == 'KWIO09-H2'))
         {
             qtyof9++;
         }
 
-        if((prod[i] == 'KWIL12-H2') || (prod[i] == 'KWIM12-H2')|| (prod[i] == 'KWIO12-H2') || (prod[i] == 'KDIM012-H2') || (prod[i] == 'KFIM012-H2') || (prod[i] == 'KTIM012-H2') || (prod[i] == 'KUIM012-H2'))
+        if((name == 'KWIL12-H2') || (name == 'KWIM12-H2')|| (name == 'KWIO12-H2') || (name == 'KDIM012-H2') || (name == 'KFIM012-H2') || (name == 'KTIM012-H2') || (name == 'KUIM012-H2'))
         {
             qtyof12++;
         }
 
-        if((prod[i] == 'KWIL18-H2') || (prod[i] == 'KWIM18-H2')|| (prod[i] == 'KWIO18-H2') || (prod[i] == 'KDIM018-H2') || (prod[i] == 'KTIM018-H2')|| (prod[i] == 'KUIM018-H2'))/*falta KFIM*/
+        if((name == 'KWIL18-H2') || (name == 'KWIM18-H2')|| (name == 'KWIO18-H2') || (name == 'KDIM018-H2') || (name == 'KTIM018-H2')|| (name == 'KUIM018-H2'))/*falta KFIM*/
         {
             qtyof18++;
+
         }
     }
 
@@ -375,6 +475,7 @@ function validationzone4(prod) {
         return true;
     }
     else if((qtyof18==2)){
+        quitar(18);
         return true;
     }
     else if(qtyof9==3){
@@ -450,41 +551,41 @@ function provalidationzone4(prod) {
 
     for (var i = 0; i < total ; i++) {
 
-        if ((prod[i] == 'KWIL09-H2') || (prod[i] == 'KWIM09-H2')|| (prod[i] == 'KWIO09-H2'))
+        if ((name == 'KWIL09-H2') || (name == 'KWIM09-H2')|| (name == 'KWIO09-H2'))
         {
             totalofwallmounttype9++;
         }
-        if ((prod[i] == 'KWIL12-H2') || (prod[i] == 'KWIM12-H2')|| (prod[i] == 'KWIO12-H2'))
+        if ((name == 'KWIL12-H2') || (name == 'KWIM12-H2')|| (name == 'KWIO12-H2'))
         {
             totalofwallmounttype12++;
         }
 
-        if ((prod[i] == 'KWIL18-H2') || (prod[i] == 'KWIM18-H2')|| (prod[i] == 'KWIO18-H2'))
+        if ((name == 'KWIL18-H2') || (name == 'KWIM18-H2')|| (name == 'KWIO18-H2'))
         {
             totalofwallmounttype18++;
         }
         /*
-         if ((prod[i] == 'KWIL18-H2') || (prod[i] == 'KWIM18-H2')|| (prod[i] == 'KWIO18-H2') || (prod[i] == 'KDIM018-H2') || (prod[i] == 'KTIM018-H2')|| (prod[i] == 'KUIM018-H2'))/*falta KFIM*/
+         if ((name == 'KWIL18-H2') || (name == 'KWIM18-H2')|| (name == 'KWIO18-H2') || (name == 'KDIM018-H2') || (name == 'KTIM018-H2')|| (name == 'KUIM018-H2'))/*falta KFIM*/
         /*{
          contain18++;
          }*/
 
-        if( (prod[i] == 'KDIM012-H2') || (prod[i] == 'KFIM012-H2')|| (prod[i] == 'KTIM012-H2') ||(prod[i] == 'KUIM012-H2'))
+        if( (name == 'KDIM012-H2') || (name == 'KFIM012-H2')|| (name == 'KTIM012-H2') ||(name == 'KUIM012-H2'))
         {
             comercialtype12++;
         }
 
-        if((prod[i] == 'KWIL09-H2') || (prod[i] == 'KWIM09-H2') || (prod[i] == 'KWIO09-H2'))
+        if((name == 'KWIL09-H2') || (name == 'KWIM09-H2') || (name == 'KWIO09-H2'))
         {
             qtyof9++;
         }
 
-        if((prod[i] == 'KWIL12-H2') || (prod[i] == 'KWIM12-H2')|| (prod[i] == 'KWIO12-H2') || (prod[i] == 'KDIM012-H2') || (prod[i] == 'KFIM012-H2') || (prod[i] == 'KTIM012-H2') || (prod[i] == 'KUIM012-H2'))
+        if((name == 'KWIL12-H2') || (name == 'KWIM12-H2')|| (name == 'KWIO12-H2') || (name == 'KDIM012-H2') || (name == 'KFIM012-H2') || (name == 'KTIM012-H2') || (name == 'KUIM012-H2'))
         {
             qtyof12++;
         }
 
-        if((prod[i] == 'KWIL18-H2') || (prod[i] == 'KWIM18-H2')|| (prod[i] == 'KWIO18-H2') || (prod[i] == 'KDIM018-H2') || (prod[i] == 'KTIM018-H2')|| (prod[i] == 'KUIM018-H2'))/*falta KFIM*/
+        if((name == 'KWIL18-H2') || (name == 'KWIM18-H2')|| (name == 'KWIO18-H2') || (name == 'KDIM018-H2') || (name == 'KTIM018-H2')|| (name == 'KUIM018-H2'))/*falta KFIM*/
         {
             qtyof18++;
         }

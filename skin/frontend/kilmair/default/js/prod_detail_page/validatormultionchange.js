@@ -25,6 +25,8 @@ var arrayofobj = new Array();
 
 var ArrayOfSelect= {};
 
+var ArrayOfSelectout= {};
+
 var comercialtype12 = qtyof9 = qtyof12 = qtyof18 = 0;
 var totalofwallmounttype9 = totalofwallmounttype12 = totalofwallmounttype18 = contain18= 0;
 
@@ -75,7 +77,34 @@ jQuery(document).ready(function( $ ) {
 
 
 
-    function setproduct(current) {
+    function setproduct(id,arreglo) {
+
+        /* for(var key in ArrayOfSelect)
+         {*/
+
+        // $( "#myselect option:selected" ).text(); for option selected
+        /*selected the current element*/
+        var idselect= "#"+id;
+        var idselected= idselect;
+        var valselected=$(idselected).val();
+        var textselected=$(idselected).text();
+        var nameselected =getname(textselected);
+
+        var product = {
+            valor:valselected,
+            texto :textselected,
+            name: nameselected
+        };
+
+        arreglo[current.id]=product;
+
+
+       /* var comercialtype12 = qtyof9 = qtyof12 = qtyof18 = totalofwallmounttype12 = totalofwallmounttype18 = contain18= 0;
+        validationzone4(arreglo);*/
+    }
+
+    /*set prodcut selected*/
+    function setproductselected(current,arreglo) {
 
        /* for(var key in ArrayOfSelect)
         {*/
@@ -94,30 +123,11 @@ jQuery(document).ready(function( $ ) {
                 name: nameselected
             };
 
-            ArrayOfSelect[current.id]=product;
+            arreglo[current.id]=product;
 
 
         var comercialtype12 = qtyof9 = qtyof12 = qtyof18 = totalofwallmounttype12 = totalofwallmounttype18 = contain18= 0;
-            validationzone4(ArrayOfSelect);
-
-        /*end selected currrent element*/
-
-            /*arrayofobj.push(product);*/
-
-           /* if(key==current.id){
-                ArrayOfSelect[key]=product;
-                selected.push(current.id);
-            }
-            else if(ArrayOfSelect[key]==''){
-                emptyselect.push(key);
-            }else{
-                *//*varificar*//*
-                selected[key]=nameselected;
-            }
-
-        }*/
-
-
+            validationzone4(arreglo);
     }
 
     loadarray();
@@ -131,7 +141,7 @@ jQuery(document).ready(function( $ ) {
 
              */
 
-            setproduct(this);
+            setproductselected(this,ArrayOfSelect);
 
 
             for(var key in ArrayOfSelect){
@@ -147,17 +157,17 @@ jQuery(document).ready(function( $ ) {
     $( "#bundle-option-178" ).change(function() {
 
 
-        setproduct(this);
+        setproductselected(this,ArrayOfSelect);
         return;
 
-        $("#option1").remove();
+
 
     });
 
     $( "#bundle-option-179" ).change(function() {
 
 
-        setproduct(this);
+        setproductselected(this,ArrayOfSelect);
         return;
 
         var idselect= "#"+this.id;
@@ -184,7 +194,7 @@ jQuery(document).ready(function( $ ) {
     $( "#bundle-option-180" ).change(function() {
 
 
-        setproduct(this);
+        setproductselected(this,ArrayOfSelect);
         return;
 
         var idselect= "#"+this.id;
@@ -208,34 +218,66 @@ jQuery(document).ready(function( $ ) {
 
     });
 
-    var removeselect = function(id) {
 
-        var idselect= "#"+id;
-        var valselected=$(idselect).val();
-        var textselected=$(idselect).text();
-
-        alert("nada");
-    };
 
 
 });
 
+var jquery = jQuery.noConflict();
+
+var removeselect = function(id) {
+
+    var idselect= "#"+id;
+    var valselected=jquery(idselect).val();
+    var textselected=jquery(idselect).text();
 
 
-function removeselect(number) {
+    var sel=idselect+" option";
+
+    /*jquery(sel).each(function() {
+        optionValues.push(jquery(this).val());
+    });
+    consolelog(optionValues);
+
+    return;*/
+
+
+    jquery(sel).each(function() {
+
+       var name =getname(jquery(this).text());
+
+        if((name == 'KWIL18-H2') || (name == 'KWIM18-H2') || (name == 'KWIO18-H2') || (name == 'KDIM018-H2') || (name == 'KTIM018-H2') || (name == 'KUIM018-H2'))/*falta KFIM*/
+        {
+            /*setproduct(id,ArrayOfSelectout);*/
+
+            /*jquery("#selectBox option[value='option1']").remove();*/
+            var val=jquery(this).val();
+            var opt=sel+"[value="+val+"]";
+
+            jquery(opt).remove();
+
+        }
+    });
+
+    console.log(optionValues);
+};
+
+
+
+/*function removeselect(number) {
 
     for(var key in ArrayOfSelect){
 
         var name=ArrayOfSelect[key].name;
 
-        if((name != 'KWIL18-H2') || (name != 'KWIM18-H2')|| (name != 'KWIO18-H2') || (name != 'KDIM018-H2') || (name != 'KTIM018-H2')|| (name != 'KUIM018-H2'))/*falta KFIM*/
+        if((name != 'KWIL18-H2') || (name != 'KWIM18-H2')|| (name != 'KWIO18-H2') || (name != 'KDIM018-H2') || (name != 'KTIM018-H2')|| (name != 'KUIM018-H2'))*//*falta KFIM*//*
         {
             removeselect(key);
 
         }
     }
 
-}
+}*/
 
 function quitar(number) {
 
@@ -243,9 +285,9 @@ function quitar(number) {
 
         var name=ArrayOfSelect[key].name;
 
-        if((name != 'KWIL18-H2') || (name != 'KWIM18-H2')|| (name != 'KWIO18-H2') || (name != 'KDIM018-H2') || (name != 'KTIM018-H2')|| (name != 'KUIM018-H2'))/*falta KFIM*/
+        if((name != 'KWIL18-H2') && (name != 'KWIM18-H2')&& (name != 'KWIO18-H2') && (name != 'KDIM018-H2') && (name != 'KTIM018-H2')&& (name != 'KUIM018-H2'))/*falta KFIM*/
         {
-            removeselect(key);
+           removeselect(key);
 
         }
     }

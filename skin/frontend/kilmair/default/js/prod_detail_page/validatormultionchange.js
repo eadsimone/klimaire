@@ -34,7 +34,7 @@ function getname(name) {
 //var res = name.split("&nbsp;");
     var res = name.split("+");
 
-var name=  res[0].replace(/^\s+|\s+$/g,'');//trim prototype
+    var name=  res[0].replace(/^\s+|\s+$/g,'');//trim prototype
 
     return name;
 }
@@ -54,22 +54,6 @@ function sizeofobject(a){
 
 jQuery.noConflict();
 
-/*notes
-var MyArray = {id1: 100, id2: 200, "tag with spaces": 300};
-/* MyArray.id3 = 400;
- MyArray["id4"] = 500;
- */
-/*
-var MyArray = {};
-
-var caca = {id1: 100, id2: 200, "tag with spaces": 300};
-
-MyArray["uno"] = caca;
-MyArray["tres"] = 3;
-MyArray["dos"] = 2;
-
-*/
-
 jQuery(document).ready(function( $ ) {
     // Your jQuery code here, using $ to refer to jQuery.
     var emptyselect = {};
@@ -79,11 +63,6 @@ jQuery(document).ready(function( $ ) {
 
     function setproduct(id,arreglo) {
 
-        /* for(var key in ArrayOfSelect)
-         {*/
-
-        // $( "#myselect option:selected" ).text(); for option selected
-        /*selected the current element*/
         var idselect= "#"+id;
         var idselected= idselect;
         var valselected=$(idselected).val();
@@ -98,155 +77,85 @@ jQuery(document).ready(function( $ ) {
 
         arreglo[current.id]=product;
 
-
-       /* var comercialtype12 = qtyof9 = qtyof12 = qtyof18 = totalofwallmounttype12 = totalofwallmounttype18 = contain18= 0;
-        validationzone4(arreglo);*/
+        /* var comercialtype12 = qtyof9 = qtyof12 = qtyof18 = totalofwallmounttype12 = totalofwallmounttype18 = contain18= 0;
+         validationzone4(arreglo);*/
     }
 
     /*set prodcut selected*/
     function setproductselected(current,arreglo) {
 
-       /* for(var key in ArrayOfSelect)
-        {*/
+        /* for(var key in ArrayOfSelect)
+         {*/
 
-            // $( "#myselect option:selected" ).text(); for option selected
-            /*selected the current element*/
-            var idselect= "#"+current.id;
-            var idselected= idselect+" option:selected";
-            var valselected=$(idselected).val();
-            var textselected=$(idselected).text();
-            var nameselected =getname(textselected);
+        // $( "#myselect option:selected" ).text(); for option selected
+        /*selected the current element*/
+        var idselect= "#"+current.id;
+        var idselected= idselect+" option:selected";
+        var valselected=$(idselected).val();
+        var textselected=$(idselected).text();
+        var nameselected =getname(textselected);
 
-            var product = {
-                valor:valselected,
-                texto :textselected,
-                name: nameselected
-            };
+        var product = {
+            valor:valselected,
+            texto :textselected,
+            name: nameselected
+        };
 
-            arreglo[current.id]=product;
+        arreglo[current.id]=product;
 
 
         var comercialtype12 = qtyof9 = qtyof12 = qtyof18 = totalofwallmounttype12 = totalofwallmounttype18 = contain18= 0;
-            validationzone4(arreglo);
+        validationzone4(arreglo);
     }
 
     loadarray();
 
     // Named function expression.
-        $( "#bundle-option-177" ).change(function() {
+    $( "#bundle-option-177" ).change(function() {
 
-            /*poner en como seteado
-            verificar si cumple como tope maximo
-            sacar de los nos seleccionados la condiciion de rule
+        /*poner en como seteado
+         verificar si cumple como tope maximo
+         sacar de los nos seleccionados la condiciion de rule
+         */
+        setproductselected(this,ArrayOfSelect);
 
-             */
-
-            setproductselected(this,ArrayOfSelect);
-
-
-            for(var key in ArrayOfSelect){
-                alert("el selelcionador:"+key+" tiene el valor "+ArrayOfSelect[key]);
-            }
-
-
-        });
-
-
+    });
 
 
     $( "#bundle-option-178" ).change(function() {
 
-
         setproductselected(this,ArrayOfSelect);
         return;
-
-
-
     });
 
     $( "#bundle-option-179" ).change(function() {
-
-
         setproductselected(this,ArrayOfSelect);
-        return;
-
-        var idselect= "#"+this.id;
-        var valselected=$(idselect).val();
-        var textselected=$(idselect).text();
-
-        alert (a);
-
-
-        var product = {
-            valor:valselected,
-            name :textselected
-        };
-
-        arrayofobj.push(product);
-
-
-        console.log ( '#someButton was clicked' );
-
-        $("#option1").remove();
 
     });
 
     $( "#bundle-option-180" ).change(function() {
 
-
         setproductselected(this,ArrayOfSelect);
         return;
 
-        var idselect= "#"+this.id;
-        var valselected=$(idselect).val();
-        var textselected=$(idselect).text();
-
-        alert (a);
-
-
-        var product = {
-            valor:valselected,
-            name :textselected
-        };
-
-        arrayofobj.push(product);
-
-
-        console.log ( '#someButton was clicked' );
-
-        $("#option1").remove();
-
     });
-
-
-
-
 });
 
 var jquery = jQuery.noConflict();
 
-var removeselect = function(id) {
+function removeselect(id){
 
     var idselect= "#"+id;
     var valselected=jquery(idselect).val();
     var textselected=jquery(idselect).text();
 
-
     var sel=idselect+" option";
-
-    /*jquery(sel).each(function() {
-        optionValues.push(jquery(this).val());
-    });
-    consolelog(optionValues);
-
-    return;*/
-
 
     jquery(sel).each(function() {
 
-       var name =getname(jquery(this).text());
+        var name =getname(jquery(this).text());
 
-        if((name == 'KWIL18-H2') || (name == 'KWIM18-H2') || (name == 'KWIO18-H2') || (name == 'KDIM018-H2') || (name == 'KTIM018-H2') || (name == 'KUIM018-H2'))/*falta KFIM*/
+        if((name == 'KWIL18-H2') && (name == 'KWIM18-H2') && (name == 'KWIO18-H2') && (name == 'KDIM018-H2') && (name == 'KTIM018-H2') && (name == 'KUIM018-H2'))/*falta KFIM*/
         {
             /*setproduct(id,ArrayOfSelectout);*/
 
@@ -262,33 +171,18 @@ var removeselect = function(id) {
     console.log(optionValues);
 };
 
-
-
-/*function removeselect(number) {
-
-    for(var key in ArrayOfSelect){
-
-        var name=ArrayOfSelect[key].name;
-
-        if((name != 'KWIL18-H2') || (name != 'KWIM18-H2')|| (name != 'KWIO18-H2') || (name != 'KDIM018-H2') || (name != 'KTIM018-H2')|| (name != 'KUIM018-H2'))*//*falta KFIM*//*
-        {
-            removeselect(key);
-
-        }
-    }
-
-}*/
-
 function quitar(number) {
+    var nombre='';
 
     for(var key in ArrayOfSelect){
 
-        var name=ArrayOfSelect[key].name;
+        if ((key !== undefined) && (typeof key !== "undefined")){
 
-        if((name != 'KWIL18-H2') && (name != 'KWIM18-H2')&& (name != 'KWIO18-H2') && (name != 'KDIM018-H2') && (name != 'KTIM018-H2')&& (name != 'KUIM018-H2'))/*falta KFIM*/
-        {
-           removeselect(key);
+            nombre = ArrayOfSelect[key].name;
 
+            if( (nombre != 'KWIL18-H2') && (nombre != 'KWIM18-H2') && (nombre != 'KWIO18-H2') && (nombre != 'KDIM018-H2') && (nombre != 'KTIM018-H2')&& (nombre != 'KUIM018-H2')){
+                removeselect(key);
+            }
         }
     }
 
@@ -359,7 +253,7 @@ function loadarray() {
 }
 
 function validationzone2(prod) {
-    
+
     var onlywallmounttype9 = qtyof9 = qtyof12 = 0;
 
     var total=prod.length;
@@ -462,9 +356,9 @@ function validationzone4(prod) {
     var total=sizeofobject(prod);
 
 
-    for (key in prod) {
+    for (var key in prod) {
 
-    //for (var i = 0; i < total ; i++) {
+        //for (var i = 0; i < total ; i++) {
         var name=prod[key].name;
         if ((name == 'KWIL09-H2') || (name == 'KWIM09-H2')|| (name == 'KWIO09-H2'))
         {

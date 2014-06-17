@@ -153,9 +153,9 @@ function removeselect(id){
 
     jquery(sel).each(function() {
 
-        var name =getname(jquery(this).text());
+        var namepro =getname(jquery(this).text());
 
-        if((name == 'KWIL18-H2') && (name == 'KWIM18-H2') && (name == 'KWIO18-H2') && (name == 'KDIM018-H2') && (name == 'KTIM018-H2') && (name == 'KUIM018-H2'))/*falta KFIM*/
+        if((namepro == 'KWIL18-H2') || (namepro == 'KWIM18-H2') || (namepro == 'KWIO18-H2') || (namepro == 'KDIM018-H2') || (namepro == 'KTIM018-H2') || (namepro == 'KUIM018-H2') )/*falta KFIM*/
         {
             /*setproduct(id,ArrayOfSelectout);*/
 
@@ -167,8 +167,6 @@ function removeselect(id){
 
         }
     });
-
-    console.log(optionValues);
 };
 
 function quitar(number) {

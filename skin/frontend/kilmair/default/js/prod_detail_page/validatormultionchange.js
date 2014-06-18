@@ -143,7 +143,11 @@ jQuery(document).ready(function( $ ) {
 
 var jquery = jQuery.noConflict();
 
+/* recorre cada opcion del elemento seleccionado a remover*/
 function removeselect(id){
+
+
+    var takeout = [];
 
     var idselect= "#"+id;
     var valselected=jquery(idselect).val();
@@ -153,7 +157,8 @@ function removeselect(id){
 
     jquery(sel).each(function() {
 
-        var namepro =getname(jquery(this).text());
+        var jquerytext=jquery(this).text();
+        var namepro =getname(jquerytext);
 
         if((namepro == 'KWIL18-H2') || (namepro == 'KWIM18-H2') || (namepro == 'KWIO18-H2') || (namepro == 'KDIM018-H2') || (namepro == 'KTIM018-H2') || (namepro == 'KUIM018-H2') )/*falta KFIM*/
         {
@@ -162,16 +167,38 @@ function removeselect(id){
             /*jquery("#selectBox option[value='option1']").remove();*/
             var val=jquery(this).val();
             var opt=sel+"[value="+val+"]";
-
             jquery(opt).remove();
 
+
+            var product = {
+                valor:val,
+                texto:jquerytext,
+                name: namepro
+            };
+            takeout.push(product);
+
         }
+
     });
+
+    ArrayOfSelectout[id]=takeout;
+
 };
+
+function takeoutofarray(){
+    var array = ["a", "b", "c"];
+
+// Find and remove item from an array
+    var i = array.indexOf("b");
+    if(i != -1) {
+        array.splice(i, 1);
+    }
+}
 
 function quitar(number) {
     var nombre='';
 
+    /*recorre arreglo de los que estan seleccionados*/
     for(var key in ArrayOfSelect){
 
         if ((key !== undefined) && (typeof key !== "undefined")){

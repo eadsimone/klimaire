@@ -144,7 +144,7 @@ jQuery(document).ready(function( $ ) {
 var jquery = jQuery.noConflict();
 
 /* recorre cada opcion del elemento seleccionado a remover*/
-function removeselect(id){
+function removeselect(id,categoria){
 
 
     var takeout = [];
@@ -160,23 +160,50 @@ function removeselect(id){
         var jquerytext=jquery(this).text();
         var namepro =getname(jquerytext);
 
-        if((namepro == 'KWIL18-H2') || (namepro == 'KWIM18-H2') || (namepro == 'KWIO18-H2') || (namepro == 'KDIM018-H2') || (namepro == 'KTIM018-H2') || (namepro == 'KUIM018-H2') )/*falta KFIM*/
-        {
-            /*setproduct(id,ArrayOfSelectout);*/
-
-            /*jquery("#selectBox option[value='option1']").remove();*/
-            var val=jquery(this).val();
-            var opt=sel+"[value="+val+"]";
-            jquery(opt).remove();
+        if(categoria==18){
 
 
-            var product = {
-                valor:val,
-                texto:jquerytext,
-                name: namepro
-            };
-            takeout.push(product);
+            if((namepro == 'KWIL18-H2') || (namepro == 'KWIM18-H2') || (namepro == 'KWIO18-H2') || (namepro == 'KDIM018-H2') || (namepro == 'KTIM018-H2') || (namepro == 'KUIM018-H2'))/*falta KFIM*/
+            {
+                /*setproduct(id,ArrayOfSelectout);*/
 
+                /*jquery("#selectBox option[value='option1']").remove();*/
+                var val=jquery(this).val();
+                var opt=sel+"[value="+val+"]";
+                jquery(opt).remove();
+
+
+                var product = {
+                    valor:val,
+                    texto:jquerytext,
+                    name: namepro
+                };
+                takeout.push(product);
+
+            }
+        }else
+        if(categoria==1812){
+            if((namepro == 'KWIL18-H2') || (namepro == 'KWIM18-H2') || (namepro == 'KWIO18-H2') || (namepro == 'KDIM018-H2') || (namepro == 'KTIM018-H2') || (namepro == 'KUIM018-H2')
+                ||  ((namepro == 'KWIL12-H2') || (namepro == 'KWIM12-H2') || (namepro == 'KDIM012-H2') || (namepro == 'KFIM012-H2') || (namepro == 'KTIM012-H2') || (namepro == 'KUIM012-H2'))
+                ||  ((namepro == 'KWIL09-H2') || (namepro == 'KWIM09-H2') || (namepro == 'KWIO09-H2') )
+                )/*falta KFIM*/
+            {
+                /*setproduct(id,ArrayOfSelectout);*/
+
+                /*jquery("#selectBox option[value='option1']").remove();*/
+                var val=jquery(this).val();
+                var opt=sel+"[value="+val+"]";
+                jquery(opt).remove();
+
+
+                var product = {
+                    valor:val,
+                    texto:jquerytext,
+                    name: namepro
+                };
+                takeout.push(product);
+
+            }
         }
 
     });
@@ -204,10 +231,26 @@ function quitar(number) {
         if ((key !== undefined) && (typeof key !== "undefined")){
 
             nombre = ArrayOfSelect[key].name;
+            if ((ArrayOfSelect[key].name == undefined) && (typeof ArrayOfSelect[key].name == "undefined")){
+                nombre="";
 
-            if( (nombre != 'KWIL18-H2') && (nombre != 'KWIM18-H2') && (nombre != 'KWIO18-H2') && (nombre != 'KDIM018-H2') && (nombre != 'KTIM018-H2')&& (nombre != 'KUIM018-H2')){
-                removeselect(key);
             }
+
+            if(number==18){
+
+                if( (nombre != 'KWIL18-H2') && (nombre != 'KWIM18-H2') && (nombre != 'KWIO18-H2') && (nombre != 'KDIM018-H2') && (nombre != 'KTIM018-H2')&& (nombre != 'KUIM018-H2')){
+                    removeselect(key,18);
+                }
+            }
+            else if((number==189)||(number==1812)){
+                if( ((nombre != 'KWIL18-H2') && (nombre != 'KWIM18-H2') && (nombre != 'KWIO18-H2') && (nombre != 'KDIM018-H2') && (nombre != 'KTIM018-H2')&& (nombre != 'KUIM018-H2') ) &&
+                    ((nombre != 'KWIL09-H2') && (nombre != 'KWIM09-H2') && (nombre != 'KWIO09-H2')) &&
+                    ((nombre != 'KWIL12-H2') && (nombre != 'KWIM12-H2') && (nombre != 'KDIM012-H2') && (nombre != 'KFIM012-H2') && (nombre != 'KTIM012-H2') && (nombre != 'KUIM012-H2'))
+                    ){
+                    removeselect(key,1812);
+                }
+            }
+
         }
     }
 
@@ -435,6 +478,14 @@ function validationzone4(prod) {
     else if((qtyof12==1)&&(qtyof18==1)){
         return true;
     }
+    else if((qtyof9==1)&&(qtyof18==2)){
+        quitar(189);
+        return true;
+    }
+    else if((qtyof12==1)&&(qtyof18==2)){
+        quitar(1812);
+        return true;
+    }
     else if((qtyof18==2)){
         quitar(18);
         return true;
@@ -460,9 +511,7 @@ function validationzone4(prod) {
     else if((qtyof9==3)&&(qtyof18==1)){
         return true;
     }
-    else if((qtyof9==1)&&(qtyof18==2)){
-        return true;
-    }
+
     else if((qtyof9==2)&&(qtyof12==2)){
         return true;
     }
@@ -478,9 +527,7 @@ function validationzone4(prod) {
     else if((qtyof12==2)&&(qtyof18==1)){
         return true;
     }
-    else if((qtyof12==1)&&(qtyof18==2)){
-        return true;
-    }
+
     else if(qtyof12==4){
         return true;
     }

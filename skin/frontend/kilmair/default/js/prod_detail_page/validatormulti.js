@@ -4,6 +4,40 @@
 
 var invalidrule = new Array();
 
+
+
+/*starting jquery*/
+
+
+var j = jQuery.noConflict();
+
+// Do something with jQuery
+//j( "div p" ).hide();
+
+
+var Product = new Object();
+Product.id = "Ford";
+Product.name = "Mustang";
+Product.html = 1969;
+
+var fruits = [];
+//fruits.push("Kiwi")
+
+
+j( "#bundle-option-177" ).change(function() {
+    //(":selected").val()
+    alert( "Handler for .change() called."+this.value+"---"+this.innerHTML );
+});
+
+
+// Do something with another library's $()
+$( "content" ).style.display = "none";
+
+
+
+/*end jquery*/
+
+
 function getselect(prod) {
 
     var  multizone2= 'ksim20912-h216-custom',multizone3='ksim30912-h216-custom',multizone4='ksim40912-h216-custom';

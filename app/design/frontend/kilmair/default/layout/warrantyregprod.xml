@@ -5,10 +5,10 @@
     <warrantyregprod_index_index>
         <reference name="head">
                <action method="addItem"><type>skin_css</type><name>css/custom_datepicker/zebra_datepicker.css</name></action>
-               <action method="addItem"><type>skin_js</type><name>js/custom_datepicker/jquery-1.6.2.js</name></action>
+               <!--<action method="addItem"><type>skin_js</type><name>js/custom_datepicker/jquery-1.6.2.js</name></action>-->
                <action method="addItem"><type>skin_js</type><name>js/custom_datepicker/zebra_datepicker.src.js</name></action>
                <action method="addItem"><type>skin_js</type><name>js/custom_datepicker/functions.js</name></action>
-               
+
                <action method="removeItem"><type>skin_css</type><name>css/reset.css</name></action>
                
                <action method="setTitle" translate="title" module="warrantyregprod"><title>WARRANTY :: PRODUCT REGISTRATION</title></action>

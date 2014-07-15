@@ -1057,26 +1057,52 @@ endforeach;
 //]]>
 </script>
 <script type="text/javascript">
-var $jq = jQuery.noConflict();
-$jq(document).ready(function() {
-    // assuming the controls you want to attach the plugin to have the "datepicker" class set
-    $jq('#purchasedon').Zebra_DatePicker();
-    $jq('#installedon').Zebra_DatePicker();
- });
- 
-$jq('#apt').blur(function(){
-	if($jq('#apt').val()!='')
+//var $jq = jQuery.noConflict();
+//$jq(document).ready(function() {
+//    // assuming the controls you want to attach the plugin to have the "datepicker" class set
+//    $jq('#purchasedon').Zebra_DatePicker();
+//    $jq('#installedon').Zebra_DatePicker();
+// });
+//
+//$jq('#apt').blur(function(){
+//	if($jq('#apt').val()!='')
+//	{
+//		$jq('#aptcom').attr('checked','checked');
+//		$jq('#aptres').attr('disabled','true');
+//	}
+//	else
+//	{
+//		$jq('#aptres').removeAttr('disabled','true');
+//		$jq('#aptres').attr('checked','checked');
+//
+//	}
+//});
+
+(function( $ ) {
+
+        // assuming the controls you want to attach the plugin to have the "datepicker" class set
+    $('#purchasedon').Zebra_DatePicker();
+    $('#installedon').Zebra_DatePicker();
+
+    $('#apt').blur(function(){
+
+	if($('#apt').val()!='')
 	{
-		$jq('#aptcom').attr('checked','checked');
-		$jq('#aptres').attr('disabled','true');
+		$('#aptcom').attr('checked','checked');
+		$('#aptres').attr('disabled','true');
 	}
 	else
 	{
-		$jq('#aptres').removeAttr('disabled','true');
-		$jq('#aptres').attr('checked','checked');
-		
+		$('#aptres').removeAttr('disabled','true');
+		$('#aptres').attr('checked','checked');
+
 	}
-});
+    });
+
+})(jQuery);
+
+
+
 var sprytextfield1 = new Spry.Widget.ValidationTextField("sprytextfield1","zip_code", {validateOn:["blur"]});
 var sprytextfield2 = new Spry.Widget.ValidationTextField("sprytextfield2","phone_number", {validateOn:["blur"],useCharacterMasking:true});
 var sprytextfield3 = new Spry.Widget.ValidationTextField("sprytextfield3","none", {validateOn:["blur"]});

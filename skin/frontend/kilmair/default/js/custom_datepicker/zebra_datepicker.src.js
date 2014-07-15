@@ -13,6 +13,8 @@
  *  @license    http://www.gnu.org/licenses/lgpl-3.0.txt GNU LESSER GENERAL PUBLIC LICENSE
  *  @package    Zebra_DatePicker
  */
+jQuery.noConflict();
+
 ;(function($) {
 
     $.Zebra_DatePicker = function(element, options) {
